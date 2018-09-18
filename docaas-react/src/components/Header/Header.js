@@ -5,6 +5,10 @@ import './Header.css';
 
 import logo from '../../images/logo.png';
 
+const NOT_LOGGED = 0
+const LOGGING = 1
+const LOGGED = 2
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +24,7 @@ class Header extends React.Component {
       'strLogin': 'Hello!',
       'colorLogin': 'primary'
     });
+    this.props.handleLogging();
   }
 
   render() {
