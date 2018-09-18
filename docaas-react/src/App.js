@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import HeaderLogin from './components/HeaderLogin/HeaderLogin';
+import Header from './components/Header/Header';
+import MainBody from './components/MainBody/MainBody';
 
 import './App.css';
 
@@ -9,13 +10,11 @@ class App extends Component {
     this.state = {    };   
   }
 
-
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <HeaderLogin />
-        </header>
+        <Header />
+        <MainBody />
       </div>
     );
   }
