@@ -1,0 +1,262 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Deck of Cards As A Service
+
+  SAM Template for the Deck of Cards As A Service Application Suite
+
+  '
+Globals:
+  Function:
+    Timeout: 15
+Outputs:
+  APIBaseURL:
+    Value:
+      Fn::Sub: https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod
+  CreateDeckFunction:
+    Description: Create Deck Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - CreateDeckFunction
+      - Arn
+  CutDeckFunction:
+    Description: Cut Deck Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - CutDeckFunction
+      - Arn
+  GetDeckFunction:
+    Description: Get Deck Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - GetDeckFunction
+      - Arn
+  ShuffleDeckFunction:
+    Description: Shuffle Deck Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ShuffleDeckFunction
+      - Arn
+Resources:
+  ApiGatewayDeployment:
+    DependsOn:
+    - GetDeckApiMethod
+    Properties:
+      RestApiId:
+        Ref: RestApi
+      StageName: Prod
+    Type: AWS::ApiGateway::Deployment
+  CognitoApiAuthoriser:
+    Properties:
+      AuthorizerResultTtlInSeconds: 600
+      IdentitySource: method.request.header.Authorization
+      Name: CognitoAuthoriser
+      ProviderARNs:
+      - arn:aws:cognito-idp:ap-southeast-2:604674757980:userpool/ap-southeast-2_NA2izZ6e4
+      RestApiId:
+        Ref: RestApi
+      Type: COGNITO_USER_POOLS
+    Type: AWS::ApiGateway::Authorizer
+  CreateDeckApiMethod:
+    Properties:
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId:
+        Ref: CognitoApiAuthoriser
+      HttpMethod: ANY
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Sub:
+          - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations
+          - lambdaArn:
+              Fn::GetAtt:
+              - CreateDeckFunction
+              - Arn
+      ResourceId:
+        Ref: CreateDeckApiResource
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Method
+  CreateDeckApiResource:
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+        - RestApi
+        - RootResourceId
+      PathPart: create
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Resource
+  CreateDeckFunction:
+    Properties:
+      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      FunctionName: DOCAAS_CreateDeck
+      Handler: create.create_deck_handler
+      Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  CreateDeckInvokeLambdaPermission:
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - CreateDeckFunction
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/create
+    Type: AWS::Lambda::Permission
+  CutDeckApiMethod:
+    Properties:
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId:
+        Ref: CognitoApiAuthoriser
+      HttpMethod: ANY
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Sub:
+          - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations
+          - lambdaArn:
+              Fn::GetAtt:
+              - CutDeckFunction
+              - Arn
+      ResourceId:
+        Ref: CutDeckApiResource
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Method
+  CutDeckApiResource:
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+        - RestApi
+        - RootResourceId
+      PathPart: cut
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Resource
+  CutDeckFunction:
+    Properties:
+      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      FunctionName: DOCAAS_CutDeck
+      Handler: cut.cut_deck_handler
+      Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  CutDeckInvokeLambdaPermission:
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - CutDeckFunction
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/cut
+    Type: AWS::Lambda::Permission
+  GetDeckApiMethod:
+    Properties:
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId:
+        Ref: CognitoApiAuthoriser
+      HttpMethod: ANY
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Sub:
+          - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations
+          - lambdaArn:
+              Fn::GetAtt:
+              - GetDeckFunction
+              - Arn
+      ResourceId:
+        Ref: GetDeckApiResource
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Method
+  GetDeckApiResource:
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+        - RestApi
+        - RootResourceId
+      PathPart: get
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Resource
+  GetDeckFunction:
+    Properties:
+      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      FunctionName: DOCAAS_GetDeck
+      Handler: get.get_deck_handler
+      Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  GetDeckInvokeLambdaPermission:
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - GetDeckFunction
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/get
+    Type: AWS::Lambda::Permission
+  RestApi:
+    Properties:
+      Name: docaas-api
+    Type: AWS::ApiGateway::RestApi
+  ShuffleDeckApiMethod:
+    Properties:
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId:
+        Ref: CognitoApiAuthoriser
+      HttpMethod: ANY
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Sub:
+          - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations
+          - lambdaArn:
+              Fn::GetAtt:
+              - ShuffleDeckFunction
+              - Arn
+      ResourceId:
+        Ref: ShuffleDeckApiResource
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Method
+  ShuffleDeckApiResource:
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+        - RestApi
+        - RootResourceId
+      PathPart: shuffle
+      RestApiId:
+        Ref: RestApi
+    Type: AWS::ApiGateway::Resource
+  ShuffleDeckFunction:
+    Properties:
+      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      FunctionName: DOCAAS_ShuffleDeck
+      Handler: shuffle.shuffle_deck_handler
+      Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  ShuffleDeckInvokeLambdaPermission:
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - ShuffleDeckFunction
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/shuffle
+    Type: AWS::Lambda::Permission
+Transform: AWS::Serverless-2016-10-31

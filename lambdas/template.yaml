@@ -1,0 +1,204 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    Deck of Cards As A Service
+
+    SAM Template for the Deck of Cards As A Service Application Suite
+    
+Globals:
+    Function:
+        Timeout: 15
+
+Resources:
+    CreateDeckFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Handler: create.create_deck_handler
+            Runtime: nodejs8.10
+            FunctionName: DOCAAS_CreateDeck
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+    GetDeckFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Handler: get.get_deck_handler
+            Runtime: nodejs8.10
+            FunctionName: DOCAAS_GetDeck
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+    ShuffleDeckFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Handler: shuffle.shuffle_deck_handler
+            Runtime: nodejs8.10
+            FunctionName: DOCAAS_ShuffleDeck
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+    CutDeckFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Handler: cut.cut_deck_handler
+            Runtime: nodejs8.10
+            FunctionName: DOCAAS_CutDeck
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+
+    RestApi:
+        Type: AWS::ApiGateway::RestApi
+        Properties:
+            Name: docaas-api
+    
+    CognitoApiAuthoriser:
+        Type: AWS::ApiGateway::Authorizer
+        Properties:
+            Name: CognitoAuthoriser
+            Type: COGNITO_USER_POOLS
+            IdentitySource: method.request.header.Authorization
+            ProviderARNs:
+                - arn:aws:cognito-idp:ap-southeast-2:604674757980:userpool/ap-southeast-2_NA2izZ6e4
+            RestApiId: !Ref RestApi
+            AuthorizerResultTtlInSeconds: 600
+
+    ApiGatewayDeployment:
+        Type: "AWS::ApiGateway::Deployment"
+        DependsOn:
+            - "GetDeckApiMethod"
+        Properties:
+            RestApiId: !Ref "RestApi"
+            StageName: Prod
+
+            
+    GetDeckApiResource:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+            ParentId: !GetAtt RestApi.RootResourceId
+            PathPart: get
+            RestApiId: !Ref RestApi
+    GetDeckApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: ANY
+            AuthorizationType: COGNITO_USER_POOLS
+            AuthorizerId: !Ref CognitoApiAuthoriser
+            ResourceId: !Ref GetDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "GetDeckFunction.Arn"
+    GetDeckInvokeLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "GetDeckFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/get"
+
+
+    CreateDeckApiResource:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+            ParentId: !GetAtt RestApi.RootResourceId
+            PathPart: create
+            RestApiId: !Ref RestApi
+    CreateDeckApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: ANY
+            AuthorizationType: COGNITO_USER_POOLS
+            AuthorizerId: !Ref CognitoApiAuthoriser
+            ResourceId: !Ref CreateDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "CreateDeckFunction.Arn"
+    CreateDeckInvokeLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "CreateDeckFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/create"
+
+
+    ShuffleDeckApiResource:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+            ParentId: !GetAtt RestApi.RootResourceId
+            PathPart: shuffle
+            RestApiId: !Ref RestApi
+    ShuffleDeckApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: ANY
+            AuthorizationType: COGNITO_USER_POOLS
+            AuthorizerId: !Ref CognitoApiAuthoriser
+            ResourceId: !Ref ShuffleDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "ShuffleDeckFunction.Arn"
+    ShuffleDeckInvokeLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "ShuffleDeckFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/shuffle"
+
+
+
+    CutDeckApiResource:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+            ParentId: !GetAtt RestApi.RootResourceId
+            PathPart: cut
+            RestApiId: !Ref RestApi
+    CutDeckApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: ANY
+            AuthorizationType: COGNITO_USER_POOLS
+            AuthorizerId: !Ref CognitoApiAuthoriser
+            ResourceId: !Ref CutDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "CutDeckFunction.Arn"
+    CutDeckInvokeLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "CutDeckFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/cut"
+
+
+
+       
+Outputs:
+    APIBaseURL:
+        Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+    CreateDeckFunction:
+      Description: "Create Deck Lambda Function ARN"
+      Value: !GetAtt CreateDeckFunction.Arn
+    GetDeckFunction:
+      Description: "Get Deck Lambda Function ARN"
+      Value: !GetAtt GetDeckFunction.Arn
+    ShuffleDeckFunction:
+      Description: "Shuffle Deck Lambda Function ARN"
+      Value: !GetAtt ShuffleDeckFunction.Arn
+    CutDeckFunction:
+      Description: "Cut Deck Lambda Function ARN"
+      Value: !GetAtt CutDeckFunction.Arn
