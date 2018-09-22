@@ -11,13 +11,23 @@ let logingPage = null;
 let controls = null;
 let table = null;
 
+let deck = { id:"", cards:[] };
+let prefixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
+let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
+
+prefixes.forEach(prefix => {
+  cards.forEach( card => {
+      deck.cards.push(card+prefix+'.png');
+  })
+});
+
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       'username': "",
       'password': "",
-      'cards': []
+      'deck': deck
     };  
     this.handleLoged = this.handleLoged.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
@@ -25,6 +35,8 @@ class MainBody extends React.Component {
     this.handleDeal = this.handleDeal.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
   }
+
+  
 
   handleLoged(username, password) {
     this.setState({
@@ -79,13 +91,14 @@ class MainBody extends React.Component {
                            handleGet={this.handleGet} _
                            handleDeal={this.handleDeal} _
                            handleShuffle={this.handleShuffle} />;
-      table = <Table />;
+      table = <Table deck={this.state.deck} />;
     }
 
     return (
       <div className="App-header">
         {logingPage}
         {controls}
+        {table}
       </div>
     );
   }
