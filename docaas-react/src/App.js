@@ -4,37 +4,49 @@ import MainBody from './components/MainBody/MainBody';
 
 import './App.css';
 
-const NOT_LOGGED = 0
-const LOGGING = 1
-const LOGGED = 2
+const NOT_LOGED = 0
+const LOGING = 1
+const LOGED = 2
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'loggingStatus': NOT_LOGGED
+      'logingStatus': NOT_LOGED,
+      'loginButtonColor':'danger',
+      'loginButtonCaption':'Login',
+      'username': "",
+      'password': ""
     };   
-    this.handleLogging = this.handleLogging.bind(this);
-    this.handleLogged = this.handleLogged.bind(this);
+    this.handleLoging = this.handleLoging.bind(this);
+    this.handleLoged = this.handleLoged.bind(this);
   }
 
-  handleLogging() {
+  handleLoging() {
     this.setState ({
-      'loggingStatus': LOGGING
+      'logingStatus': LOGING
     })
   }
 
-  handleLogged() {
+  handleLoged(username, password) {
     this.setState ({
-      'loggingStatus': LOGGED
-    })
+      'logingStatus': LOGED,
+      'loginButtonColor': 'primary',
+      'loginButtonCaption': 'Hello ' + username,
+      'username': username,
+      'password': password
+    });
   }
 
   render() {
     return (
       <div className="App">
-        <Header loggingStatus={this.state.loggingStatus} handleLogging={this.handleLogging} />
-        <MainBody loggingStatus={this.state.loggingStatus} handleLogged={this.handleLogged} />
+        <Header logingStatus={this.state.logingStatus} 
+                handleLoging={this.handleLoging} 
+                loginButtonColor={this.state.loginButtonColor} 
+                loginButtonCaption={this.state.loginButtonCaption} 
+        />
+        <MainBody logingStatus={this.state.logingStatus} handleLoged={this.handleLoged} />
       </div>
     );
   }

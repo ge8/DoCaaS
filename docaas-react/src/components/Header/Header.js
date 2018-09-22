@@ -5,9 +5,9 @@ import './Header.css';
 
 import logo from '../../images/logo.png';
 
-const NOT_LOGGED = 0
-const LOGGING = 1
-const LOGGED = 2
+const NOT_LOGED = 0
+const LOGING = 1
+const LOGED = 2
 
 class Header extends React.Component {
   constructor(props) {
@@ -20,20 +20,17 @@ class Header extends React.Component {
   }
 
   handleClick(e) {
-    this.setState({
-      'strLogin': 'Hello!',
-      'colorLogin': 'primary'
-    });
-    this.props.handleLogging();
+    this.props.handleLoging();
   }
 
   render() {
+    console.log(this.props.loginButtonColor);
     return (
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1 className="App-title">Deck Of Cards As A Service</h1>
-        <Button onClick={this.handleClick} className="login" color={this.state.colorLogin} size="lg">
-          {this.state.strLogin}
+        <Button onClick={this.handleClick} className="login" color={this.props.loginButtonColor} size="lg">
+          {this.props.loginButtonCaption}
         </Button>
       </div>
     );
