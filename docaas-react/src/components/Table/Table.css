@@ -1,4 +1,9 @@
+.App-table {
+    margin: 2rem 0 0 7rem;
+}
+
 img {
-    height: 1rem;
-    width: 1rem
+    height: 10rem;
+    width: 7rem;
+    margin-left: -5rem;
 }

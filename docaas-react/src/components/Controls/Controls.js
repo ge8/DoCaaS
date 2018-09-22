@@ -32,17 +32,17 @@ class Controls extends React.Component {
 
     render() {
     return (
-        <div className="App-header">
-            <Button onClick={this.handleCreate} className="create" color='success' size="lg">
+        <div className="App-controls">
+            <Button onClick={this.handleCreate} className="buttons" color='success' size="lg">
                 Create
             </Button>
-            <Button onClick={this.handleGet} className="create" color='info' size="lg">
+            <Button onClick={this.handleGet} className="buttons" color='info' size="lg">
                 Get
             </Button>
-            <Button onClick={this.handleDeal} className="create" color='warning' size="lg">
+            <Button onClick={this.handleDeal} className="buttons" color='warning' size="lg">
                 Deal
             </Button>
-            <Button onClick={this.handleShuffle} className="create" color='danger' size="lg">
+            <Button onClick={this.handleShuffle} className="buttons" color='danger' size="lg">
                 Shuffle
             </Button>
         </div>
