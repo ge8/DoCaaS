@@ -16,8 +16,8 @@ class Table extends React.Component {
 
 
     render() {
-        console.log(this.props.deck.cards);
-        this.props.deck.cards.map((object) => console.log(object));
+        // console.log(this.props.deck.cards);
+        // this.props.deck.cards.map((object) => console.log(object));
         return (
             <div className="App-table">
                 <h1 className="table-title">{this.props.message}</h1>

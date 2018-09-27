@@ -24,7 +24,6 @@ class Header extends React.Component {
   }
 
   render() {
-    console.log(this.props.loginButtonColor);
     return (
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

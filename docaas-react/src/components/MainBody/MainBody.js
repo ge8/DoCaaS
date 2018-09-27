@@ -3,6 +3,8 @@ import Login from '../Login/Login'
 import Controls from '../Controls/Controls'
 import Table from '../Table/Table'
 
+const USE_FIXED_VALUES = 1
+
 const NOT_LOGED = 0
 const LOGING = 1
 const LOGED = 2
@@ -44,6 +46,7 @@ class MainBody extends React.Component {
   }  
 
   blankCards() {    
+    fixedDeck.cards = [];
     prefixes.forEach(prefix => {
       cards.forEach( card => {
         fixedDeck.cards.push('Blank.png');
@@ -61,34 +64,62 @@ class MainBody extends React.Component {
 
   handleCreate(deckId) {
     console.log('API for Create');
+    let message = "";
+    this.blankCards();
+
     this.callAPI(mainUrl + '/create', deckId).then(response => {
       fixedDeck.id = deckId;
-      fixedDeck.cards = [];
-      this.blankCards();
-      //Comment to disable hard coded response
-      counter++;
-      let message = "";
-      if (counter < 0) {
-        message = "Invalid Deck";
-      } else {
-        message = "Deck " + counter + " created!"
-      }
-      //End comment
   
-      console.log(response);
-      //message = "Deck " + response.deckId + " created!";
+      if (!USE_FIXED_VALUES) {
+        if (response.deckId === "0") {
+          message = "Deck could not be created";
+        } else {
+          message = "Deck " + response.deckId + " created!";
+        }
+  
+        this.setState({
+          'message': message,
+          'deck': fixedDeck
+        });
+      }
+    });
+
+    if (USE_FIXED_VALUES) {
+      counter++;
+      message = "Deck " + counter + " created!"
+
       this.setState({
         'message': message,
         'deck': fixedDeck
       });
-    });
-
+    }
   }
   
   handleGet(deckId) {
     console.log('API for Get');
-    console.log(fixedDeck.cards);
-    this.callAPI(mainUrl + '/get', deckId).then(response => {
+    let message = "";
+
+    this.callAPI(mainUrl + '/get', deckId).then(response => { 
+      if(!USE_FIXED_VALUES) {
+        if (response.id === "0")  {
+          message = "Invalid Deck";   
+          this.blankCards();
+        } else {
+          fixedDeck.id = response.id;
+          fixedDeck.cards = [];
+          response.cards.map((card,i) => {
+            fixedDeck.cards.push(card+".png");
+          });
+        } 
+  
+        this.setState({
+          'message': message,
+          'deck': fixedDeck
+        });
+      } 
+    });    
+    
+    if (USE_FIXED_VALUES) {
       fixedDeck.id = this.state.deck.id;
       fixedDeck.cards = [];
       prefixes.forEach(prefix => {
@@ -96,72 +127,93 @@ class MainBody extends React.Component {
           fixedDeck.cards.push(card+prefix+'.png');
         })
       });
-  
-      let message = "";
-      if (counter < 0) {
-        message = "Invalid Deck";
-      } else {
-        message = "";
-      }
-  
+
       this.setState({
         'message': message,
         'deck': fixedDeck
       });
-    });    
+    }
   }
 
   handleDeal(deckId) {
     console.log('API for Deal');
-    const response = this.callAPI(mainUrl + '/deal', deckId);
-    let dealDeck = this.state.deck;
-    let newStack = [];
-    this.state.deck.cards.map((object,i) => {
-      if (i!==4 && i!==6 && i!==20 && i!==22) {
-        newStack.push("Blank.png");
-      } else {
-        newStack.push(object);
+    let message = "";
+    this.blankCards();
+
+    this.callAPI(mainUrl + '/deal', deckId).then(response => {
+      if (!USE_FIXED_VALUES) {
+        if (counter === "0") {
+          message = "Invalid Deck";
+        } else {
+          message = "";
+          response.cards.map((object,i) => {
+            if (i===0) fixedDeck.cards[4] = object+".png";
+            if (i===1) fixedDeck.cards[6] = object+".png";
+            if (i===2) fixedDeck.cards[20] = object+".png";
+            if (i===3) fixedDeck.cards[22] = object+".png";
+          }); 
+        }
+    
+        this.setState({
+          'message': message,
+          'deck': fixedDeck
+        });
       }
     });
-    dealDeck.cards = newStack;  
-    dealDeck.id = this.state.deck.id;  
+    
+    if (USE_FIXED_VALUES) {
+      fixedDeck.cards.map((object,i) => {
+        if (i===0) fixedDeck.cards[4] = Math.floor((Math.random()+1)*4) + "C.png";
+        if (i===1) fixedDeck.cards[6] = Math.floor((Math.random()+1)*4) + "S.png";
+        if (i===2) fixedDeck.cards[20] = Math.floor((Math.random()+1)*4) + "D.png";
+        if (i===3) fixedDeck.cards[22] = Math.floor((Math.random()+1)*4) + "H.png";
+      }); 
 
-    let message = "";
-    if (counter < 0) {
-      message = "Invalid Deck";
-    } else {
-      message = "";
+      this.setState({
+        'message': message,
+        'deck': fixedDeck
+      });
     }
-
-    this.setState({
-      'message': message,
-      'deck': fixedDeck
-    });
   }
 
   handleShuffle(deckId) {
     console.log('API for Shuffle');
-    const response = this.callAPI(mainUrl + '/shuffle', deckId);
-    
-    fixedDeck.id = this.state.deck.id;  
-    fixedDeck.cards = [];
-    prefixes.forEach(prefix => {
-      cards.forEach( card => {
-        fixedDeck.cards.push(card+prefix+'.png');
-      })
-    });
-
     let message = "";
-    if (counter < 0) {
-      message = "Invalid Deck";
-    } else {
-      message = "";
-    }
 
-    this.setState({
-      'message': message,
-      'deck': fixedDeck
-    });
+    this.callAPI(mainUrl + '/shuffle', deckId).then(response => {
+      if (!USE_FIXED_VALUES) {
+        if (response.id === "0")  {
+          message = "Invalid Deck";   
+          this.blankCards();
+        } else {
+          fixedDeck.id = response.id;
+          fixedDeck.cards = [];
+          response.cards.map((card,i) => {
+            fixedDeck.cards.push(card+".png");
+          });
+        } 
+  
+        this.setState({
+          'message': message,
+          'deck': fixedDeck
+        });
+      }    
+    }); 
+
+    if (USE_FIXED_VALUES) {
+      fixedDeck.id = this.state.deck.id;
+      fixedDeck.cards = [];
+      prefixes.forEach(prefix => {
+        cards.forEach( card => {
+          fixedDeck.cards.push(card+prefix+'.png');
+        })
+      });
+
+      this.setState({
+        'message': message,
+        'deck': fixedDeck
+      });
+    }
   }
 
   callAPI(url, deckId) {    
@@ -183,7 +235,6 @@ class MainBody extends React.Component {
     
   render() {
     const logingStatus = this.props.logingStatus;
-    //console.log(logingStatus);
     logingPage = null;
     controls = null;
     table = null;

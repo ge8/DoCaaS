@@ -23,7 +23,6 @@ class Login extends Component {
   }
 
   handleSubmit = event => {
-    console.log('handle submit');
     this.props.handleLoged(this.state.username, this.state.password);
     event.preventDefault();
   }
