@@ -7,7 +7,7 @@ const NOT_LOGED = 0
 const LOGING = 1
 const LOGED = 2
 
-const mainUrl = "http://estaba.net"
+const mainUrl = "https://estaba.net"
 
 let logingPage = null;
 let controls = null;
@@ -40,7 +40,16 @@ class MainBody extends React.Component {
     this.handleDeal = this.handleDeal.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
     this.callAPI = this.callAPI.bind(this);
+    this.blankCards = this.blankCards.bind(this);
   }  
+
+  blankCards() {    
+    prefixes.forEach(prefix => {
+      cards.forEach( card => {
+        fixedDeck.cards.push('Blank.png');
+      })
+    });
+  }
 
   handleLoged(username, password) {
     this.setState({
@@ -50,45 +59,61 @@ class MainBody extends React.Component {
     this.props.handleLoged(username, password);
   }
 
-  handleCreate() {
+  handleCreate(deckId) {
     console.log('API for Create');
-    const response = this.callAPI(mainUrl + '/create');
-    counter++;
-
-    fixedDeck.cards = [];
-    prefixes.forEach(prefix => {
-      cards.forEach( card => {
-        fixedDeck.cards.push('Blank.png');
-      })
+    this.callAPI(mainUrl + '/create', deckId).then(response => {
+      fixedDeck.id = deckId;
+      fixedDeck.cards = [];
+      this.blankCards();
+      //Comment to disable hard coded response
+      counter++;
+      let message = "";
+      if (counter < 0) {
+        message = "Invalid Deck";
+      } else {
+        message = "Deck " + counter + " created!"
+      }
+      //End comment
+  
+      console.log(response);
+      //message = "Deck " + response.deckId + " created!";
+      this.setState({
+        'message': message,
+        'deck': fixedDeck
+      });
     });
 
-    this.setState({
-      'message': "Deck " + counter + " created!",
-      'deck': fixedDeck
-    });
   }
   
-  handleGet() {
+  handleGet(deckId) {
     console.log('API for Get');
     console.log(fixedDeck.cards);
-    const response = this.callAPI(mainUrl + '/get');
-    
-    fixedDeck.cards = [];
-    prefixes.forEach(prefix => {
-      cards.forEach( card => {
-        fixedDeck.cards.push(card+prefix+'.png');
-      })
-    });
-
-    this.setState({
-      'message': "",
-      'deck': fixedDeck
-    });
+    this.callAPI(mainUrl + '/get', deckId).then(response => {
+      fixedDeck.id = this.state.deck.id;
+      fixedDeck.cards = [];
+      prefixes.forEach(prefix => {
+        cards.forEach( card => {
+          fixedDeck.cards.push(card+prefix+'.png');
+        })
+      });
+  
+      let message = "";
+      if (counter < 0) {
+        message = "Invalid Deck";
+      } else {
+        message = "";
+      }
+  
+      this.setState({
+        'message': message,
+        'deck': fixedDeck
+      });
+    });    
   }
 
-  handleDeal() {
+  handleDeal(deckId) {
     console.log('API for Deal');
-    const response = this.callAPI(mainUrl + '/deal');
+    const response = this.callAPI(mainUrl + '/deal', deckId);
     let dealDeck = this.state.deck;
     let newStack = [];
     this.state.deck.cards.map((object,i) => {
@@ -98,17 +123,27 @@ class MainBody extends React.Component {
         newStack.push(object);
       }
     });
-    dealDeck.cards = newStack;
+    dealDeck.cards = newStack;  
+    dealDeck.id = this.state.deck.id;  
+
+    let message = "";
+    if (counter < 0) {
+      message = "Invalid Deck";
+    } else {
+      message = "";
+    }
+
     this.setState({
-      'message': "",
-      'deck': dealDeck
+      'message': message,
+      'deck': fixedDeck
     });
   }
 
-  handleShuffle() {
+  handleShuffle(deckId) {
     console.log('API for Shuffle');
-    const response = this.callAPI(mainUrl + '/shuffle');
+    const response = this.callAPI(mainUrl + '/shuffle', deckId);
     
+    fixedDeck.id = this.state.deck.id;  
     fixedDeck.cards = [];
     prefixes.forEach(prefix => {
       cards.forEach( card => {
@@ -116,16 +151,26 @@ class MainBody extends React.Component {
       })
     });
 
+    let message = "";
+    if (counter < 0) {
+      message = "Invalid Deck";
+    } else {
+      message = "";
+    }
+
     this.setState({
-      'message': "",
+      'message': message,
       'deck': fixedDeck
     });
   }
 
-  callAPI(url) {    
+  callAPI(url, deckId) {    
     return fetch(url, {
       method: 'GET',
-      headers: { Authorization: 'Basic ' + btoa(this.state.username + ":" + this.state.password) }
+      headers: { 
+        Authorization: 'Basic ' + btoa(this.state.username + ":" + this.state.password),
+        'deckId': deckId 
+      }
     }).then(response => {
         console.log(response);
         if (response.ok) {

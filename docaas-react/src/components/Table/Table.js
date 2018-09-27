@@ -20,7 +20,7 @@ class Table extends React.Component {
         this.props.deck.cards.map((object) => console.log(object));
         return (
             <div className="App-table">
-                <h1>{this.props.message}</h1>
+                <h1 className="table-title">{this.props.message}</h1>
                 {this.props.deck.cards.map((object, i) => <img src={images[object]} className="App-card" alt="card" />)}
             </div>
         );
