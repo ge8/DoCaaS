@@ -29,13 +29,13 @@ npm i react-boostrap
 * npm run-script build
 * aws s3 sync build/ s3://docaas --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
 
-##ReactJS build and deploy:
+## ReactJS build and deploy:
 ```shell
 npm run-script build
 aws s3 sync build/ s3://docaas --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
 ```
 
-##Demo1
+## Demo1
 * Add amplify libraries into app
 ```shell
 npm install --save aws-amplify #takes seconds
@@ -51,10 +51,10 @@ amplify add auth #prompts
 amplify push #takes about 1 min+?
 ```
 
-#Questions!
+# Questions!
 * Caching in browser? caching with cloudfront but origin changed!
 
----------
+# API Convention
 APIs
 GET /path Header 
   (Authorization Basic user:password)
