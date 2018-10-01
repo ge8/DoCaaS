@@ -50,6 +50,18 @@ amplify init #prompts + 10 seconds
 amplify add auth #prompts
 amplify push #takes about 1 min+?
 ```
+* Configure App with Amplify
+```js
+import Amplify, { Auth } from 'aws-amplify';
+import aws_exports from './aws-exports';
+Amplify.configure(aws_exports);
+```
+* Add Cognito's Authenticator Component (withAuthenticator HOC) Go to **Using Components in React**.
+```js
+import { withAuthenticator } from 'aws-amplify-react';
+...
+export default withAuthenticator(App);
+```
 
 # Questions!
 * Caching in browser? caching with cloudfront but origin changed!
