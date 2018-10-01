@@ -1,12 +1,14 @@
 # DoCaaS
 Deck of Cards as a Service
  
-Requirements for docaas-react:
+## Requirements for docaas-react:
+'''shell
 npm install ajv
 npm install --save reactstrap react react-dom
 npm install jquery
 npm install --save boostrap
 npm i react-boostrap
+'''
 
 Requirement:
 Domain name imported into Route53.
