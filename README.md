@@ -1,7 +1,7 @@
 # DoCaaS
 Deck of Cards as a Service
  
-## Machine requirements for docaas-react:
+## Machine requirements for docaas-react: (Review which one is installing globally or inside project)
 ```shell
 npm install ajv
 npm install --save reactstrap react react-dom
@@ -66,6 +66,7 @@ export default withAuthenticator(App);
 
 # Questions!
 * Caching in browser? caching with cloudfront but origin changed!
+* Review which npms are installing globally or inside project
 
 # APIs Convention
 GET /path Header 
