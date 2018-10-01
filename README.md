@@ -8,6 +8,7 @@ npm install --save reactstrap react react-dom
 npm install jquery
 npm install --save boostrap
 npm i react-boostrap
+npm install -g create-react-app
 ```
 
 ## AWS Requirement:
@@ -66,8 +67,7 @@ export default withAuthenticator(App);
 # Questions!
 * Caching in browser? caching with cloudfront but origin changed!
 
-# API Convention
-APIs
+# APIs Convention
 GET /path Header 
   (Authorization Basic user:password)
   (deckId:deckId)
