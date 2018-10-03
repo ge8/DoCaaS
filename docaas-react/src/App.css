@@ -24,10 +24,6 @@ h1 .highlight {
 .App {
   height: 100%;
   padding: 0 5% 10% 5%;
-  background-image: url('./images/felt-background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   font-weight: 500;
   color: #fff;
 }
