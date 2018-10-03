@@ -8,7 +8,8 @@ npm install --save reactstrap react react-dom
 npm install jquery
 npm install --save boostrap
 npm i react-boostrap
-npm install -g create-react-app
+npm install -g @aws-amplify/cli
+amplify configure
 ```
 
 ## AWS Requirement:
