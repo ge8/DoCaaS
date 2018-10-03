@@ -47,57 +47,54 @@ Theme: Speed of delivery (dev productivity)
 Decision: Move to multitenant SaaS.
 
 ## Step 0 (Prepare)
-•	Run prepare script
-o	creates 2 monoliths (from repo) + ALB – with cfn (so that we can kill it with delete-stack after Demo 2)
-o	Route53 script.
-o	build and publish front-end (from repo)
+Run prepare script
+*	creates 2 monoliths (from repo) + ALB – with cfn (so that we can kill it with delete-stack after Demo 2)
+*	Route53 script.
+*	build and publish front-end (from repo)
 
 ## DEMO 1: Centralise Identity. Tech: Cognito over console, AWS Amplify. Why: Simplify, save time, secure.
-•	Test app in monoliths: Visual and with Insomnia.
-•	Show current App front-end code and back-end. 
-•	Deploy Cognito (Console)
-•	Modify Front-end App (Cognito for sign in/up with snippet)
-o	Build + Publish
-•	Modify Monoliths code (if basic auth or Cognito for sign in/up with snippet)
-o	Push update somehow to monoliths. (how? CodeDeploy?)
-•	Test New App
+*	Test app in monoliths: Visual and with Insomnia.
+*	Show current App front-end code and back-end. 
+*	Deploy Cognito (Console)
+*	Modify Front-end App (Cognito for sign in/up with snippet)- Build + Publish
+*	Modify Monoliths code (if basic auth or Cognito for sign in/up with snippet)
+*	Push update somehow to monoliths. (how? CodeDeploy?)
+*	Test New App
 
 ## DEMO 2: New Environment: Breaking the monoliths into Serverless Microservices with Standardised Offering and Identity Isolation. Tech: APIGW, Lambda, SAM, Why: Minimize Operational burden (Free Up Engineering Cycles), Dev Experience, Automated Onboarding.
-•	Standardized Service Offering into 2!
-o	Bronze: Create, Get, Deal.
-o	Silver: Create, Get, Deal, Shuffle.
-•	Create Token Manager: library to simplify user management.
-o	Show code.
-•	APIGW – with Authoriser + 4 Lambdas (existing) + 2 New Lambdas (Game + Deck)+ 2 Dynamos
-o	Show SAM templates.
-o	Talk about Authoriser Scopes (OIDC???)
+* Standardized Service Offering into 2!
+-	Bronze: Create, Get, Deal.
+-	Silver: Create, Get, Deal, Shuffle.
+* Create Token Manager: library to simplify user management. Show code.
+* APIGW – with Authoriser + 4 Lambdas (existing) + 2 New Lambdas (Game + Deck)+ 2 Dynamos
+*	Show SAM templates.
+*	Talk about Authoriser Scopes (OIDC???)
 
 ## DEMO 3: Microservice Datastores + Data Partitioning + Migration.
-•	IAM Roles 
-•	Customer 1 migration: Populate with a script – Customer 1 - Test.
-•	Customer 2 migration: Populate with a script – Customer 2 - Test.
-•	Test isolation!!!
-•	Decommission monoliths. 
-o	Script to kill!
+*	IAM Roles wit leading key condition 
+*	Customer 1 migration: Populate with a script – Customer 1 - Test.
+*	Customer 2 migration: Populate with a script – Customer 2 - Test.
+*	Test isolation!!!
+*	Decommission monoliths.	Script to kill!
 
 ## DEMO 4: Launch a service offering and new serverless microservice. Tech: SAM author, test, debug. Why: Speed, save time, Developer Experience.
-•	Standardized Service Offering into 2!
-o	Bronze: Create, Get, Deal.
-o	Silver: Create, Get, Deal, Shuffle.
-o	NEW Gold: Create, Get, Deal, Shuffle, Cut.
-•	Deploy Lambda
-•	Update APIGW.
-•	Test New Feature
+* Standardized Service Offering into 2!
+-	Bronze: Create, Get, Deal.
+-	Silver: Create, Get, Deal, Shuffle.
+-	NEW Gold: Create, Get, Deal, Shuffle, Cut.
+*	Deploy Lambda
+*	Update APIGW.
+*	Test New Feature
 
 
-Summary/Takeaways:
-o	DevOps principles for Speed
-o	From Monolith to Microservices
-o	Benefits of Multi-tenant / Pool SaaS.
-o	Simplify API Management.
-o	Simplify user + isolation for Devs: Cognito
-o	OIDC’s standard for isolation and data partitioning.
-o	Serverless FTW
-o	Infra as Code (SAM)
-o	Author, Test, Debug Lamdba (SAM CLI)
-o	AWS Amplify.
+## Summary/Takeaways:
+*	DevOps principles for Speed
+*	From Monolith to Microservices
+*	Benefits of Multi-tenant / Pool SaaS.
+*	Simplify API Management.
+*	Simplify user + isolation for Devs: Cognito
+*	OIDC’s standard for isolation and data partitioning.
+*	Serverless FTW
+*	Infra as Code (SAM)
+*	Author, Test, Debug Lamdba (SAM CLI)
+*	AWS Amplify.
