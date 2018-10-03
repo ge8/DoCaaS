@@ -65,6 +65,10 @@ import { withAuthenticator } from 'aws-amplify-react';
 export default withAuthenticator(App);
 ```
 
+* Remove Previous Login Button. Header.js lines 31-33.
+
+* Change state to LOGGED using Cognito's session info. App.js Lines 31-39
+
 # Questions!
 * Caching in browser? caching with cloudfront but origin changed!
 * Review which npms are installing globally or inside project
