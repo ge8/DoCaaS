@@ -51,7 +51,7 @@ class DAHelper {
         this._aws = require('aws-sdk');
         this._aws.config.region = process.env.AWS_REGION || "ap-southeast-2";
 
-        this._creds = await loadCredentials(this._aws, this._claims, this._jwt);
+        this._creds = await loadCredentials(this._aws, this.claims, this.jwt);
         if (!this._creds) {
             if (debugLogging) console.log("Failed to load credentials");
             return false;
@@ -62,7 +62,7 @@ class DAHelper {
     }
   }
   
-module.exports.Helper = Helper;
+module.exports.DAHelper = DAHelper;
   
 
 

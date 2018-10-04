@@ -2,6 +2,7 @@ const { DAHelper } = require('./common/da-helper');
 
 exports.deck_data_access = async (event, context, callback) => {
     try {
+        console.log("Event:", event);
         let helper = new DAHelper(event);
         
         let loginOK = await helper.aquireCredentials();
@@ -18,6 +19,7 @@ exports.deck_data_access = async (event, context, callback) => {
                 result = await helper.saveDeck(helper.params.deck); break;
         }
 
+        console.log("Result:", result);
         callback(null, result);
     } catch (err) {
         console.log("Failed to Process Request with an \"" + err.code + "\" error:",err.message);

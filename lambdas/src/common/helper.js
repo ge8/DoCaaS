@@ -62,13 +62,13 @@ class Helper {
         }
         let lambda = new this._aws.Lambda();
         let invokeParams = {
-                ClientContext: "DOCAAS",
                 FunctionName: "DOCAAS_DeckDataAccess",
                 InvocationType: "RequestResponse",
                 LogType: "Tail",
                 Payload: JSON.stringify(data)
            };
         let result = await lambda.invoke(invokeParams).promise();
+        console.log("DA Result:", result);
         return JSON.parse(result.Payload);
     }
   }

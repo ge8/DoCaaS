@@ -39,7 +39,7 @@ exports.getDeck = async (ddb, tenantId, deckId) => {
     };
 
     // Retrieve Deck from DDB
-    // console.log("Retrieving Deck:", params);
+    console.log("Retrieving Deck:", params);
     return ddb.getItem(params).promise()
             .then(data => toDeck(data))
             .catch(err => {
@@ -57,7 +57,7 @@ exports.saveDeck = async (ddb, tenantId, deck) => {
     };
     
     // Save the item to DDB
-    // console.log("Saving Deck:", params);
+    console.log("Saving Deck:", params);
     return ddb.putItem(params).promise();
 }
 
