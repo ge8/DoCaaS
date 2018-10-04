@@ -88,7 +88,7 @@ Resources:
     Type: AWS::ApiGateway::Resource
   CreateDeckFunction:
     Properties:
-      CodeUri: s3://adams-s3/bd60694c15681257323a0983b42ddaee
+      CodeUri: s3://adams-s3/e9376f0ca305cf35c33e02b608a0efb0
       FunctionName: DOCAAS_CreateDeck
       Handler: create.create_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
@@ -138,7 +138,7 @@ Resources:
     Type: AWS::ApiGateway::Resource
   CutDeckFunction:
     Properties:
-      CodeUri: s3://adams-s3/bd60694c15681257323a0983b42ddaee
+      CodeUri: s3://adams-s3/e9376f0ca305cf35c33e02b608a0efb0
       FunctionName: DOCAAS_CutDeck
       Handler: cut.cut_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
@@ -157,7 +157,7 @@ Resources:
     Type: AWS::Lambda::Permission
   DeckDataAccessFunction:
     Properties:
-      CodeUri: s3://adams-s3/bd60694c15681257323a0983b42ddaee
+      CodeUri: s3://adams-s3/e9376f0ca305cf35c33e02b608a0efb0
       FunctionName: DOCAAS_DeckDataAccess
       Handler: deck-da.deck_data_access
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
@@ -196,7 +196,7 @@ Resources:
     Type: AWS::ApiGateway::Resource
   GetDeckFunction:
     Properties:
-      CodeUri: s3://adams-s3/bd60694c15681257323a0983b42ddaee
+      CodeUri: s3://adams-s3/e9376f0ca305cf35c33e02b608a0efb0
       FunctionName: DOCAAS_GetDeck
       Handler: get.get_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
@@ -250,7 +250,7 @@ Resources:
     Type: AWS::ApiGateway::Resource
   ShuffleDeckFunction:
     Properties:
-      CodeUri: s3://adams-s3/bd60694c15681257323a0983b42ddaee
+      CodeUri: s3://adams-s3/e9376f0ca305cf35c33e02b608a0efb0
       FunctionName: DOCAAS_ShuffleDeck
       Handler: shuffle.shuffle_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA

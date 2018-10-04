@@ -1,4 +1,5 @@
 const identityPool = process.env.IDENTITY_POOL_ID || 'ap-southeast-2:5b205dba-4e2f-4382-abf3-907d6eb119eb';
+const { getDeck, createDeck, saveDeck } = require('./dataAccess');
 
 class DAHelper {
     constructor(event) {
@@ -53,10 +54,10 @@ class DAHelper {
 
         this._creds = await loadCredentials(this._aws, this.claims, this.jwt);
         if (!this._creds) {
-            if (debugLogging) console.log("Failed to load credentials");
+            console.log("Failed to load credentials");
             return false;
-        } else if (debugLogging) console.log("Retrieved Credentials:", this._creds);
-    
+        }
+        console.log("Retrieved Credentials:", this._creds);
         this._identityId = this._creds.id;
         return true;
     }
