@@ -4,7 +4,7 @@ AWS.config.update({ region: process.env.AWS_REGION || "ap-southeast-2" });
 const ddb = new AWS.DynamoDB();
 
 function toDeck(data) {
-    if (!data || !data.Item) return null;
+    if (!data) return null;
     let deck = { name:data.Item.deck.S, cards:[] };
     data.Item.cards.L.forEach(card => {
         deck.cards.push(card.S);
