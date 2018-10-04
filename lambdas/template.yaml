@@ -7,42 +7,41 @@ Description: >
     
 Globals:
     Function:
-        Timeout: 15
+        Timeout: 20
+        CodeUri: src/
+        Runtime: nodejs8.10
 
 Resources:
+    DeckDataAccessFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            Handler: deck-da.deck_data_access
+            FunctionName: DOCAAS_DeckDataAccess
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
     CreateDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
-            CodeUri: src/
             Handler: create.create_deck_handler
-            Runtime: nodejs8.10
             FunctionName: DOCAAS_CreateDeck
             Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
     GetDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
-            CodeUri: src/
             Handler: get.get_deck_handler
-            Runtime: nodejs8.10
             FunctionName: DOCAAS_GetDeck
             Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
     ShuffleDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
-            CodeUri: src/
             Handler: shuffle.shuffle_deck_handler
-            Runtime: nodejs8.10
             FunctionName: DOCAAS_ShuffleDeck
             Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
     CutDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
-            CodeUri: src/
             Handler: cut.cut_deck_handler
-            Runtime: nodejs8.10
             FunctionName: DOCAAS_CutDeck
             Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
-
     RestApi:
         Type: AWS::ApiGateway::RestApi
         Properties:

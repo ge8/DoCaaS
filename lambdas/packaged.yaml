@@ -6,7 +6,9 @@ Description: 'Deck of Cards As A Service
   '
 Globals:
   Function:
-    Timeout: 15
+    CodeUri: src/
+    Runtime: nodejs8.10
+    Timeout: 20
 Outputs:
   APIBaseURL:
     Value:
@@ -88,11 +90,10 @@ Resources:
     Type: AWS::ApiGateway::Resource
   CreateDeckFunction:
     Properties:
-      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      CodeUri: s3://adams-s3/2787ca1d4a70b8238135294fe23feeb8
       FunctionName: DOCAAS_CreateDeck
       Handler: create.create_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
-      Runtime: nodejs8.10
     Type: AWS::Serverless::Function
   CreateDeckInvokeLambdaPermission:
     Properties:
@@ -138,11 +139,10 @@ Resources:
     Type: AWS::ApiGateway::Resource
   CutDeckFunction:
     Properties:
-      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      CodeUri: s3://adams-s3/2787ca1d4a70b8238135294fe23feeb8
       FunctionName: DOCAAS_CutDeck
       Handler: cut.cut_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
-      Runtime: nodejs8.10
     Type: AWS::Serverless::Function
   CutDeckInvokeLambdaPermission:
     Properties:
@@ -155,6 +155,13 @@ Resources:
       SourceArn:
         Fn::Sub: arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/cut
     Type: AWS::Lambda::Permission
+  DeckDataAccessFunction:
+    Properties:
+      CodeUri: s3://adams-s3/2787ca1d4a70b8238135294fe23feeb8
+      FunctionName: DOCAAS_DeckDataAccess
+      Handler: deck-da.deck_data_access
+      Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+    Type: AWS::Serverless::Function
   GetDeckApiMethod:
     Properties:
       AuthorizationType: COGNITO_USER_POOLS
@@ -188,11 +195,10 @@ Resources:
     Type: AWS::ApiGateway::Resource
   GetDeckFunction:
     Properties:
-      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      CodeUri: s3://adams-s3/2787ca1d4a70b8238135294fe23feeb8
       FunctionName: DOCAAS_GetDeck
       Handler: get.get_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
-      Runtime: nodejs8.10
     Type: AWS::Serverless::Function
   GetDeckInvokeLambdaPermission:
     Properties:
@@ -242,11 +248,10 @@ Resources:
     Type: AWS::ApiGateway::Resource
   ShuffleDeckFunction:
     Properties:
-      CodeUri: s3://adams-artifacts/7bb421c6ff1f5a895076afd9cce959b4
+      CodeUri: s3://adams-s3/2787ca1d4a70b8238135294fe23feeb8
       FunctionName: DOCAAS_ShuffleDeck
       Handler: shuffle.shuffle_deck_handler
       Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
-      Runtime: nodejs8.10
     Type: AWS::Serverless::Function
   ShuffleDeckInvokeLambdaPermission:
     Properties:

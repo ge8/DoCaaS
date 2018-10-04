@@ -17,28 +17,20 @@ function shuffle(arr, iterations) {
 
 exports.shuffle_deck_handler = async (event, context, callback) => {
     try {
-        if (isDebugLogging()) console.log("Event:", event);
-
         let helper = new Helper(event);
-        let loginOK = await helper.aquireCredentials();
-
-        if (!loginOK) callback(null, { 'statusCode': 401, 'body': "Failed to authorize the request!" });
-        let deckId = helper.getParam("deck");
-    
-        if (!deckId) {
-            if (isDebugLogging()) console.log("Deck ID not provided!");
-            return callback(null, { 'statusCode': 400, 'body': "Deck ID must be provided!" });
-        } else if (isDebugLogging()) console.log("Shuffling Deck:", deckId);
-
-        let deck = await helper.getDeck(deckId);
-        shuffle(deck.cards, 100);
-        helper.saveDeck(deck);
+        let deckName = helper.getParam("deck");
+        if (!deckName) return callback(null, { 'statusCode': 400, 'body': "Deck ID must be provided!" });
         
-        if (!deck) return callback(null, { 'statusCode': 404, 'body': "Deck " + deckId + " not found" });
-        callback(null, { 'statusCode': 200, 'body': JSON.stringify(deck.cards) });
+        let deck = await helper.getDeck(deckName);
+        if (!deck) return callback(null, { 'statusCode': 404, 'body': "Deck " + deckName + " not found" });
+        
+        let iterations = Number.parseInt(helper.getParam("iterations") || "100");
+        shuffle(deck.cards, iterations);
+        await helper.saveDeck(deck);
+        
+        callback(null, { 'statusCode': 200, 'body': JSON.stringify(helper.asPublicDeck(deck)) });
     } catch (err) {
         console.log("Failed to Process Request with an \"" + err.code + "\" error:",err.message);
-        if (isDebugLogging()) console.log(err.stack);
         callback(err.message, null);
     }
 };
