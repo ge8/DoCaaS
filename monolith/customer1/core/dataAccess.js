@@ -5,7 +5,7 @@ const ddb = new AWS.DynamoDB();
 
 function toDeck(data) {
     if (!data) return null;
-    let deck = { id:data.Item.deck.S, cards:[] };
+    let deck = { name:data.Item.deck.S, cards:[] };
     data.Item.cards.L.forEach(card => {
         deck.cards.push(card.S);
     });
@@ -14,7 +14,7 @@ function toDeck(data) {
 
 function fromDeck(deck) {
     if (!deck) return null;
-    let data = { deck: { S:deck.id }, cards:{ L: [] } };
+    let data = { deck: { S:deck.name }, cards:{ L: [] } };
     deck.cards.forEach(card => {
         data.cards.L.push({ S:card });
     });
@@ -22,7 +22,7 @@ function fromDeck(deck) {
 }
 
 function initDeck(name) {
-    let deck = { id:name, cards:[ "TJ" ] };
+    let deck = { name:name, cards:[ "TJ" ] };
     let prefixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
     let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
     prefixes.forEach(prefix => {
@@ -64,5 +64,6 @@ exports.saveDeck = async (tenantId, deck) => {
 
 exports.createDeck = async (tenantId, deckId) => {
     let deck = initDeck(deckId);
-    return exports.saveDeck(tenantId, deck);
+    await exports.saveDeck(tenantId, deck);
+    return deck;
 }
