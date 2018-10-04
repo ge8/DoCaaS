@@ -1,14 +1,14 @@
 const debugLogging = (process.env.DEBUG_LOGGING || "false") === "true";
 const dataAccess = require('../core/dataAccess');
+const { tenant } = require("../core/tenant-info");
 
 exports.service = async (req, res) => {
-    let tenant = req.get("tenant") || req.query.tenant;
-    let deckId = req.get("deck") || req.query.deck;
-    if (debugLogging) console.log("Taking top card from Deck " + deckId + " for tenant " + tenant);
+    let deckName = req.get("deck") || req.query.deck;
+    if (debugLogging) console.log("Taking top card from Deck " + deckName + " for tenant " + tenant);
     try {
-        let deck = await dataAccess.getDeck(tenant, deckId);
+        let deck = await dataAccess.getDeck(tenant, deckName);
         if (!deck) {
-            return res.status(404).send('Deck ' + deckId + ' was not found!');
+            return res.status(404).send('Deck ' + deckName + ' was not found!');
         }
 
         let count = parseInt(req.get("count") || req.query.count || "1");

@@ -1,5 +1,6 @@
 const debugLogging = (process.env.DEBUG_LOGGING || "false") === "true";
 const dataAccess = require('../core/dataAccess');
+const { tenant } = require("../core/tenant-info");
 
 function shuffle(arr, iterations) {
     for (let i = 0; i < iterations; i++) {
@@ -17,14 +18,13 @@ function shuffle(arr, iterations) {
 }
 
 exports.service = async (req, res) => {
-    let tenant = req.get("tenant") || req.query.tenant;
-    let deckId = req.get("deck") || req.query.deck;
-    if (debugLogging) console.log("Shuffling Deck " + deckId + " for tenant " + tenant);
+    let deckName = req.get("deck") || req.query.deck;
+    if (debugLogging) console.log("Shuffling Deck " + deckName + " for tenant " + tenant);
     try {
 
-        let deck = await dataAccess.getDeck(tenant, deckId);
+        let deck = await dataAccess.getDeck(tenant, deckName);
         if (!deck) {
-            return res.status(404).send('Deck ' + deckId + ' not found!');
+            return res.status(404).send('Deck ' + deckName + ' not found!');
         }
 
         
@@ -32,7 +32,7 @@ exports.service = async (req, res) => {
         shuffle(deck.cards, 100);
         if (debugLogging) console.log("\t[Shuffled] " + deck.cards);
         dataAccess.saveDeck(tenant, deck);
-        return res.send(JSON.stringify(deck.cards));
+        return res.send(JSON.stringify({ name:deck.name, cards:deck.cards }));
     } catch(err) {
         console.error(err);
         return res.status(500).send("Failed to shuffle the deck!");
