@@ -21,6 +21,7 @@ Run setup.sh script
 
 
 # Questions!
+* mainUrl and CallAPI on MainBody.js
 * Caching in browser? caching with cloudfront but origin changed!
 * Review which npms are installing globally or inside project
 
