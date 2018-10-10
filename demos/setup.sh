@@ -2,17 +2,19 @@
 
 # Takes a domain name imported into R53 and an S3 bucket
 BUCKET=docaas
-BUCKETC1=docaasc1
-BUCKETC2=docaasc2
-DOMAIN=estaba.net
-
 export ARTIFACT_BUCKET=$BUCKET
-export ARTIFACT_BUCKETC1=$BUCKETC1
-export ARTIFACT_BUCKETC2=$BUCKETC2
-export ARTIFACT_DOMAIN=$DOMAIN
 echo "Artifact Bucket: $BUCKET"
+
+BUCKETC1=docaasc1
+export ARTIFACT_BUCKETC1=$BUCKETC1
 echo "Artifact Bucket: $BUCKETC1"
+
+BUCKETC2=docaasc2
+export ARTIFACT_BUCKETC2=$BUCKETC2
 echo "Artifact Bucket: $BUCKETC2"
+
+DOMAIN=estaba.net
+export ARTIFACT_DOMAIN=$DOMAIN
 echo "Artifact Domain: $DOMAIN"
 
 # AWS Monoliths setup
@@ -34,9 +36,15 @@ echo "Artifact Domain: $DOMAIN"
 
 # AWS front-end setup
 git clone https://github.com/ge8/docaas
-cd docaas-react
+cd front-end/customer1 #yet to be created!
 npm run-script build
-aws s3 sync build/ s3://$BUCKET --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
+aws s3 sync build/ s3://$BUCKETc1 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
+
+cd ../customer2
+npm run-script build #yet to be created!
+aws s3 sync build/ s3://$BUCKETc2 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
+
+
 
 
 
@@ -50,13 +58,5 @@ aws s3 sync build/ s3://$BUCKET --grants read=uri=http://acs.amazonaws.com/group
 
 
 
-
-# Deploy React App
-git clone https://github.com/ge8/docaas
-cd docaas-react
-npm run-script build
-aws s3 sync build/ s3://$BUCKET --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
-
-# Deploy 2 Monoliths 
 
 
