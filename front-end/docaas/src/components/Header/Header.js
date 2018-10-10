@@ -5,9 +5,9 @@ import './Header.css';
 
 import logo from '../../images/logo.png';
 
-const NOT_LOGED = 0
-const LOGING = 1
-const LOGED = 2
+const NOT_LOGGED = 0
+const LOGGING = 1
+const LOGGED = 2
 
 class Header extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Header extends React.Component {
   }
 
   handleClick(e) {
-    this.props.handleLoging();
+    this.props.handleLogging();
   }
 
   render() {

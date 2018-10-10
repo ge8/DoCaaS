@@ -5,9 +5,9 @@ import Table from '../Table/Table'
 
 const USE_FIXED_VALUES = 1
 
-const NOT_LOGED = 0
-const LOGING = 1
-const LOGED = 2
+const NOT_LOGGED = 0
+const LOGGING = 1
+const LOGGED = 2
 
 const mainUrl = "https://estaba.net"
 
@@ -36,7 +36,7 @@ class MainBody extends React.Component {
       'message': "",
       'deck': fixedDeck
     };  
-    this.handleLoged = this.handleLoged.bind(this);
+    this.handleLogged = this.handleLogged.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.handleGet = this.handleGet.bind(this);
     this.handleDeal = this.handleDeal.bind(this);
@@ -54,12 +54,12 @@ class MainBody extends React.Component {
     });
   }
 
-  handleLoged(username, password) {
+  handleLogged(username, password) {
     this.setState({
       'username': username,
       'password': password
     });
-    this.props.handleLoged(username, password);
+    this.props.handleLogged(username, password);
   }
 
   handleCreate(deckId) {
@@ -238,10 +238,10 @@ class MainBody extends React.Component {
     logingPage = null;
     controls = null;
     table = null;
-    if (logingStatus === LOGING) {
-      logingPage = <Login handleLoged={this.handleLoged} />
+    if (logingStatus === LOGGING) {
+      logingPage = <Login handleLogged={this.handleLogged} />
     }
-    else if (logingStatus === LOGED) {
+    else if (logingStatus === LOGGED) {
       controls = <Controls handleCreate={this.handleCreate} _
                            handleGet={this.handleGet} _
                            handleDeal={this.handleDeal} _

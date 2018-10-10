@@ -10,43 +10,43 @@ import './App.css';
 // import aws_exports from './aws-exports';
 // Amplify.configure(aws_exports);
 
-const NOT_LOGED = 0
-const LOGING = 1
-const LOGED = 2
+const NOT_LOGGED = 0
+const LOGGING = 1
+const LOGGED = 2
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'logingStatus': NOT_LOGED,
+      'logingStatus': NOT_LOGGED,
       'loginButtonColor':'danger',
       'loginButtonCaption':'Login',
       'username': "",
       'password': ""
     };   
-    this.handleLoging = this.handleLoging.bind(this);
-    this.handleLoged = this.handleLoged.bind(this);
+    this.handleLogging = this.handleLogging.bind(this);
+    this.handleLogged = this.handleLogged.bind(this);
   }
 
   // async componentDidMount() {
   //   let session = await Auth.currentSession();
   //   if (session && session.idToken) {
   //     this.setState( {
-  //       'logingStatus': LOGED
+  //       'logingStatus': LOGGED
   //     }
   //     )
   //   }
   // }
 
-  handleLoging() {
+  handleLogging() {
     this.setState ({
-      'logingStatus': LOGING
+      'logingStatus': LOGGING
     })
   }
 
-  handleLoged(username, password) {
+  handleLogged(username, password) {
     this.setState ({
-      'logingStatus': LOGED,
+      'logingStatus': LOGGED,
       'loginButtonColor': 'primary',
       'loginButtonCaption': 'Hello ' + username,
       'username': username,
@@ -58,11 +58,11 @@ class App extends Component {
     return (
       <div className="App">
         <Header logingStatus={this.state.logingStatus} 
-                handleLoging={this.handleLoging} 
+                handleLogging={this.handleLogging} 
                 loginButtonColor={this.state.loginButtonColor} 
                 loginButtonCaption={this.state.loginButtonCaption} 
         />
-        <MainBody logingStatus={this.state.logingStatus} handleLoged={this.handleLoged} />
+        <MainBody logingStatus={this.state.logingStatus} handleLogged={this.handleLogged} />
       </div>
     );
   }

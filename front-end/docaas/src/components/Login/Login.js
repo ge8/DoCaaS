@@ -23,7 +23,7 @@ class Login extends Component {
   }
 
   handleSubmit = event => {
-    this.props.handleLoged(this.state.username, this.state.password);
+    this.props.handleLogged(this.state.username, this.state.password);
     event.preventDefault();
   }
 
