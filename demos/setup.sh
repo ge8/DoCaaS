@@ -17,7 +17,19 @@ DOMAIN=estaba.net
 export ARTIFACT_DOMAIN=$DOMAIN
 echo "Artifact Domain: $DOMAIN"
 
+# GENERATE RANDOM NAME C1 and RANDOM NAME C2
+
 # AWS Monoliths setup
+cd monoliths/customer1
+rm -f ../bundlec1.zip
+zip ../bundlec1.zip -r * .[^.]* #Bundle needs fixing and bootstrapping? https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html
+eb create $RANDOMNAMEC1 --cname $RANDOMNAMEC1 --elb-type application 
+# The domain name is $RANDOMNAMEC1.us-west-2.elasticbeanstalk.com
+
+# eb terminate customer1-dev --force
+
+
+
 ## Create 2 EC2 instances (cust 1 and Cust 2)
 ## deploy monolith/customer1 on EC2-1, and monolith/customer2 on EC2-2
 ## git clone https://github.com/ge8/docaas
@@ -27,6 +39,14 @@ echo "Artifact Domain: $DOMAIN"
 
 
 ## Create 2 ALBs with ACM (Cust 1 and Cust 2) - Output ALB1 and ALB2.
+### Install EB CLI
+
+
+## Upload source bundle to S3
+## Create EB App
+aws elasticbeanstalk create-application-version --application-name $BUCKETC1 --version-label v1 --source-bundle S3Bucket=$BUCKETC1,S3Key=monolith-c1-bundle.zip
+
+
 ### Create a load balancer using CreateLoadBalancer .
 ### Create a target group using CreateTargetGroup .
 ### Register targets for the target group using RegisterTargets .

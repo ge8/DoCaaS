@@ -8,9 +8,21 @@ npm install --save reactstrap react react-dom
 npm install jquery
 npm install --save boostrap
 npm i react-boostrap
+```
+Install and configure the AWS CLI, the AWS EB CLID and the AWS Amplify CLI
+```shell
+
+pip3 install awscli --upgrade --user
+aws configure
+
+pip install awsebcli --upgrade --user
+eb init
+
 npm install -g @aws-amplify/cli
 amplify configure
 ```
+
+pip install awsebcli --upgrade --user
 
 ## AWS Requirement:
 * Domain name imported into Route53
