@@ -21,10 +21,16 @@ echo "Artifact Domain: $DOMAIN"
 
 # AWS Monoliths setup
 cd monoliths/customer1
-rm -f ../bundlec1.zip
-zip ../bundlec1.zip -r * .[^.]* #Bundle needs fixing and bootstrapping? https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html
-eb create $RANDOMNAMEC1 --cname $RANDOMNAMEC1 --elb-type application 
-# The domain name is $RANDOMNAMEC1.us-west-2.elasticbeanstalk.com
+# rm -f ../bundlec1.zip
+# zip ../bundlec1.zip -r * .[^.]* 
+#Bundle needs fixing and bootstrapping? https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html
+eb init --platform node.js --region us-west-2
+eb create prod --elb-type application 
+# https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html
+# https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-create.html
+
+
+# grab the domain name
 
 # eb terminate customer1-dev --force
 
