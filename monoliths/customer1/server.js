@@ -4,7 +4,7 @@ const auth = require('./core/auth').service;
 const { port, tenant } = require("./core/tenant-info");
 
 // Setup Routes
-app.get('/healthcheck', require('./services/healthcheck').service);
+app.get('/', require('./services/healthcheck').service);
 app.get('/create', auth, require('./services/create').service);
 app.get('/get', auth, require('./services/get').service);
 app.get('/shuffle', auth, require('./services/shuffle').service);

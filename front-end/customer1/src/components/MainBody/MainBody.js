@@ -9,7 +9,7 @@ const NOT_LOGGED = 0
 const LOGGING = 1
 const LOGGED = 2
 
-const mainUrl = "https://estaba.net"
+const mainUrl = "https://##CNAMEC1GOESHERE##"
 
 let logingPage = null;
 let controls = null;
