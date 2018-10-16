@@ -40,7 +40,7 @@ echo "Monolith 1 App Published"
 
 echo "Adding record to R53"
 ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-output '.HostedZones[0].Id'`
-cd ../../../demos
+cd ../../../../../demos
 find r53.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/$CNAME1/g" {} \;
 find r53.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$DOMAIN/g" {} \;
 aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://r53c1.json 
