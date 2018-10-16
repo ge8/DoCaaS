@@ -24,6 +24,8 @@ amplify configure
 
 pip install awsebcli --upgrade --user
 
+aws configure #Set de default region to us-west-2 (Oregon)
+
 ## AWS Requirement:
 * Domain name imported into Route53
 * S3 Bucket
