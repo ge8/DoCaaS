@@ -16,8 +16,6 @@ echo "Artifact Bucket: $BUCKETC2"
 export ARTIFACT_DOMAIN=$DOMAIN
 echo "Artifact Domain: $DOMAIN"
 
-# Clone Repo
-git clone https://github.com/ge8/docaas
 
 # Monolith 1 setup
 cd monoliths/customer1
