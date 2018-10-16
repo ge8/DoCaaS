@@ -23,7 +23,7 @@ cd monoliths/customer1
 eb init --platform node.js --region us-west-2
 eb create docaas-customer1-eb-env 
 aws elasticbeanstalk update-environment --environment-name docaas-customer1-eb-env --option-settings "OptionName=NodeVersion, Namespace=aws:elasticbeanstalk:container:nodejs, Value=8.11.4"
-CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-env | jq --raw-output '.Environments[0].CNAME'`
+CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-env --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
 echo "Monolith created"
 
 
@@ -40,9 +40,11 @@ echo "Monolith 1 App Published"
 
 echo "Adding record to R53"
 ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-output '.HostedZones[0].Id'`
+echo "ZONEID is $ZONEID"
 cd ../../../../../demos
-find r53.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/$CNAME1/g" {} \;
-find r53.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$DOMAIN/g" {} \;
+find r53c1.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/$CNAMEC1/g" {} \;
+find r53c1.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$DOMAIN/g" {} \;
 aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://r53c1.json 
 echo "Record to R53 Added"
 
+echo "Customer 1 url is: customer1.$DOMAIN"
