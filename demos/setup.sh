@@ -34,6 +34,7 @@ npm install
 npm run-script build
 cd build/static/js
 find ./ -type f -exec sed -i -e "s/##CNAMEGOESHERE##/$CNAMEC1/g" {} \;
+cd ../../../
 aws s3 sync build/ s3://$BUCKETC1 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
 aws s3 website s3://$BUCKETC1 --index-document index.html --error-document index.html
 echo "Monolith 1 App Published"
@@ -41,7 +42,7 @@ echo "Monolith 1 App Published"
 echo "Adding record to R53"
 ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-output '.HostedZones[0].Id'`
 echo "ZONEID is $ZONEID"
-cd ../../../../../demos
+cd ../../demos
 find r53c1.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/https:\/\/$BUCKETC1.s3-website-us-west-2.amazonaws.com/g" {} \;
 find r53c1.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$DOMAIN/g" {} \;
 aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://r53c1.json 
