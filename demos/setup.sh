@@ -30,6 +30,7 @@ echo "Monolith created"
 # Front End 1 setup
 echo "Publishing Monolith 1 App"
 cd ../../front-end/customer1
+npm install
 npm run-script build
 cd build/static/js
 find ./ -type f -exec sed -i -e "s/##CNAMEGOESHERE##/$CNAMEC1/g" {} \;
