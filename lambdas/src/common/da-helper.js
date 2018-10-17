@@ -23,7 +23,7 @@ class DAHelper {
     }
 
     get jwt() {
-        return this.event.jwt;
+        return this.event.jwt || this.event.authorizationToken;
     }
 
     get claims() {
@@ -71,7 +71,9 @@ module.exports.DAHelper = DAHelper;
 async function loadCredentials(AWS, claims, idJWT) {
     return new Promise( async (resolve, reject) => {
         // Grab the PoolID from the issuer
-        let pool = claims.iss.substring(8);
+        let pool = process.env.USER_POOL_ID || (claims && claims.iss ? claims.iss.substring(8) : null);
+        if (!pool) throw new Error("Configuration failure - request cannot be authorised");
+
         // And setup the logins object with the ID Token for the pool
         let logins = {};
         logins[pool] = idJWT;
