@@ -16,7 +16,13 @@ exports.authorise_request = async (event, context, callback) => {
 
     // validate the incoming token
     let helper = new DAHelper(event);
-    let loginOK = await helper.aquireCredentials();
+    let loginOK = false;
+    try {
+        loginOK = await helper.aquireCredentials();
+    } catch(e) {
+        console.log("Invalid Login Credentials.", e);
+    }
+
     if (!loginOK) return callback("Not Authorized");
 
     // Token is valid, so we can trust the claims
@@ -62,3 +68,4 @@ exports.authorise_request = async (event, context, callback) => {
     console.log("Auth Response:", JSON.stringify(authResponse));
     callback(null, authResponse);
 };
+ 
