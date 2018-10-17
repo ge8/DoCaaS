@@ -99,6 +99,14 @@ Resources:
             Name: DocaasPlanAuthoriser
             RestApiId: !Ref RestApi
 
+    AuthoriserInvokeLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "AuthoriserFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/*"
+
     ApiGatewayDeployment:
         Type: "AWS::ApiGateway::Deployment"
         DependsOn:
@@ -107,6 +115,7 @@ Resources:
             RestApiId: !Ref "RestApi"
             StageName: Prod
 
+    
             
     GetDeckApiResource:
         Type: AWS::ApiGateway::Resource

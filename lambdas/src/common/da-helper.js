@@ -1,5 +1,6 @@
 const identityPool = process.env.IDENTITY_POOL_ID || 'ap-southeast-2:5b205dba-4e2f-4382-abf3-907d6eb119eb';
 const { getDeck, createDeck, saveDeck } = require('./dataAccess');
+const jwt = require('jsonwebtoken');
 
 class DAHelper {
     constructor(event) {
@@ -23,15 +24,15 @@ class DAHelper {
     }
 
     get jwt() {
-        return this.event.jwt || this.event.authorizationToken;
+        return this.event.jwt || this.event.authorizationToken || this.event.headers.Authorization;
     }
 
     get claims() {
-        return this.event.claims;
+        return this.event.claims || jwt.decode(this.jwt);
     }
 
     get plan() {
-        return this.event.plan;
+        return this.claims["custom:plan"];
     }
 
     get role() {

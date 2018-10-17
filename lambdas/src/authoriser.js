@@ -59,6 +59,6 @@ exports.authorise_request = async (event, context, callback) => {
         sub: claims.sub
     };
     
-    console.log("Auth Response:", authResponse);
+    console.log("Auth Response:", JSON.stringify(authResponse));
     callback(null, authResponse);
 };
