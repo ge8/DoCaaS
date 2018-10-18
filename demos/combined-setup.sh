@@ -26,14 +26,14 @@ npm install
 npm run-script build
 cd build/static/js
 find ./ -type f -exec sed -i -e "s/##CNAMEGOESHERE##/$CNAMEC1/g" {} \;
-cd ../../
-cp -vr * ../../../monoliths/customer1
+cd ../../../
+cp -vr build/ ../../monoliths/customer1/build/
 
-cd ../../../monoliths/customer1
+cd ../../monoliths/customer1
 eb init --platform node.js --region us-west-2
-eb create docaas-customer1-eb-envd 
-aws elasticbeanstalk update-environment --environment-name docaas-customer1-eb-envd --option-settings "OptionName=NodeVersion, Namespace=aws:elasticbeanstalk:container:nodejs, Value=8.11.4"
-CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-envd --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
+eb create docaas-customer1-eb-enve 
+aws elasticbeanstalk update-environment --environment-name docaas-customer1-eb-enve --option-settings "OptionName=NodeVersion, Namespace=aws:elasticbeanstalk:container:nodejs, Value=8.11.4"
+CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-enve --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
 echo "CNAMEC1 is $CNAMEC1"
 
 
