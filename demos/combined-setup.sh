@@ -31,9 +31,9 @@ cp -vr * ../../../monoliths/customer1
 
 cd ../../../monoliths/customer1
 eb init --platform node.js --region us-west-2
-eb create docaas-customer1-eb-enva 
-aws elasticbeanstalk update-environment --environment-name docaas-customer1-eb-enva --option-settings "OptionName=NodeVersion, Namespace=aws:elasticbeanstalk:container:nodejs, Value=8.11.4"
-CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-enva --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
+eb create docaas-customer1-eb-envb 
+aws elasticbeanstalk update-environment --environment-name docaas-customer1-eb-envb --option-settings "OptionName=NodeVersion, Namespace=aws:elasticbeanstalk:container:nodejs, Value=8.11.4"
+CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-envb --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
 echo "CNAMEC1 is $CNAMEC1"
 
 
