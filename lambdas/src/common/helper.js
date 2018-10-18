@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const debugLogging = process.env.DEBUG_LOGGING || "false" === "true";
 module.exports.isDebugLogging = function() {
     return debugLogging;
@@ -7,7 +8,7 @@ class Helper {
     constructor(event) {
         this._event = event;
         this._jwt = this.event.headers.Authorization || this.event.headers.authorization;
-        this._claims = this.event.requestContext.authorizer.claims;
+        this._claims = this.event.requestContext.authorizer.claims || jwt.decode(this._jwt);
         this._aws = require('aws-sdk');
     }
 

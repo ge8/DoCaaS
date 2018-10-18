@@ -1,5 +1,6 @@
 const identityPool = process.env.IDENTITY_POOL_ID || 'ap-southeast-2:5b205dba-4e2f-4382-abf3-907d6eb119eb';
 const { getDeck, createDeck, saveDeck } = require('./dataAccess');
+const jwt = require('jsonwebtoken');
 
 class DAHelper {
     constructor(event) {
@@ -23,15 +24,15 @@ class DAHelper {
     }
 
     get jwt() {
-        return this.event.jwt;
+        return this.event.jwt || this.event.authorizationToken || this.event.headers.Authorization;
     }
 
     get claims() {
-        return this.event.claims;
+        return this.event.claims || jwt.decode(this.jwt);
     }
 
     get plan() {
-        return this.event.plan;
+        return this.claims["custom:plan"];
     }
 
     get role() {
@@ -71,7 +72,9 @@ module.exports.DAHelper = DAHelper;
 async function loadCredentials(AWS, claims, idJWT) {
     return new Promise( async (resolve, reject) => {
         // Grab the PoolID from the issuer
-        let pool = claims.iss.substring(8);
+        let pool = process.env.USER_POOL_ID || (claims && claims.iss ? claims.iss.substring(8) : null);
+        if (!pool) throw new Error("Configuration failure - request cannot be authorised");
+
         // And setup the logins object with the ID Token for the pool
         let logins = {};
         logins[pool] = idJWT;

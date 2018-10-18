@@ -2,6 +2,7 @@ const {isDebugLogging, Helper } = require('./common/helper');
 
 exports.get_deck_handler = async (event, context, callback) => {
     try {
+        if (isDebugLogging) console.log("Event:", JSON.stringify(event, null, 2));
         let helper = new Helper(event);
         let deckName = helper.getParam("deck");
         if (!deckName) return callback(null, { 'statusCode': 400, 'body': "Deck ID must be provided!" });
