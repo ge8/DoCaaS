@@ -27,7 +27,7 @@ npm run-script build
 cd build/static/js
 find ./ -type f -exec sed -i -e "s/##CNAMEGOESHERE##/$CNAMEC1/g" {} \;
 cd ../../
-cp -vra * ../../../monoliths/customer1
+cp -vr * ../../../monoliths/customer1
 
 cd ../../../monoliths/customer1
 eb init --platform node.js --region us-west-2
