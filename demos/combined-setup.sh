@@ -45,7 +45,7 @@ ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-outp
 echo "ZONEID is $ZONEID"
 cd ../../demos
 cp r53c1.json r53c1-mod.json
-find r53c1-mod.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/https:\/\/$BUCKETC1.s3-website-us-west-2.amazonaws.com/g" {} \;
+find r53c1-mod.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/https:\/\/$CNAMEC1/g" {} \;
 find r53c1-mod.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$DOMAIN/g" {} \;
 aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://r53c1-mod.json
 rm -f r53c1-mod.json r53c1-mod.json-e 
