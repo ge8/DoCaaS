@@ -1,5 +1,5 @@
-const { username, password } = require("./tenant-info");
-
+const dataAccess = require('./dataAccess');
+const { tenant } = require("../core/tenant-info");
 exports.service = async (req, res, next) => {
     try {
     let auth = req.headers.authorization;
@@ -7,7 +7,9 @@ exports.service = async (req, res, next) => {
     if (auth.length > 5 && auth.substring(0, 5) === "Basic") {
         // Basic Authentication
         let arr = Buffer.from(auth.substring(5).trim(), 'base64').toString().split(":");
-        if (arr[0].toLowerCase() === username.toLowerCase() && arr[1] === password) {
+        let username = arr[0], password = arr[1];
+        let ok = await dataAccess.checkuser( tenant, username, password);
+        if (ok) {
             next();
         } else {
             return res.status(401).send('Not Authorised');
