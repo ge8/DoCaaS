@@ -2,5 +2,5 @@
 * Clone Repo and run setup script.
 ```shell
 git clone https://github.com/ge8/docaas && cd docaas
-./demos/setup.sh
+./demos/combined-setup.sh
 ```

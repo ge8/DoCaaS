@@ -4,7 +4,7 @@ const auth = require('./core/auth').service;
 const { port, tenant } = require("./core/tenant-info");
 
 // Setup Routes
-app.get('/', require('./services/redirect-to-app').service);
+app.get('/healthcheck', require('./services/redirect-to-app').service);
 app.get('/healthcheck', require('./services/healthcheck').service);
 app.get('/create', auth, require('./services/create').service);
 app.get('/get', auth, require('./services/get').service);
