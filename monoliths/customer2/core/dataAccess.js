@@ -14,7 +14,7 @@ function toDeck(data) {
 
 function fromDeck(deck) {
     if (!deck) return null;
-    let data = { deck: { S:deck.name }, cards:{ L: [] } };
+    let data = { key:{ S:"deck-" + deck.name }, deck: { S:deck.name }, cards:{ L: [] } };
     deck.cards.forEach(card => {
         data.cards.L.push({ S:card });
     });
@@ -22,7 +22,7 @@ function fromDeck(deck) {
 }
 
 function initDeck(name) {
-    let deck = { name:name, cards:[ "TJ" ] };
+    let deck = { name:name, cards:[ ] };
     let prefixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
     let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
     prefixes.forEach(prefix => {
@@ -33,11 +33,39 @@ function initDeck(name) {
     return deck;
 }
 
+exports.checkuser = async (tenantId, username, password) => {
+    var params = {
+        TableName: 'data-' + tenantId,
+        Key: {
+            'key': { S: "user" }
+        }
+    };
+
+    // Retrieve Deck from DDB
+    return ddb.getItem(params).promise()
+            .then(data =>{
+                let dbUsername = data.Item.username.S;
+                let dbPassword = data.Item.password.S;
+                if (dbUsername.toLowerCase() === username.toLowerCase()
+                    && dbPassword === password ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+            .catch(err => {
+                if (err.code === "ResourceNotFoundException") {
+                    // Item doesn't exist!
+                    return false;   // No Username/Password in the database
+                } else throw err;
+            });
+}
+
 exports.getDeck = async (tenantId, deckId) => {
     var params = {
-        TableName: 'decks-' + tenantId,
+        TableName: 'data-' + tenantId,
         Key: {
-            'deck': { S: deckId }
+            'key': { S: "deck-" + deckId }
         }
     };
 
@@ -54,7 +82,7 @@ exports.getDeck = async (tenantId, deckId) => {
 
 exports.saveDeck = async (tenantId, deck) => {
     var params = {
-        TableName: 'decks-' + tenantId,
+        TableName: 'data-' + tenantId,
         Item: fromDeck(deck)
     };
     
