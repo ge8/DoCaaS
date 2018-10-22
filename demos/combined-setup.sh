@@ -16,7 +16,9 @@ echo "Artifact Bucket: $BUCKETC2"
 export ARTIFACT_DOMAIN=$DOMAIN
 echo "Artifact Domain: $DOMAIN"
 
-
+# Get certificate for monoliths
+CERT=`aws acm  request-certificate --domain-name estaba.net --subject-alternative-names customer1.estaba.net customer2.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
+echo $CERT
 
 
 # Monolith 1 setup
