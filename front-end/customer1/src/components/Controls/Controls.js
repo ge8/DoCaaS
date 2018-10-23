@@ -11,7 +11,7 @@ class Controls extends React.Component {
         this.state = { "deckId": ""  };  
         this.handleCreate = this.handleCreate.bind(this);
         this.handleGet = this.handleGet.bind(this);
-        this.handleDeal = this.handleDeal.bind(this);
+        this.handleGame = this.handleGame.bind(this);
         this.handleShuffle = this.handleShuffle.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -24,8 +24,8 @@ class Controls extends React.Component {
         this.props.handleGet(this.state.deckId);
     }
 
-    handleDeal() {
-        this.props.handleDeal(this.state.deckId);
+    handleGame() {
+        this.props.handleGame(this.state.deckId);
     }
 
     handleShuffle() {
@@ -56,8 +56,8 @@ class Controls extends React.Component {
             <Button onClick={this.handleGet} className="buttons" color='info' size="lg">
                 Get
             </Button>
-            <Button onClick={this.handleDeal} className="buttons" color='warning' size="lg">
-                Deal
+            <Button onClick={this.handleGame} className="buttons" color='warning' size="lg">
+                Game
             </Button>
             <Button onClick={this.handleShuffle} className="buttons" color='danger' size="lg">
                 Shuffle

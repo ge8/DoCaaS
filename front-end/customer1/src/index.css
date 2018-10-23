@@ -7,3 +7,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+h6 {
+  text-align: center;
+}

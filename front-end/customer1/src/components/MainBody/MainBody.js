@@ -5,7 +5,7 @@ import Table from '../Table/Table'
 
 const USE_FIXED_VALUES = 1
 
-const NOT_LOGGED = 0
+// const NOT_LOGGED = 0
 const LOGGING = 1
 const LOGGED = 2
 
@@ -34,12 +34,14 @@ class MainBody extends React.Component {
       'username': "",
       'password': "",
       'message': "",
-      'deck': fixedDeck
+      'deck': fixedDeck,
+      'winner': -1,
+      'scores': []
     };  
     this.handleLogged = this.handleLogged.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.handleGet = this.handleGet.bind(this);
-    this.handleDeal = this.handleDeal.bind(this);
+    this.handleGame = this.handleGame.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
     this.callAPI = this.callAPI.bind(this);
     this.blankCards = this.blankCards.bind(this);
@@ -79,7 +81,8 @@ class MainBody extends React.Component {
   
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': -1
         });
       }
     });
@@ -90,7 +93,8 @@ class MainBody extends React.Component {
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': -1
       });
     }
   }
@@ -109,12 +113,14 @@ class MainBody extends React.Component {
           fixedDeck.cards = [];
           response.cards.map((card,i) => {
             fixedDeck.cards.push(card+".png");
+            return 0;
           });
         } 
   
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': -1
         });
       } 
     });    
@@ -130,48 +136,57 @@ class MainBody extends React.Component {
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': -1
       });
     }
   }
 
-  handleDeal(deckId) {
-    console.log('API for Deal');
+  handleGame(deckId) {
+    console.log('API for Game');
     let message = "";
     this.blankCards();
 
-    this.callAPI(mainUrl + '/deal', deckId).then(response => {
+    this.callAPI(mainUrl + '/game', deckId).then(response => {
       if (!USE_FIXED_VALUES) {
         if (counter === "0") {
           message = "Invalid Deck";
         } else {
           message = "";
           response.cards.map((object,i) => {
-            if (i===0) fixedDeck.cards[4] = object+".png";
-            if (i===1) fixedDeck.cards[6] = object+".png";
-            if (i===2) fixedDeck.cards[20] = object+".png";
-            if (i===3) fixedDeck.cards[22] = object+".png";
+            if (i===0) fixedDeck.cards[6] = object+".png";
+            if (i===1) fixedDeck.cards[20] = object+".png";
+            return 0;
           }); 
         }
     
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': response.winner,
+          'scores': response.scores
         });
       }
     });
     
     if (USE_FIXED_VALUES) {
+      let card1, card2, tempWinner;
+      card1 = Math.floor((Math.random()+1)*4);
+      card2 = Math.floor((Math.random()+1)*4);
+      tempWinner = 0;
+      if (card2>card1) tempWinner = 1;
+
       fixedDeck.cards.map((object,i) => {
-        if (i===0) fixedDeck.cards[4] = Math.floor((Math.random()+1)*4) + "C.png";
-        if (i===1) fixedDeck.cards[6] = Math.floor((Math.random()+1)*4) + "S.png";
-        if (i===2) fixedDeck.cards[20] = Math.floor((Math.random()+1)*4) + "D.png";
-        if (i===3) fixedDeck.cards[22] = Math.floor((Math.random()+1)*4) + "H.png";
+        if (i===0) fixedDeck.cards[6] = card1 + "S.png";
+        if (i===1) fixedDeck.cards[20] = card2 + "D.png";
+        return 0;
       }); 
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': tempWinner,
+        'scores': [25,18]
       });
     }
   }
@@ -190,12 +205,14 @@ class MainBody extends React.Component {
           fixedDeck.cards = [];
           response.cards.map((card,i) => {
             fixedDeck.cards.push(card+".png");
+            return 0;
           });
         } 
   
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': -1
         });
       }    
     }); 
@@ -211,7 +228,8 @@ class MainBody extends React.Component {
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': -1
       });
     }
   }
@@ -242,11 +260,18 @@ class MainBody extends React.Component {
       logingPage = <Login handleLogged={this.handleLogged} />
     }
     else if (logingStatus === LOGGED) {
-      controls = <Controls handleCreate={this.handleCreate} _
-                           handleGet={this.handleGet} _
-                           handleDeal={this.handleDeal} _
-                           handleShuffle={this.handleShuffle} />;
-      table = <Table deck={this.state.deck} message={this.state.message} />;
+      controls = <Controls 
+                    handleCreate={this.handleCreate} 
+                    handleGet={this.handleGet} 
+                    handleGame={this.handleGame} 
+                    handleShuffle={this.handleShuffle} 
+                  />;
+      table = <Table 
+                deck={this.state.deck} 
+                message={this.state.message} 
+                winner={this.state.winner}
+                scores={this.state.scores}
+              />;
     }
 
     return (

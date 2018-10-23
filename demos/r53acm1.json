@@ -3,7 +3,7 @@
     "Changes": [{
     "Action": "UPSERT",
                 "ResourceRecordSet": {
-                            "Name": "customer1.##DOMAINGOESHERE##",
+                            "Name": "##DOMAINGOESHERE##",
                             "Type": "CNAME",
                             "TTL": 10,
                          "ResourceRecords": [{ "Value": "##TARGETGOESHERE##"}]

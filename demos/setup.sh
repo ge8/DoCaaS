@@ -1,7 +1,7 @@
 #!/bin/bash
-#Script to set up the initial environment + apps
 
-# Enter 3 buckets in us-west-2 (Oregon) and 1 domain name that's been imported your AWS account's R53.
+# Enter 3 buckets in us-west-2 (Oregon) and 1 domain name for which you've made Route 53 the DNS Service.
+
 BUCKET=docaas
 BUCKETC1=docaasc1
 BUCKETC2=docaasc2
@@ -16,45 +16,36 @@ echo "Artifact Bucket: $BUCKETC2"
 export ARTIFACT_DOMAIN=$DOMAIN
 echo "Artifact Domain: $DOMAIN"
 
+# ACM Setup
+echo 'Start ACM setup'
+./acm.sh
+echo 'Finished ACM setup'
 
-# Monolith 1 setup
-echo "Creating Monolith 1"
-cd monoliths/customer1
-eb init --platform node.js --region us-west-2
-eb create docaas-customer1-eb-env 
-aws elasticbeanstalk update-environment --environment-name docaas-customer1-eb-env --option-settings "OptionName=NodeVersion, Namespace=aws:elasticbeanstalk:container:nodejs, Value=8.11.4"
-CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-env --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
-echo "Monolith created"
+# Monolith 1 Setup
+echo 'Start monolith1 setup'
+./monolith1setup.sh
+echo 'Finished monolith1 setup'
 
+# App 1 Setup
+echo 'Start App1 setup'
+./app1setup.sh
+echo 'Finished App1 setup'
 
-# Front End 1 setup
-echo "Publishing Monolith 1 App"
-cd ../../front-end/customer1
-npm install
-npm run-script build
-cd build/static/js
-find ./ -type f -exec sed -i -e "s/##CNAMEGOESHERE##/$CNAMEC1/g" {} \;
-cd ../../../
-aws s3 sync build/ s3://$BUCKETC1 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete
-aws s3api delete-bucket-policy --bucket $BUCKETC1 
-cp s3policy.json s3policy-mod.json
-find s3policy-mod.json -type f -exec sed -i -e "s/##BUCKETGOESHERE##/$BUCKETC1/g" {} \;
-aws s3api put-bucket-policy --bucket $BUCKETC1 --policy file://s3policy-mod.json
-rm -f s3policy-mod.json s3policy-mod.json-e
+# Add Customer 1 R53 record
+echo 'Start C1 R53 add'
+./c1addr53record.sh
+echo 'Finished C1 R53 add'
 
-aws s3 website s3://$BUCKETC1 --index-document index.html --error-document index.html
-echo "Monolith 1 App Published"
+# App 2 Setup TODO
+# Monolith 2 Setup TODO
+# Add Customer 2 R53 record TODO
+# Add DynamoDB TODO
+# Populate DynamoDB TODO
 
-echo "Adding record to R53"
-ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-output '.HostedZones[0].Id'`
-echo "ZONEID is $ZONEID"
-cd ../../demos
-cp r53c1.json r53c1-mod.json
-find r53c1-mod.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/https:\/\/$BUCKETC1.s3-website-us-west-2.amazonaws.com/g" {} \;
-find r53c1-mod.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$DOMAIN/g" {} \;
-aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://r53c1-mod.json
-rm -f r53c1-mod.json r53c1-mod.json-e 
-echo "Record to R53 Added"
+# Validate ACM is validated
+CERTARN=`aws acm request-certificate --domain-name estaba.net --subject-alternative-names *.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
+echo $CERTARN
+aws acm wait certificate-validated --certificate-arn $CERTARN
+echo 'Validation Done!'
 
-echo "Customer 1 url is: customer1.$DOMAIN"
-
+# Add ACM certificate to both load balancers! and redirect to HTTPS. TODO
