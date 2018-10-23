@@ -6,5 +6,12 @@ import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+//Delete <h6> for multi-tenant!
+ReactDOM.render(
+    <div className="App">
+        <h6>Customer1</h6> 
+        <App />
+    </div>, 
+    document.getElementById('root')
+);
 registerServiceWorker();

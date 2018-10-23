@@ -34,12 +34,14 @@ class MainBody extends React.Component {
       'username': "",
       'password': "",
       'message': "",
-      'deck': fixedDeck
+      'deck': fixedDeck,
+      'winner': -1,
+      'scores': []
     };  
     this.handleLogged = this.handleLogged.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.handleGet = this.handleGet.bind(this);
-    this.handleDeal = this.handleDeal.bind(this);
+    this.handleGame = this.handleGame.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
     this.callAPI = this.callAPI.bind(this);
     this.blankCards = this.blankCards.bind(this);
@@ -136,22 +138,20 @@ class MainBody extends React.Component {
     }
   }
 
-  handleDeal(deckId) {
-    console.log('API for Deal');
+  handleGame(deckId) {
+    console.log('API for Game');
     let message = "";
     this.blankCards();
 
-    this.callAPI(mainUrl + '/deal', deckId).then(response => {
+    this.callAPI(mainUrl + '/game', deckId).then(response => {
       if (!USE_FIXED_VALUES) {
         if (counter === "0") {
           message = "Invalid Deck";
         } else {
           message = "";
           response.cards.map((object,i) => {
-            if (i===0) fixedDeck.cards[4] = object+".png";
-            if (i===1) fixedDeck.cards[6] = object+".png";
-            if (i===2) fixedDeck.cards[20] = object+".png";
-            if (i===3) fixedDeck.cards[22] = object+".png";
+            if (i===0) fixedDeck.cards[6] = object+".png";
+            if (i===1) fixedDeck.cards[20] = object+".png";
             return 0;
           }); 
         }
@@ -165,10 +165,8 @@ class MainBody extends React.Component {
     
     if (USE_FIXED_VALUES) {
       fixedDeck.cards.map((object,i) => {
-        if (i===0) fixedDeck.cards[4] = Math.floor((Math.random()+1)*4) + "C.png";
-        if (i===1) fixedDeck.cards[6] = Math.floor((Math.random()+1)*4) + "S.png";
-        if (i===2) fixedDeck.cards[20] = Math.floor((Math.random()+1)*4) + "D.png";
-        if (i===3) fixedDeck.cards[22] = Math.floor((Math.random()+1)*4) + "H.png";
+        if (i===0) fixedDeck.cards[6] = Math.floor((Math.random()+1)*4) + "S.png";
+        if (i===1) fixedDeck.cards[20] = Math.floor((Math.random()+1)*4) + "D.png";
         return 0;
       }); 
 
@@ -249,7 +247,7 @@ class MainBody extends React.Component {
       controls = <Controls 
                     handleCreate={this.handleCreate} 
                     handleGet={this.handleGet} 
-                    handleDeal={this.handleDeal} 
+                    handleGame={this.handleGame} 
                     handleShuffle={this.handleShuffle} 
                   />;
       table = <Table deck={this.state.deck} message={this.state.message} />;
