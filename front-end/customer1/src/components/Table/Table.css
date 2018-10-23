@@ -12,3 +12,18 @@ img {
     background-color: rgba(255,255,255,0);
     color: rgb(255,255,255)
 }
+
+.position0 {
+    margin-left: 7rem;
+    text-align: left
+}
+
+.position1 {
+    margin-left: 35rem;
+    text-align: left
+}
+
+.scores {
+    margin-left: 20rem;
+    text-align: left
+}
