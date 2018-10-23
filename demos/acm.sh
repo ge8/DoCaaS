@@ -38,3 +38,9 @@ find r53acm1-mod.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/$VALUECNAME1
 find r53acm1-mod.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$NAMECNAME1/g" {} \;
 aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://r53acm1-mod.json
 rm -f r53acm1-mod.json r53acm1-mod.json-e 
+
+# Hide if don't need to validate
+CERTARN=`aws acm request-certificate --domain-name estaba.net --subject-alternative-names *.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
+echo $CERTARN
+aws acm wait certificate-validated --certificate-arn $CERTARN
+echo 'Validation Done!'
