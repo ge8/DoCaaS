@@ -81,7 +81,8 @@ class MainBody extends React.Component {
   
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': -1
         });
       }
     });
@@ -92,7 +93,8 @@ class MainBody extends React.Component {
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': -1
       });
     }
   }
@@ -117,7 +119,8 @@ class MainBody extends React.Component {
   
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': -1
         });
       } 
     });    
@@ -133,7 +136,8 @@ class MainBody extends React.Component {
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': -1
       });
     }
   }
@@ -158,21 +162,31 @@ class MainBody extends React.Component {
     
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': response.winner,
+          'scores': response.scores
         });
       }
     });
     
     if (USE_FIXED_VALUES) {
+      let card1, card2, tempWinner;
+      card1 = Math.floor((Math.random()+1)*4);
+      card2 = Math.floor((Math.random()+1)*4);
+      tempWinner = 0;
+      if (card2>card1) tempWinner = 1;
+
       fixedDeck.cards.map((object,i) => {
-        if (i===0) fixedDeck.cards[6] = Math.floor((Math.random()+1)*4) + "S.png";
-        if (i===1) fixedDeck.cards[20] = Math.floor((Math.random()+1)*4) + "D.png";
+        if (i===0) fixedDeck.cards[6] = card1 + "S.png";
+        if (i===1) fixedDeck.cards[20] = card2 + "D.png";
         return 0;
       }); 
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': tempWinner,
+        'scores': [25,18]
       });
     }
   }
@@ -197,7 +211,8 @@ class MainBody extends React.Component {
   
         this.setState({
           'message': message,
-          'deck': fixedDeck
+          'deck': fixedDeck,
+          'winner': -1
         });
       }    
     }); 
@@ -213,7 +228,8 @@ class MainBody extends React.Component {
 
       this.setState({
         'message': message,
-        'deck': fixedDeck
+        'deck': fixedDeck,
+        'winner': -1
       });
     }
   }
@@ -250,7 +266,12 @@ class MainBody extends React.Component {
                     handleGame={this.handleGame} 
                     handleShuffle={this.handleShuffle} 
                   />;
-      table = <Table deck={this.state.deck} message={this.state.message} />;
+      table = <Table 
+                deck={this.state.deck} 
+                message={this.state.message} 
+                winner={this.state.winner}
+                scores={this.state.scores}
+              />;
     }
 
     return (
