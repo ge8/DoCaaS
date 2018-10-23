@@ -5,7 +5,7 @@
                 "ResourceRecordSet": {
                             "Name": "##DOMAINGOESHERE##",
                             "Type": "CNAME",
-                            "TTL": 300,
+                            "TTL": 10,
                          "ResourceRecords": [{ "Value": "##TARGETGOESHERE##"}]
 }}]
 }

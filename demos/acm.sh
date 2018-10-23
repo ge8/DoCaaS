@@ -38,9 +38,3 @@ find r53acm1-mod.json -type f -exec sed -i -e "s/##TARGETGOESHERE##/$VALUECNAME1
 find r53acm1-mod.json -type f -exec sed -i -e "s/##DOMAINGOESHERE##/$NAMECNAME1/g" {} \;
 aws route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://r53acm1-mod.json
 rm -f r53acm1-mod.json r53acm1-mod.json-e 
-
-#Still working on this!
-# aws acm wait certificate-validated --certificate-arn $CERTARN
-# aws acm wait certificate-validated --certificate-arn arn:aws:acm:us-west-2:385251132543:certificate/64956ef5-532b-4ea8-aff7-348ca00d7cfa
-
-

@@ -18,6 +18,7 @@ echo "Artifact Domain: $DOMAIN"
 
 # Get certificate for monoliths
 CERT=`aws acm  request-certificate --domain-name estaba.net --subject-alternative-names customer1.estaba.net customer2.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
+
 echo $CERT
 
 
@@ -32,8 +33,9 @@ find ./ -type f -exec sed -i -e "s/CUSTOMERGOESHERE/customer1/g" {} \;
 find ./ -type f -exec sed -i -e "s/DOMAINGOESHERE.com/$DOMAIN/g" {} \;
 cd ../../../
 cp -vr build/ ../../monoliths/customer1/app/
+cd ../../
 
-cd ../../monoliths/customer1
+cd monoliths/customer1
 eb init --platform node.js --region us-west-2
 eb create docaas-customer1-eb-env 
 aws elasticbeanstalk update-environment --environment-name docaas-customer1-eb-env --option-settings "OptionName=NodeVersion, Namespace=aws:elasticbeanstalk:container:nodejs, Value=8.11.4"
