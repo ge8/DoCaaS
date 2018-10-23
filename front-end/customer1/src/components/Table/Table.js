@@ -3,7 +3,10 @@ import './Table.css';
 
 function importAll(r) {
     let images = {};
-    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    r.keys().map((item, index) => { 
+        images[item.replace('./', '')] = r(item); 
+        return 0;
+    });
     return images;
 }
 const images = importAll(require.context('../../images', false));

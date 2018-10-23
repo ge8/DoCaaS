@@ -5,7 +5,7 @@ import Table from '../Table/Table'
 
 const USE_FIXED_VALUES = 1
 
-const NOT_LOGGED = 0
+// const NOT_LOGGED = 0
 const LOGGING = 1
 const LOGGED = 2
 
@@ -109,6 +109,7 @@ class MainBody extends React.Component {
           fixedDeck.cards = [];
           response.cards.map((card,i) => {
             fixedDeck.cards.push(card+".png");
+            return 0;
           });
         } 
   
@@ -151,6 +152,7 @@ class MainBody extends React.Component {
             if (i===1) fixedDeck.cards[6] = object+".png";
             if (i===2) fixedDeck.cards[20] = object+".png";
             if (i===3) fixedDeck.cards[22] = object+".png";
+            return 0;
           }); 
         }
     
@@ -167,6 +169,7 @@ class MainBody extends React.Component {
         if (i===1) fixedDeck.cards[6] = Math.floor((Math.random()+1)*4) + "S.png";
         if (i===2) fixedDeck.cards[20] = Math.floor((Math.random()+1)*4) + "D.png";
         if (i===3) fixedDeck.cards[22] = Math.floor((Math.random()+1)*4) + "H.png";
+        return 0;
       }); 
 
       this.setState({
@@ -190,6 +193,7 @@ class MainBody extends React.Component {
           fixedDeck.cards = [];
           response.cards.map((card,i) => {
             fixedDeck.cards.push(card+".png");
+            return 0;
           });
         } 
   
@@ -242,10 +246,12 @@ class MainBody extends React.Component {
       logingPage = <Login handleLogged={this.handleLogged} />
     }
     else if (logingStatus === LOGGED) {
-      controls = <Controls handleCreate={this.handleCreate} _
-                           handleGet={this.handleGet} _
-                           handleDeal={this.handleDeal} _
-                           handleShuffle={this.handleShuffle} />;
+      controls = <Controls 
+                    handleCreate={this.handleCreate} 
+                    handleGet={this.handleGet} 
+                    handleDeal={this.handleDeal} 
+                    handleShuffle={this.handleShuffle} 
+                  />;
       table = <Table deck={this.state.deck} message={this.state.message} />;
     }
 
