@@ -26,6 +26,13 @@ import { withAuthenticator } from 'aws-amplify-react';
 export default withAuthenticator(App);
 ```
 
-* Remove Previous Login Button. Header.js lines 31-33.
-
 * Change state to LOGGED using Cognito's session info. App.js Lines 31-39
+
+* Remove Previous Login Button. Header.js lines 27-29.
+
+* Deploy App - takes 5 minutes.
+```shell
+npm run-script build
+cd ../../demos
+./app1setup.sh
+```
