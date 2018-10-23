@@ -48,4 +48,4 @@ echo $CERTARN
 aws acm wait certificate-validated --certificate-arn $CERTARN
 echo 'Validation Done!'
 
-# Add ACM certificate to both load balancers! TODO
+# Add ACM certificate to both load balancers! and redirect to HTTPS. TODO
