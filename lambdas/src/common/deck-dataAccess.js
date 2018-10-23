@@ -19,7 +19,7 @@ function fromDeck(deck, tenantId) {
 }
 
 function initDeck(name, tenantId) {
-    let deck = { id:tenantId + "-" + name, name:name, tenant:tenantId, cards:[ "TJ" ] };
+    let deck = { id:tenantId + "-" + name, name:name, tenant:tenantId, cards:[ ] };
     let suffixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
     let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
     suffixes.forEach(suffix => {

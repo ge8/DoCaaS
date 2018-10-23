@@ -2,7 +2,7 @@
 const { DAHelper } = require('./common/da-helper');
 const { AuthPolicy } = require('./common/auth-policy');
 const jwt = require('jsonwebtoken');
-
+const DEBUG_LOGGING = (process.env.DEBUG_LOGGING || "false") === "true";
 const ALLOWED_RESOURCES = {
     "bronze": ["/create", "/get"],
     "silver": ["/create", "/get", "/shuffle"], 
@@ -10,24 +10,27 @@ const ALLOWED_RESOURCES = {
 }
 
 exports.authorise_request = async (event, context, callback) => {
-    console.log("Event:", event);
-    console.log('Client token:', event.authorizationToken);
-    console.log('Method ARN:', event.methodArn);
+    if (DEBUG_LOGGING) {
+        console.log("Event:", event);
+        console.log('Client token:', event.authorizationToken);
+        console.log('Method ARN:', event.methodArn);
+    }
 
     // validate the incoming token
     let helper = new DAHelper(event);
-    let loginOK = false;
+    let loginCredentials;
     try {
-        loginOK = await helper.aquireCredentials();
+        loginCredentials = await helper.aquireCredentials();
     } catch(e) {
         console.log("Invalid Login Credentials.", e);
     }
 
-    if (!loginOK) return callback("Not Authorized");
+    if (!loginCredentials) return callback("Not Authorized");
 
     // Token is valid, so we can trust the claims
     let claims = jwt.decode(helper.jwt.trim());
-    console.log("Claims:", claims);
+    if (DEBUG_LOGGING) console.log("Claims:", claims);
+
     // Grab the plan attribute - this will define which methods are allowed for this user
     let plan = claims["custom:plan"];
     if (!plan) callback("No subscription plan - please purchase a subscription first");
@@ -42,11 +45,6 @@ exports.authorise_request = async (event, context, callback) => {
     apiOptions.region = tmp[3];
     apiOptions.restApiId = apiGatewayArnTmp[0];
     apiOptions.stage = apiGatewayArnTmp[1];
-    // const method = apiGatewayArnTmp[2];
-    // let resource = '/'; // root resource
-    // if (apiGatewayArnTmp[3]) {
-    //     resource += apiGatewayArnTmp[3];
-    // }
     
     const policy = new AuthPolicy(claims.sub, awsAccountId, apiOptions);
     let allowed = ALLOWED_RESOURCES[plan];  // Grab the paths that are allowed for this users' plan
@@ -62,10 +60,14 @@ exports.authorise_request = async (event, context, callback) => {
     const authResponse = policy.build();
     authResponse.context = {
         plan: plan,
-        sub: claims.sub
+        sub: claims.sub, 
+        accessKeyId: loginCredentials.accessKeyId, 
+        secretAccessKey: loginCredentials.secretAccessKey, 
+        sessionToken: loginCredentials.sessionToken, 
+        identityId: loginCredentials.id
     };
     
-    console.log("Auth Response:", JSON.stringify(authResponse));
+    if (DEBUG_LOGGING) console.log("Auth Response:", JSON.stringify(authResponse));
     callback(null, authResponse);
 };
  

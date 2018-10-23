@@ -59,8 +59,15 @@ class Helper {
             claims: this.claims, 
             plan: this.plan,
             method: method,
+            credentials: {
+                accessKeyId: this.event.requestContext.authorizer.accessKeyId, 
+                secretAccessKey: this.event.requestContext.authorizer.secretAccessKey, 
+                sessionToken: this.event.requestContext.authorizer.sessionToken, 
+                identityId: this.event.requestContext.authorizer.identityId
+            },
             params: params
         }
+        
         let lambda = new this._aws.Lambda();
         let invokeParams = {
                 FunctionName: "DOCAAS_DeckDataAccess",
