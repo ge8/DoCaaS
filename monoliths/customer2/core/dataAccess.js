@@ -95,3 +95,50 @@ exports.createDeck = async (tenantId, deckId) => {
     await exports.saveDeck(tenantId, deck);
     return deck;
 }
+
+exports.getScores = async (tenantId, deckId) => {
+    var params = {
+        TableName: 'data-' + tenantId,
+        Key: {
+            'key': { S: "game-" + deckId }
+        }
+    };
+
+    // Retrieve Deck from DDB
+    return ddb.getItem(params).promise()
+            .then(data => {
+                if (data && data.Item) {
+                    let scores = [];
+                    data.Item.scores.L.forEach(score => {
+                        scores.push(Number.parseInt(score.N));
+                    });
+                    return scores;
+                } else return null;
+            })
+            .catch(err => {
+                if (err.code === "ResourceNotFoundException") {
+                    // Item doesn't exist!
+                    return null;
+                } else throw err;
+            });
+}
+
+exports.saveScores = async (tenantId, deckId, scores) => {
+    let item = {
+        'key': { S: "game-" + deckId },
+        deck: { S: deckId },
+        scores: { L: [ ] }
+    };
+
+    scores.forEach(score => {
+        item.scores.L.push({ "N": score.toString()});
+    });
+
+    var params = {
+        TableName: 'data-' + tenantId,
+        Item: item
+    };
+    
+    // Save the item to DDB
+    return ddb.putItem(params).promise();
+}

@@ -10,5 +10,6 @@ app.get('/create', auth, require('./services/create').service);
 app.get('/get', auth, require('./services/get').service);
 app.get('/shuffle', auth, require('./services/shuffle').service);
 app.get('/take', auth, require('./services/take').service);
+app.get('/game', auth, require('./services/game').service);
 
 app.listen(port, () => console.log(tenant + ': Service Started (On Port: ' + port + ')'));
