@@ -50,7 +50,11 @@ exports.checkuser = async (tenantId, username, password) => {
                 let dbUsername = data.Item.username.S;
                 let dbPassword = data.Item.password.S;
                 console.log("ddbusername is:" + dbUsername);
+                console.log("Request username is:" + username);
+
                 console.log("ddbpassword is:" + dbPassword);
+                console.log("Request password is:" + password);
+
                 if (dbUsername.toLowerCase() === username.toLowerCase()
                     && dbPassword === password ) {
                         console.log("Exiting at 1")
