@@ -7,7 +7,7 @@ Resources:
     Properties:
       TableName: data-customer1
       PrimaryKey:
-        Name: id
+        Name: key
         Type: String
       ProvisionedThroughput:
         ReadCapacityUnits: 50

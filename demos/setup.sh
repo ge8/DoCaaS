@@ -39,8 +39,13 @@ echo 'Finished C1 R53 add'
 # App 2 Setup TODO
 # Monolith 2 Setup TODO
 # Add Customer 2 R53 record TODO
-# Add DynamoDB TODO
 # Populate DynamoDB TODO
+
+
+# Add and populate C1 passwords in DynamoDB
+echo 'Start C1 DynamoDB'
+./dynamo1setup.sh
+echo 'Finished C1 DynamoDB'
 
 # Validate ACM is validated
 CERTARN=`aws acm request-certificate --domain-name estaba.net --subject-alternative-names *.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
