@@ -1,6 +1,6 @@
 const debugLogging = (process.env.DEBUG_LOGGING || "false") === "true";
 const AWS = require('aws-sdk');
-AWS.config.update({ region: process.env.AWS_REGION || "ap-southeast-2" });
+AWS.config.update({ region: process.env.AWS_REGION || "us-west-2" });
 const ddb = new AWS.DynamoDB();
 
 function toDeck(data) {

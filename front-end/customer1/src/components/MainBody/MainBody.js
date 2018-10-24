@@ -3,14 +3,14 @@ import Login from '../Login/Login'
 import Controls from '../Controls/Controls'
 import Table from '../Table/Table'
 
-const USE_FIXED_VALUES = 1
+const USE_FIXED_VALUES = 0
 
 // const NOT_LOGGED = 0
 const LOGGING = 1
 const LOGGED = 2
 
-const mainUrl = "https://##CNAMEGOESHERE##"
-
+// const mainUrl = "https://##CNAMEGOESHERE##"
+const mainUrl = "https://customer1.estaba.net" //HARDCODED
 let logingPage = null;
 let controls = null;
 let table = null;
@@ -20,7 +20,7 @@ let prefixes = [ "C", "S", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
 let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
 
 let counter = 0;
-
+let deckId = "1"; //HARDCODED
 prefixes.forEach(prefix => {
   cards.forEach( card => {
     fixedDeck.cards.push('Blank.png');
