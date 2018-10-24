@@ -14,3 +14,4 @@ eb create docaas-customer1-eb-env
 CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-env --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
 echo "CNAMEC1 is $CNAMEC1"
 cd ../../demos
+aws iam attach-role-policy --role-name aws-elasticbeanstalk-ec2-role --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
