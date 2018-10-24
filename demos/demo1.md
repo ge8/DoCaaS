@@ -26,7 +26,7 @@ import { withAuthenticator } from 'aws-amplify-react';
 export default withAuthenticator(App);
 ```
 
-* Change state to LOGGED using Cognito's session info. App.js Lines 31-39
+* Change state to LOGGED using Cognito's session info. App.js Lines 36-44
 
 * Remove Previous Login Button. Header.js lines 27-29.
 

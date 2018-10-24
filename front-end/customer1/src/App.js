@@ -14,6 +14,10 @@ const NOT_LOGGED = 0
 const LOGGING = 1
 const LOGGED = 2
 
+if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+  window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.search;
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +31,7 @@ class App extends Component {
     this.handleLogging = this.handleLogging.bind(this);
     this.handleLogged = this.handleLogged.bind(this);
   }
+
 
   // async componentDidMount() {
   //   let session = await Auth.currentSession();
