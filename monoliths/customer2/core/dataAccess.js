@@ -1,6 +1,6 @@
 const debugLogging = (process.env.DEBUG_LOGGING || "false") === "true";
 const AWS = require('aws-sdk');
-AWS.config.update({ region: process.env.AWS_REGION || "ap-southeast-2" });
+AWS.config.update({ region: process.env.AWS_REGION || "us-west-2" });
 const ddb = new AWS.DynamoDB();
 
 function toDeck(data) {
@@ -14,7 +14,7 @@ function toDeck(data) {
 
 function fromDeck(deck) {
     if (!deck) return null;
-    let data = { key:{ S:"deck-" + deck.name }, deck: { S:deck.name }, cards:{ L: [] } };
+    let data = { id:{ S:"deck-" + deck.name }, deck: { S:deck.name }, cards:{ L: [] } };
     deck.cards.forEach(card => {
         data.cards.L.push({ S:card });
     });
@@ -23,11 +23,11 @@ function fromDeck(deck) {
 
 function initDeck(name) {
     let deck = { name:name, cards:[ ] };
-    let prefixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
+    let suffixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
     let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
-    prefixes.forEach(prefix => {
+    suffixes.forEach(suffix => {
         cards.forEach( card => {
-            deck.cards.push(card+prefix);
+            deck.cards.push(card+suffix);
         })
     })
     return deck;
@@ -37,7 +37,7 @@ exports.checkuser = async (tenantId, username, password) => {
     var params = {
         TableName: 'data-' + tenantId,
         Key: {
-            'key': { S: "user" }
+            'id': { S: 'user' }
         }
     };
 
@@ -54,6 +54,7 @@ exports.checkuser = async (tenantId, username, password) => {
                 }
             })
             .catch(err => {
+                console.log("Error: " + err)
                 if (err.code === "ResourceNotFoundException") {
                     // Item doesn't exist!
                     return false;   // No Username/Password in the database
@@ -65,7 +66,7 @@ exports.getDeck = async (tenantId, deckId) => {
     var params = {
         TableName: 'data-' + tenantId,
         Key: {
-            'key': { S: "deck-" + deckId }
+            'id': { S: "deck-" + deckId }
         }
     };
 
@@ -100,7 +101,7 @@ exports.getScores = async (tenantId, deckId) => {
     var params = {
         TableName: 'data-' + tenantId,
         Key: {
-            'key': { S: "game-" + deckId }
+            'id': { S: "game-" + deckId }
         }
     };
 
@@ -125,7 +126,7 @@ exports.getScores = async (tenantId, deckId) => {
 
 exports.saveScores = async (tenantId, deckId, scores) => {
     let item = {
-        'key': { S: "game-" + deckId },
+        'id': { S: "game-" + deckId },
         deck: { S: deckId },
         scores: { L: [ ] }
     };

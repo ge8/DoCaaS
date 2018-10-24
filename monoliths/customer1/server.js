@@ -3,6 +3,14 @@ const app = express()
 const auth = require('./core/auth').service;
 const { port, tenant } = require("./core/tenant-info");
 
+// Enable Cors
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 // Setup Routes
 app.get('/', require('./services/redirect-to-app').service);
 app.get('/healthcheck', require('./services/healthcheck').service);

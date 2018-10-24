@@ -1,5 +1,5 @@
 const dataAccess = require('./dataAccess');
-const { tenant } = require("../core/tenant-info");
+const { tenant } = require("./tenant-info");
 exports.service = async (req, res, next) => {
     try {
     let auth = req.headers.authorization;

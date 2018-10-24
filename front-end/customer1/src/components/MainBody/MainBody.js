@@ -11,6 +11,7 @@ const LOGGED = 2
 
 // const mainUrl = "https://##CNAMEGOESHERE##"
 const mainUrl = "https://customer1.estaba.net" //HARDCODED
+// const mainUrl = "http://localhost:3001" //HARDCODED
 let logingPage = null;
 let controls = null;
 let table = null;
@@ -20,7 +21,7 @@ let prefixes = [ "C", "S", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
 let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
 
 let counter = 0;
-let deckId = "1"; //HARDCODED
+// let deckId = "1"; //HARDCODED
 prefixes.forEach(prefix => {
   cards.forEach( card => {
     fixedDeck.cards.push('Blank.png');
@@ -73,10 +74,12 @@ class MainBody extends React.Component {
       fixedDeck.id = deckId;
   
       if (!USE_FIXED_VALUES) {
-        if (response.deckId === "0") {
+        if (response.name === "NOT_AUTHORIZED")  {
+          message = "Not Authorized - check your username + password!";
+        } else if (response.name === "0") {
           message = "Deck could not be created";
         } else {
-          message = "Deck " + response.deckId + " created!";
+          message = "Deck " + response.name + " created!";
         }
   
         this.setState({
@@ -105,11 +108,14 @@ class MainBody extends React.Component {
 
     this.callAPI(mainUrl + '/get', deckId).then(response => { 
       if(!USE_FIXED_VALUES) {
-        if (response.id === "0")  {
+        if (response.name === "NOT_AUTHORIZED")  {
+          message = "Not Authorized - check your username + password!";
+          this.blankCards();
+        } else if (response.name === "0")  {
           message = "Invalid Deck";   
           this.blankCards();
         } else {
-          fixedDeck.id = response.id;
+          fixedDeck.id = response.name;
           fixedDeck.cards = [];
           response.cards.map((card,i) => {
             fixedDeck.cards.push(card+".png");
@@ -148,16 +154,16 @@ class MainBody extends React.Component {
     this.blankCards();
 
     this.callAPI(mainUrl + '/game', deckId).then(response => {
+      // {"cards":["6S","7C"],"scores":[6,3],"winner":1}
       if (!USE_FIXED_VALUES) {
-        if (counter === "0") {
+        if (response.name === "NOT_AUTHORIZED")  {
+          message = "Not Authorized - check your username + password!";
+        } else if (counter === "0") {
           message = "Invalid Deck";
         } else {
           message = "";
-          response.cards.map((object,i) => {
-            if (i===0) fixedDeck.cards[6] = object+".png";
-            if (i===1) fixedDeck.cards[20] = object+".png";
-            return 0;
-          }); 
+          fixedDeck.cards[6] = response.cards[0] + ".png";
+          fixedDeck.cards[20] = response.cards[1] + ".png";
         }
     
         this.setState({
@@ -197,11 +203,14 @@ class MainBody extends React.Component {
 
     this.callAPI(mainUrl + '/shuffle', deckId).then(response => {
       if (!USE_FIXED_VALUES) {
-        if (response.id === "0")  {
+        if (response.name === "NOT_AUTHORIZED")  {
+          message = "Not Authorized - check your username + password!";
+          this.blankCards();
+        } else if (response.name === "0")  {
           message = "Invalid Deck";   
           this.blankCards();
         } else {
-          fixedDeck.id = response.id;
+          fixedDeck.id = response.name;
           fixedDeck.cards = [];
           response.cards.map((card,i) => {
             fixedDeck.cards.push(card+".png");
@@ -235,17 +244,20 @@ class MainBody extends React.Component {
   }
 
   callAPI(url, deckId) {    
-    return fetch(url, {
+    return fetch(url + "?deck=" + deckId, {
       method: 'GET',
       headers: { 
-        Authorization: 'Basic ' + btoa(this.state.username + ":" + this.state.password),
-        'deckId': deckId 
+        Authorization: 'Basic ' + btoa(this.state.username + ":" + this.state.password)
       }
     }).then(response => {
         console.log(response);
-        if (response.ok) {
+        if (response.status === 401) {
+          // Not Authorized!
+          return { name:"NOT_AUTHORIZED" };
+        } else if (response.ok) {
           return response.json();
         }
+
         throw new Error('Request failed!');
       }, networkError => console.log(networkError.message)
     );

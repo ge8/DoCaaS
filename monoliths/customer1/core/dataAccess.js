@@ -14,7 +14,7 @@ function toDeck(data) {
 
 function fromDeck(deck) {
     if (!deck) return null;
-    let data = { key:{ S:"deck-" + deck.name }, deck: { S:deck.name }, cards:{ L: [] } };
+    let data = { id:{ S:"deck-" + deck.name }, deck: { S:deck.name }, cards:{ L: [] } };
     deck.cards.forEach(card => {
         data.cards.L.push({ S:card });
     });
@@ -23,11 +23,11 @@ function fromDeck(deck) {
 
 function initDeck(name) {
     let deck = { name:name, cards:[ ] };
-    let prefixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
+    let suffixes = [ "S", "C", "D", "H" ];  // Spades, Clubs, Diamons, Hearts
     let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
-    prefixes.forEach(prefix => {
+    suffixes.forEach(suffix => {
         cards.forEach( card => {
-            deck.cards.push(card+prefix);
+            deck.cards.push(card+suffix);
         })
     })
     return deck;
@@ -37,30 +37,19 @@ exports.checkuser = async (tenantId, username, password) => {
     var params = {
         TableName: 'data-' + tenantId,
         Key: {
-            'partition-key': { S: 'user' }
+            'id': { S: 'user' }
         }
     };
-
-    console.log ("DB Params - Key :" + params.Key["partition-key"].S)
-    console.log ("DB Params - TableName :" + params.TableName)
 
     // Retrieve Deck from DDB
     return ddb.getItem(params).promise()
             .then(data =>{
                 let dbUsername = data.Item.username.S;
                 let dbPassword = data.Item.password.S;
-                console.log("ddbusername is:" + dbUsername);
-                console.log("Request username is:" + username);
-
-                console.log("ddbpassword is:" + dbPassword);
-                console.log("Request password is:" + password);
-
                 if (dbUsername.toLowerCase() === username.toLowerCase()
                     && dbPassword === password ) {
-                        console.log("Exiting at 1")
                     return true;
                 } else {
-                    console.log("Exiting at 2")
                     return false;
                 }
             })
@@ -77,7 +66,7 @@ exports.getDeck = async (tenantId, deckId) => {
     var params = {
         TableName: 'data-' + tenantId,
         Key: {
-            'partition-key': { S: "deck-" + deckId }
+            'id': { S: "deck-" + deckId }
         }
     };
 
@@ -112,7 +101,7 @@ exports.getScores = async (tenantId, deckId) => {
     var params = {
         TableName: 'data-' + tenantId,
         Key: {
-            'partition-key': { S: "game-" + deckId }
+            'id': { S: "game-" + deckId }
         }
     };
 
@@ -137,7 +126,7 @@ exports.getScores = async (tenantId, deckId) => {
 
 exports.saveScores = async (tenantId, deckId, scores) => {
     let item = {
-        'partition-key': { S: "game-" + deckId },
+        'id': { S: "game-" + deckId },
         deck: { S: deckId },
         scores: { L: [ ] }
     };
