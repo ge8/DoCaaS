@@ -7,7 +7,7 @@ Resources:
     Properties:
       TableName: data-customer1
       PrimaryKey:
-        Name: key
+        Name: partition-key
         Type: String
       ProvisionedThroughput:
         ReadCapacityUnits: 50
