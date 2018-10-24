@@ -11,7 +11,7 @@ amplify init #prompts + takes 1 min
 * Create Amazon Cognito User Pool
 ```shell
 amplify add auth #prompts
-amplify push #takes 3 min
+amplify push #takes 3 min: Go through Amplify Docs.
 ```
 * Configure App with Amplify
 ```js
@@ -32,7 +32,6 @@ export default withAuthenticator(App);
 
 * Deploy App - takes 5 minutes.
 ```shell
-npm run-script build
 cd ../../demos
 ./app1setup.sh
 ```
