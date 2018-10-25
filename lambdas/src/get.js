@@ -1,4 +1,4 @@
-const {isDebugLogging, Helper } = require('./common/helper');
+const {isDebugLogging, Helper } = require('./common/deck-helper');
 
 exports.get_deck_handler = async (event, context, callback) => {
     try {

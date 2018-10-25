@@ -1,0 +1,127 @@
+{
+    "resource": "/game",
+    "path": "/game",
+    "httpMethod": "GET",
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "eyJraWQiOiJnUGNpRXhqU1BYS2ZKNTlaZzU0YVpKK1IyS1NsZUg5TXg2Zk1rUnFTUE9rPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJiYjUxM2I4Yi0zNmYwLTQ2ZjEtYmEzNy0zMTcwZTU2YmM5NmUiLCJjb2duaXRvOmdyb3VwcyI6WyJHT0xEIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJjb2duaXRvOnByZWZlcnJlZF9yb2xlIjoiYXJuOmF3czppYW06OjYwNDY3NDc1Nzk4MDpyb2xlXC9Eb2NhYXNfR29sZF9NZW1iZXIiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTJfTkEyaXpaNmU0IiwiY29nbml0bzp1c2VybmFtZSI6ImFkYW0iLCJjb2duaXRvOnJvbGVzIjpbImFybjphd3M6aWFtOjo2MDQ2NzQ3NTc5ODA6cm9sZVwvRG9jYWFzX0dvbGRfTWVtYmVyIl0sImF1ZCI6IjJwdHMwM280OWh1Nzg3aHN2cDI2YXYxNHRiIiwiY3VzdG9tOnBsYW4iOiJnb2xkIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE1NDA0NTEyMzIsImN1c3RvbTp0ZW5hbnQiOiJ0ZXN0IiwiZXhwIjoxNTQwNDU5MTA4LCJpYXQiOjE1NDA0NTU1MDgsImVtYWlsIjoiYWRzdHJpY2tAYW1hem9uLmNvbSJ9.H-_C1XkFmRqDLV_G5VobcHIfow66GLrODh0cRsQBXvqEiv_fDC8q0WtkjG2VntRDoqEaw7TslGNl7iMxE-mKtqeiGVX7oM1pCTfSRbe-OxhuRkadXueCYXCshVRWJe8WdVf48Ic6V3ODzfKOc-GNBxcqVAOcW6AvVYsMtvqurYBicU04KaMF6YRCDE89lTAxFOnNmKXRUm6uNCkkNYa4mrNCkFX1FPfbmSC0R_5GYqns93dkydWokGwJjwvRysHZI5sUBxAMZrmGvtbMyx4z_aH1Vj5nA9IVgDNwzopYoTJViNTM7d6pOwpBiSgs2C6NwQnMC55Tglj1x2TeUbEWWw",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "AU",
+        "Content-Type": "application/json",
+        "Host": "rua4r408l1.execute-api.ap-southeast-2.amazonaws.com",
+        "User-Agent": "insomnia/6.0.2",
+        "Via": "1.1 d3cdaa3c5e1029370ebb12e67bf022cc.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "RShzf4HjGhmZ8W2J2zOSjWd4fOSLp1I_ZnRwVNNjkZEXRkntdBGIQg==",
+        "X-Amzn-Trace-Id": "Root=1-5bd16c45-2fb7e9605884edc09d247000",
+        "X-Forwarded-For": "110.175.218.206, 54.239.202.76",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Accept": [
+            "application/json"
+        ],
+        "Authorization": [
+            "eyJraWQiOiJnUGNpRXhqU1BYS2ZKNTlaZzU0YVpKK1IyS1NsZUg5TXg2Zk1rUnFTUE9rPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJiYjUxM2I4Yi0zNmYwLTQ2ZjEtYmEzNy0zMTcwZTU2YmM5NmUiLCJjb2duaXRvOmdyb3VwcyI6WyJHT0xEIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJjb2duaXRvOnByZWZlcnJlZF9yb2xlIjoiYXJuOmF3czppYW06OjYwNDY3NDc1Nzk4MDpyb2xlXC9Eb2NhYXNfR29sZF9NZW1iZXIiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTJfTkEyaXpaNmU0IiwiY29nbml0bzp1c2VybmFtZSI6ImFkYW0iLCJjb2duaXRvOnJvbGVzIjpbImFybjphd3M6aWFtOjo2MDQ2NzQ3NTc5ODA6cm9sZVwvRG9jYWFzX0dvbGRfTWVtYmVyIl0sImF1ZCI6IjJwdHMwM280OWh1Nzg3aHN2cDI2YXYxNHRiIiwiY3VzdG9tOnBsYW4iOiJnb2xkIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE1NDA0NTEyMzIsImN1c3RvbTp0ZW5hbnQiOiJ0ZXN0IiwiZXhwIjoxNTQwNDU0ODMyLCJpYXQiOjE1NDA0NTEyMzIsImVtYWlsIjoiYWRzdHJpY2tAYW1hem9uLmNvbSJ9.aYIaJ1tV3FoJPQVQVgBbhX-1l5Yr_yf6MJTOlKpD1dpvCiag56sGeKNCaPad5S2Mg92oaT3KZ_2Uw13vprhqUu2f2P_AMQ6HGPWZNlIsC2SHBF3fpFeK5VIUjPwqidS9ZgybTG1UBZgTXxG8yiVyJ7KZhr_UG1X_gVCpL9K5ZtpiyXqL52DEqcg6Z2Hfu61BkNvRGoJCSvk_9g6ROdcnTh76dAPFGOFYd6mb4ZkV6556MW2JTKIuqZVl5tzn-KN_v9cDOi2LvXIWLJBd4dr0WNgxu8cgQ9dduf9g9qf6Xj7PCnrCEMuqq8191LDXa2alVGD8dUcgJz65m2me5GrmMQ"
+        ],
+        "CloudFront-Forwarded-Proto": [
+            "https"
+        ],
+        "CloudFront-Is-Desktop-Viewer": [
+            "true"
+        ],
+        "CloudFront-Is-Mobile-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-SmartTV-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-Tablet-Viewer": [
+            "false"
+        ],
+        "CloudFront-Viewer-Country": [
+            "AU"
+        ],
+        "Content-Type": [
+            "application/json"
+        ],
+        "Host": [
+            "rua4r408l1.execute-api.ap-southeast-2.amazonaws.com"
+        ],
+        "User-Agent": [
+            "insomnia/6.0.2"
+        ],
+        "Via": [
+            "1.1 d3cdaa3c5e1029370ebb12e67bf022cc.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "RShzf4HjGhmZ8W2J2zOSjWd4fOSLp1I_ZnRwVNNjkZEXRkntdBGIQg=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5bd16c45-2fb7e9605884edc09d247000"
+        ],
+        "X-Forwarded-For": [
+            "110.175.218.206, 54.239.202.76"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": {
+        "deck": "adam",
+        "players": "2"
+    },
+    "multiValueQueryStringParameters": {
+        "deck": [
+            "adam"
+        ],
+        "players": [
+            "2"
+        ]
+    },
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "xprs7h",
+        "authorizer": {
+            "sub": "bb513b8b-36f0-46f1-ba37-3170e56bc96e",
+            "principalId": "bb513b8b-36f0-46f1-ba37-3170e56bc96e",
+            "plan": "gold"
+        },
+        "resourcePath": "/game",
+        "httpMethod": "GET",
+        "extendedRequestId": "PT3a4E3DSwMF5CQ=",
+        "requestTime": "25/Oct/2018:07:09:57 +0000",
+        "path": "/Prod/game",
+        "accountId": "604674757980",
+        "protocol": "HTTP/1.1",
+        "stage": "Prod",
+        "domainPrefix": "rua4r408l1",
+        "requestTimeEpoch": 1540451397670,
+        "requestId": "fb060cf9-d824-11e8-92a1-bd3fee875d79",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "110.175.218.206",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "insomnia/6.0.2",
+            "user": null
+        },
+        "domainName": "rua4r408l1.execute-api.ap-southeast-2.amazonaws.com",
+        "apiId": "rua4r408l1"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

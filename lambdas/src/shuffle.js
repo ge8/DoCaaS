@@ -1,4 +1,4 @@
-const {isDebugLogging, Helper } = require('./common/helper');
+const {isDebugLogging, Helper } = require('./common/deck-helper');
 
 function shuffle(arr, iterations) {
     for (let i = 0; i < iterations; i++) {

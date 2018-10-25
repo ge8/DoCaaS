@@ -1,4 +1,4 @@
-const { Helper } = require('./common/helper');
+const { Helper } = require('./common/deck-helper');
 
 exports.cut_deck_handler = async (event, context, callback) => {
     try {

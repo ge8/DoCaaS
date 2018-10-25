@@ -1,4 +1,4 @@
-const { DAHelper } = require('./common/da-helper');
+const { DAHelper } = require('./common/deck-da-helper');
 
 exports.deck_data_access = async (event, context, callback) => {
     try {

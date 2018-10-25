@@ -18,6 +18,14 @@ Resources:
             Handler: deck-da.deck_data_access
             FunctionName: DOCAAS_DeckDataAccess
             Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+    GameDataAccessFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Runtime: nodejs8.10
+            Handler: game-da.game_data_access
+            FunctionName: DOCAAS_GameDataAccess
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
     CreateDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -50,6 +58,14 @@ Resources:
             Handler: cut.cut_deck_handler
             FunctionName: DOCAAS_CutDeck
             Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+    GameFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Runtime: nodejs8.10
+            Handler: game.demo_game_handler
+            FunctionName: DOCAAS_Game
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
     AuthoriserFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -61,23 +77,20 @@ Resources:
             Environment:
                 Variables:
                     USER_POOL_ID: cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_NA2izZ6e4
+    CorsFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Runtime: nodejs8.10
+            Handler: cors.handle_request
+            FunctionName: DOCAAS_Cors
+            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
 
-            
     RestApi:
         Type: AWS::ApiGateway::RestApi
         Properties:
             Name: docaas-api
-    
-    # CognitoApiAuthoriser:
-    #     Type: AWS::ApiGateway::Authorizer
-    #     Properties:
-    #         Name: CognitoAuthoriser
-    #         Type: COGNITO_USER_POOLS
-    #         IdentitySource: method.request.header.Authorization
-    #         ProviderARNs:
-    #             - arn:aws:cognito-idp:ap-southeast-2:604674757980:userpool/ap-southeast-2_NA2izZ6e4
-    #         RestApiId: !Ref RestApi
-    #         AuthorizerResultTtlInSeconds: 600
+
     PlanAuthorizer: 
         Type: AWS::ApiGateway::Authorizer
         Properties: 
@@ -115,7 +128,13 @@ Resources:
             RestApiId: !Ref "RestApi"
             StageName: Prod
 
-    
+    InvokeCorsLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "CorsFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/*"
             
     GetDeckApiResource:
         Type: AWS::ApiGateway::Resource
@@ -144,7 +163,19 @@ Resources:
             FunctionName: !GetAtt "GetDeckFunction.Arn"
             Principal: "apigateway.amazonaws.com"
             SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/get"
-
+    GetDeckOptionsApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: OPTIONS
+            AuthorizationType: NONE
+            ResourceId: !Ref GetDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "CorsFunction.Arn"
 
     CreateDeckApiResource:
         Type: AWS::ApiGateway::Resource
@@ -173,6 +204,21 @@ Resources:
             FunctionName: !GetAtt "CreateDeckFunction.Arn"
             Principal: "apigateway.amazonaws.com"
             SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/create"
+    CreateDeckOptionsApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: OPTIONS
+            AuthorizationType: NONE
+            ResourceId: !Ref CreateDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "CorsFunction.Arn"
+
+
 
 
     ShuffleDeckApiResource:
@@ -202,7 +248,19 @@ Resources:
             FunctionName: !GetAtt "ShuffleDeckFunction.Arn"
             Principal: "apigateway.amazonaws.com"
             SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/shuffle"
-
+    ShuffleDeckOptionsApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: OPTIONS
+            AuthorizationType: NONE
+            ResourceId: !Ref ShuffleDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "CorsFunction.Arn"
 
 
     CutDeckApiResource:
@@ -232,13 +290,71 @@ Resources:
             FunctionName: !GetAtt "CutDeckFunction.Arn"
             Principal: "apigateway.amazonaws.com"
             SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/cut"
+    CutDeckOptionsApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: OPTIONS
+            AuthorizationType: NONE
+            ResourceId: !Ref CutDeckApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "CorsFunction.Arn"
+    
+    
+    GameApiResource:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+            ParentId: !GetAtt RestApi.RootResourceId
+            PathPart: game
+            RestApiId: !Ref RestApi
+    GameApiApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: ANY
+            AuthorizationType: CUSTOM
+            AuthorizerId: !Ref PlanAuthorizer
+            ResourceId: !Ref GameApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "GameFunction.Arn"
+    GameInvokeLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "GameFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/game"
+    GameOptionsApiMethod:
+        Type: AWS::ApiGateway::Method
+        Properties:
+            HttpMethod: OPTIONS
+            AuthorizationType: NONE
+            ResourceId: !Ref GameApiResource
+            RestApiId: !Ref RestApi
+            Integration:
+                Type: AWS_PROXY
+                IntegrationHttpMethod: POST
+                Uri: !Sub 
+                    - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+                    - lambdaArn: !GetAtt "CorsFunction.Arn"
 
-
-
-       
 Outputs:
     APIBaseURL:
         Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+    DeckDataAccessFunction:
+      Description: "Deck DataAccess Function ARN"
+      Value: !GetAtt DeckDataAccessFunction.Arn
+    GameDataAccessFunction:
+      Description: "Game DataAccess Function ARN"
+      Value: !GetAtt GameDataAccessFunction.Arn
     CreateDeckFunction:
       Description: "Create Deck Lambda Function ARN"
       Value: !GetAtt CreateDeckFunction.Arn

@@ -1,5 +1,5 @@
 const identityPool = process.env.IDENTITY_POOL_ID || 'ap-southeast-2:5b205dba-4e2f-4382-abf3-907d6eb119eb';
-const { getDeck, createDeck, saveDeck } = require('./deck-dataAccess');
+const { getScores, saveScores } = require('./game-dataAccess');
 const jwt = require('jsonwebtoken');
 
 class DAHelper {
@@ -39,23 +39,22 @@ class DAHelper {
         return this.claims["cognito:preferred_role"];
     }
 
-    async getDeck(name) {
-        return getDeck(this.dynamoDbClient, this._identityId, name);
+    async getScores(deckName) {
+        console.log("GetScores");
+        return getScores(this.dynamoDbClient, this._identityId, deckName);
     }
-    async saveDeck(deck) {
-        return saveDeck(this.dynamoDbClient, this._identityId, deck);
+    async saveScores(deckName, scores) {
+        return saveScores(this.dynamoDbClient, this._identityId, deckName, scores);
     }
-    async createDeck(name) {
-        return createDeck(this.dynamoDbClient, this._identityId, name);
-    }
-
+    
     async aquireCredentials() {
         this._aws = require('aws-sdk');
         this._aws.config.region = process.env.AWS_REGION || "ap-southeast-2";
         if (this.event && this.event.credentials && this.event.credentials.accessKeyId) {
             // Access Keys have been provided in the request - use them!
             console.log("Using provided access keys...");
-            this._aws.config.credentials = new AWS.Credentials(this.event.credentials.accessKeyId, this.event.credentials.secretAccessKey, this.event.credentials.sessionToken);
+            this._aws.config.credentials = new this._aws.Credentials(this.event.credentials.accessKeyId, this.event.credentials.secretAccessKey, this.event.credentials.sessionToken);
+            this._identityId = this.event.credentials.identityId;
             return true;
         } else {
             console.log("Acquiring new access keys...");

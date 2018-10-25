@@ -10,13 +10,16 @@ class Helper {
         this._jwt = this.event.headers.Authorization || this.event.headers.authorization;
         this._claims = this.event.requestContext.authorizer.claims || jwt.decode(this._jwt);
         this._aws = require('aws-sdk');
+        this._aws.config.region = "ap-southeast-2";
     }
 
-    async getScores(name) {
-        return this._callGameDataAccess("get", { name:name });
+    async getScores(deckName) {
+        console.log("Calling GameDA:", "get",  deckName);
+        return this._callGameDataAccess("get", { deck:deckName });
     }
-    async saveScores(deck) {
-        return this._callGameDataAccess("save", { deck:deck });
+    async saveScores(deckName, scores) {
+        console.log("Calling GameDA:", "save", deckName, scores);
+        return this._callGameDataAccess("save", { deck:deckName, scores:scores });
     }
     
     get event() {
@@ -63,13 +66,13 @@ class Helper {
         
         let lambda = new this._aws.Lambda();
         let invokeParams = {
-                FunctionName: "DOCAAS_DeckDataAccess",
+                FunctionName: "DOCAAS_GameDataAccess",
                 InvocationType: "RequestResponse",
                 LogType: "Tail",
                 Payload: JSON.stringify(data)
            };
+
         let result = await lambda.invoke(invokeParams).promise();
-        console.log("DA Result:", result);
         return JSON.parse(result.Payload);
     }
   }

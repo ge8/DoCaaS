@@ -34,6 +34,7 @@ exports.saveScores = async (ddb, tenantId, deckId, scores) => {
         scores: { L: [ ] }
     };
 
+    console.log("Scores:", scores);
     scores.forEach(score => {
         item.scores.L.push({ "N": score.toString()});
     });

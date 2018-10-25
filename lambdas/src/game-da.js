@@ -1,4 +1,4 @@
-const { DAHelper } = require('./common/da-helper');
+const { DAHelper } = require('./common/game-da-helper');
 
 exports.game_data_access = async (event, context, callback) => {
     try {
@@ -12,9 +12,9 @@ exports.game_data_access = async (event, context, callback) => {
         let result;
         switch(method) {
             case "get": 
-                result = await helper.getScores(helper.params.name); break;
+                result = await helper.getScores(helper.params.deck); break;
             case "save": 
-                result = await helper.saveScores(helper.params.scores); break;
+                result = await helper.saveScores(helper.params.deck, helper.params.scores); break;
         }
 
         console.log("Result:", result);

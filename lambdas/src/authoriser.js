@@ -1,12 +1,12 @@
 'use strict';
-const { DAHelper } = require('./common/da-helper');
+const DEBUG_LOGGING = (process.env.DEBUG_LOGGING || "false") === "true";
+const { DAHelper } = require('./common/deck-da-helper');
 const { AuthPolicy } = require('./common/auth-policy');
 const jwt = require('jsonwebtoken');
-const DEBUG_LOGGING = (process.env.DEBUG_LOGGING || "false") === "true";
 const ALLOWED_RESOURCES = {
     "bronze": ["/create", "/get"],
-    "silver": ["/create", "/get", "/shuffle"], 
-    "gold": ["/create", "/get", "/shuffle", "/cut"]
+    "silver": ["/create", "/get", "/shuffle", "/game"], 
+    "gold": ["/create", "/get", "/shuffle", "/cut", "/game"]
 }
 
 exports.authorise_request = async (event, context, callback) => {
@@ -61,10 +61,10 @@ exports.authorise_request = async (event, context, callback) => {
     authResponse.context = {
         plan: plan,
         sub: claims.sub, 
-        accessKeyId: loginCredentials.accessKeyId, 
-        secretAccessKey: loginCredentials.secretAccessKey, 
-        sessionToken: loginCredentials.sessionToken, 
-        identityId: loginCredentials.id
+        accessKeyId: helper.credentials.accessKeyId, 
+        secretAccessKey: helper.credentials.secretAccessKey, 
+        sessionToken: helper.credentials.sessionToken, 
+        identityId: helper.credentials.id
     };
     
     if (DEBUG_LOGGING) console.log("Auth Response:", JSON.stringify(authResponse));

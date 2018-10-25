@@ -1,0 +1,34 @@
+{
+    "jwt": "eyJraWQiOiJnUGNpRXhqU1BYS2ZKNTlaZzU0YVpKK1IyS1NsZUg5TXg2Zk1rUnFTUE9rPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJiYjUxM2I4Yi0zNmYwLTQ2ZjEtYmEzNy0zMTcwZTU2YmM5NmUiLCJjb2duaXRvOmdyb3VwcyI6WyJHT0xEIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJjb2duaXRvOnByZWZlcnJlZF9yb2xlIjoiYXJuOmF3czppYW06OjYwNDY3NDc1Nzk4MDpyb2xlXC9Eb2NhYXNfR29sZF9NZW1iZXIiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTJfTkEyaXpaNmU0IiwiY29nbml0bzp1c2VybmFtZSI6ImFkYW0iLCJjb2duaXRvOnJvbGVzIjpbImFybjphd3M6aWFtOjo2MDQ2NzQ3NTc5ODA6cm9sZVwvRG9jYWFzX0dvbGRfTWVtYmVyIl0sImF1ZCI6IjJwdHMwM280OWh1Nzg3aHN2cDI2YXYxNHRiIiwiY3VzdG9tOnBsYW4iOiJnb2xkIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE1NDA0NTEyMzIsImN1c3RvbTp0ZW5hbnQiOiJ0ZXN0IiwiZXhwIjoxNTQwNDU5MTA4LCJpYXQiOjE1NDA0NTU1MDgsImVtYWlsIjoiYWRzdHJpY2tAYW1hem9uLmNvbSJ9.H-_C1XkFmRqDLV_G5VobcHIfow66GLrODh0cRsQBXvqEiv_fDC8q0WtkjG2VntRDoqEaw7TslGNl7iMxE-mKtqeiGVX7oM1pCTfSRbe-OxhuRkadXueCYXCshVRWJe8WdVf48Ic6V3ODzfKOc-GNBxcqVAOcW6AvVYsMtvqurYBicU04KaMF6YRCDE89lTAxFOnNmKXRUm6uNCkkNYa4mrNCkFX1FPfbmSC0R_5GYqns93dkydWokGwJjwvRysHZI5sUBxAMZrmGvtbMyx4z_aH1Vj5nA9IVgDNwzopYoTJViNTM7d6pOwpBiSgs2C6NwQnMC55Tglj1x2TeUbEWWw",
+    "claims": {
+        "sub": "bb513b8b-36f0-46f1-ba37-3170e56bc96e",
+        "cognito:groups": [
+            "GOLD"
+        ],
+        "email_verified": true,
+        "cognito:preferred_role": "arn:aws:iam::604674757980:role/Docaas_Gold_Member",
+        "iss": "https://cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_NA2izZ6e4",
+        "cognito:username": "adam",
+        "cognito:roles": [
+            "arn:aws:iam::604674757980:role/Docaas_Gold_Member"
+        ],
+        "aud": "2pts03o49hu787hsvp26av14tb",
+        "custom:plan": "gold",
+        "token_use": "id",
+        "auth_time": 1540451232,
+        "custom:tenant": "test",
+        "exp": 1540454832,
+        "iat": 1540451232,
+        "email": "adstrick@amazon.com"
+    },
+    "plan": "gold",
+    "method": "get",
+    "credentials": {},
+    "params": {
+        "deck": "adam",
+        "scores": [
+            1,
+            0
+        ]
+    }
+}
