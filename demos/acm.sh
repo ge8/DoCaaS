@@ -38,6 +38,6 @@ rm -f r53acm1-mod.json r53acm1-mod.json-e
 
 # Hide if don't need to validate
 CERTARN=`aws acm request-certificate --domain-name estaba.net --subject-alternative-names *.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
-echo $CERTARN
+echo "waiting for ACM validation for $CERTARN"
 aws acm wait certificate-validated --certificate-arn $CERTARN
 echo 'Validation Done!'

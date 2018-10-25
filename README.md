@@ -1,52 +1,36 @@
-# DoCaaS
-Deck of Cards as a Service
- 
-## Machine requirements for docaas-react: (Review which one is installing globally or inside project)
+# Deck of Cards as a Service (DoCaaS)
+This is a asdasdasd
+
+## Requirement -> An AWS account with:
+* Domain name imported into Route53
+* 3 x S3 Bucket in Oregon region (us-west-2)
+* An IAM user with admin permissions.
+
+##Setup
+* Install machine requirements including the AWS CLI (Pyhton 3), the AWS EB CLI, the AWS Amplify CLI and the SAM CLI
 ```shell
 npm install ajv
 npm install --save reactstrap react react-dom
 npm install jquery
 npm install --save boostrap
 npm i react-boostrap
-```
-Install and configure the AWS CLI, the AWS EB CLID and the AWS Amplify CLI
-```shell
 
-pip3 install awscli --upgrade --user
-aws configure
-
-pip install awsebcli --upgrade --user
-eb init
-
+pip3 install awscli --upgrade --user #does it install EB CLI?
 npm install -g @aws-amplify/cli
+```
+* Configure the AWS CLI, Amplify CLI, and the EB CLI - follow prompts
+```shell
+aws configure #Set de default region to us-west-2 (Oregon)
 amplify configure
+eb init
+```
+* Clone repo and run setup script
+```shell
+git clone https://github.com/ge8/docaas && cd docaas/demos
+./setup.sh
 ```
 
-pip install awsebcli --upgrade --user
-
-aws configure #Set de default region to us-west-2 (Oregon)
-
-## AWS Requirement:
-* Domain name imported into Route53
-* S3 Bucket
-
-## Set-up Demo: Sets up 2 monoliths on EC2, builds and deploy front-end app to public hosting S3 bucket with CloudFront and points domain name to app.
-Run setup.sh script 
-
-
-# Questions!
-* mainUrl and CallAPI on MainBody.js
-* Caching in browser? caching with cloudfront but origin changed!
-* Review which npms are installing globally or inside project
-
-# APIs Convention
-GET /path Header 
-  (Authorization Basic user:password)
-  (deckId:deckId)
-
-API Response: {id:id cards:[cards]}
-
-# GPSTEC405 - Optimize Your SaaS Offering with Serverless Microservices
+# Session details: GPSTEC405 - Optimize Your SaaS Offering with Serverless Microservices
 
 In this hands-on session, we crack open the IDE and transform a SaaS web app comprised of several monolithic single-tenant environments into an efficient, scalable, and secure multi-tenant SaaS platform using ReactJS and NodeJS serverless microservices.
 
