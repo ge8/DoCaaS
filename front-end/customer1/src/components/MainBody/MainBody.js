@@ -9,8 +9,8 @@ const USE_FIXED_VALUES = 0
 const LOGGING = 1
 const LOGGED = 2
 
-// const mainUrl = "https://##CNAMEGOESHERE##"
-const mainUrl = "https://customer1.estaba.net" //HARDCODED
+const mainUrl = "https://CUSTOMERGOESHERE.DOMAINGOESHERE.com"
+// const mainUrl = "https://customer1.estaba.net" //HARDCODED
 // const mainUrl = "http://localhost:3001" //HARDCODED
 let logingPage = null;
 let controls = null;
