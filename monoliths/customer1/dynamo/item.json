@@ -1,5 +1,5 @@
 {
-    "key": {"S": "user"},
+    "id": {"S": "user"},
     "username": {"S": "gerardo"},
     "password": {"S": "asd"}
 }
