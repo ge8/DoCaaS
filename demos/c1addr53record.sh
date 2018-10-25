@@ -1,12 +1,8 @@
 #!/bin/bash
-# BUCKET=docaas
-# BUCKETC1=docaasc1
-# BUCKETC2=docaasc2
-# DOMAIN=estaba.net
+
+. ./loadvariables.sh
 
 CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-env --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
-
-
 
 echo "Adding record to R53"
 ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-output '.HostedZones[0].Id'`

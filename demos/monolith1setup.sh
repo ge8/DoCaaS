@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+. ./loadvariables.sh
 
 cd ../monoliths/customer1
 eb init --platform node.js --region us-west-2

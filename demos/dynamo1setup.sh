@@ -1,5 +1,6 @@
 #!/bin/bash
-# BUCKET=docaas
+
+. ./loadvariables.sh
 
 cd ../monoliths/customer1/dynamo/
 sam package --template-file dynamodb.yaml --s3-bucket $BUCKET --output-template-file packaged-dynamo.yaml

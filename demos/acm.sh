@@ -1,9 +1,6 @@
 #!/bin/bash
-#run at demos/
-# BUCKET=docaas
-# BUCKETC1=docaasc1
-# BUCKETC2=docaasc2
-# DOMAIN=estaba.net
+
+. ./loadvariables.sh
 
 CERTARN=`aws acm request-certificate --domain-name estaba.net --subject-alternative-names *.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
 echo $CERTARN
