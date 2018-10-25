@@ -1,15 +1,6 @@
 #!/bin/bash
 
-./loadvariables.sh
-
-export ARTIFACT_BUCKET=$BUCKET
-echo "Artifact Bucket: $BUCKET"
-export ARTIFACT_BUCKETC1=$BUCKETC1
-echo "Artifact Bucket: $BUCKETC1"
-export ARTIFACT_BUCKETC2=$BUCKETC2
-echo "Artifact Bucket: $BUCKETC2"
-export ARTIFACT_DOMAIN=$DOMAIN
-echo "Artifact Domain: $DOMAIN"
+. ./loadvariables.sh
 
 # ACM Setup
 echo 'Start ACM setup'
