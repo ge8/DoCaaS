@@ -29,10 +29,11 @@ find ./ -type f -exec sed -i -e "s/DOMAINGOESHERE.com/$DOMAIN/g" {} \;
 cd ../../../
 
 # Update env variable for COGNITO
-cd amplify/backend
+cd amplify/backend/
 A=`grep "IdentityPoolId" amplify-meta.json`
 B=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
 echo "The Identity Pool Id is: $B"
+cd ../../
 cd ../../monoliths/customer1/.ebextensions
 find variable.config -type f -exec sed -i -e "s,IDENTITYPOOLGOESHERE,$B,g" {} \;
 rm -f securelistener-clb.config-e
