@@ -5,8 +5,8 @@ const { port, tenant } = require("./core/tenant-info");
 
 // Enable Cors
 app.use(function(req, res, next) {
-    var origin = event.headers.origin || event.headers.Origin;
-    var requestHeaders = event.headers["access-control-request-headers"] || event.headers["Access-Control-Request-Headers"];
+    var origin = req.headers.origin || req.headers.Origin;
+    var requestHeaders = req.headers["access-control-request-headers"] || req.headers["Access-Control-Request-Headers"];
     res.header("Access-Control-Allow-Origin", origin);
     res.header("Access-Control-Allow-Headers", requestHeaders);
     res.header("Access-Control-Allow-Credentials", "true");
