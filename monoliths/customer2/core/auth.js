@@ -1,7 +1,7 @@
 const dataAccess = require('./dataAccess');
-const cognitoAuth = require('./cognito');
-
+// const cognitoAuth = require('./cognito');
 const { tenant } = require("./tenant-info");
+
 exports.service = async (req, res, next) => {
     try {
         let ok = false, auth = req.headers.authorization;
@@ -21,7 +21,6 @@ exports.service = async (req, res, next) => {
         if (ok) next();
         else return res.status(401).send('Not Authorised');
     } catch(err) {
-        console.log(err);
         res.status(500).send('Internal Server Error');
     }
 }
