@@ -32,16 +32,19 @@ class App extends Component {
     this.handleLogged = this.handleLogged.bind(this);
   }
 
+  async getCurrentAuthToken() {
+    // If Basic:
+    return 'Basic ' + btoa(this.state.username + ":" + this.state.password);
 
-  // async componentDidMount() {
-  //   let session = await Auth.currentSession();
-  //   if (session && session.idToken) {
-  //     this.setState( {
-  //       'logingStatus': LOGGED
-  //     }
-  //     )
-  //   }
-  // }
+    // else if cognito: 
+    // let session = await Auth.currentSession();
+    // if (session && session.idToken) {
+    //   this.setState( {
+    //     'logingStatus': LOGGED
+    //   });
+    //   return session.idToken;
+    // } else return null;
+  }
 
   handleLogging() {
     this.setState ({
@@ -67,7 +70,7 @@ class App extends Component {
                 loginButtonColor={this.state.loginButtonColor} 
                 loginButtonCaption={this.state.loginButtonCaption} 
         />
-        <MainBody logingStatus={this.state.logingStatus} handleLogged={this.handleLogged} />
+        <MainBody logingStatus={this.state.logingStatus} handleLogged={this.handleLogged} getAuthToken={this.getCurrentAuthToken.bind(this)} /> 
       </div>
     );
   }

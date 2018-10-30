@@ -36,11 +36,11 @@ import { withAuthenticator } from 'aws-amplify-react';
 ...
 export default withAuthenticator(App);
 ```
-* Change state to LOGGED using Cognito's session info. App.js Lines 36-44
+* Using Cognito's session info instead of Basic Auth. Hide App.js Line 37 and unhide Lines 40-46
 
 * Remove Previous Login Button. Header.js lines 27-29.
 
-* Modify Backend code!
+* Modify Backend code. Hide Basic Auth Auth.js lines 11-16, unhide line 19. Explain cognito.js
 
 * Deploy App - takes 5 minutes.
 ```shell

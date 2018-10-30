@@ -9,8 +9,8 @@ const USE_FIXED_VALUES = 0
 const LOGGING = 1
 const LOGGED = 2
 
-const mainUrl = "https://CUSTOMERGOESHERE.DOMAINGOESHERE.com"
-// const mainUrl = "https://customer1.estaba.net" //HARDCODED
+// const mainUrl = "https://CUSTOMERGOESHERE.DOMAINGOESHERE.com"
+const mainUrl = "https://customer1.estaba.net" //HARDCODED
 // const mainUrl = "http://localhost:3001" //HARDCODED
 let logingPage = null;
 let controls = null;
@@ -31,6 +31,7 @@ prefixes.forEach(prefix => {
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       'username': "",
       'password': "",
@@ -243,12 +244,14 @@ class MainBody extends React.Component {
     }
   }
 
-  callAPI(url, deckId) {    
-    return fetch(url + "?deck=" + deckId, {
-      method: 'GET',
-      headers: { 
-        Authorization: 'Basic ' + btoa(this.state.username + ":" + this.state.password)
-      }
+  callAPI(url, deckId) {
+    return this.props.getAuthToken().then((authToken) => {
+      return fetch(url + "?deck=" + deckId, {
+        method: 'GET',
+        headers: { 
+          Authorization: authToken
+        }
+      })
     }).then(response => {
         console.log(response);
         if (response.status === 401) {
