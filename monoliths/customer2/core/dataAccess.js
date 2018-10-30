@@ -82,18 +82,36 @@ exports.getDeck = async (tenantId, deckId) => {
 }
 
 exports.saveDeck = async (tenantId, deck) => {
+    let item = fromDeck(deck);
+    var params = {
+        TableName: 'data-' + tenantId,
+
+        ExpressionAttributeNames: {
+         "#cards": "cards"
+        }, 
+        ExpressionAttributeValues: {
+         ":cards": item.cards
+        }, 
+        Key: {
+         "id": item.id
+        }, 
+        UpdateExpression: "SET #cards = :cards"
+       };
+       
+    // update the cards in the deck
+    return ddb.updateItem(params).promise();
+}
+
+exports.createDeck = async (tenantId, deckId) => {
+    let deck = initDeck(deckId);
+
     var params = {
         TableName: 'data-' + tenantId,
         Item: fromDeck(deck)
     };
     
-    // Save the item to DDB
-    return ddb.putItem(params).promise();
-}
-
-exports.createDeck = async (tenantId, deckId) => {
-    let deck = initDeck(deckId);
-    await exports.saveDeck(tenantId, deck);
+    // Put the item to DDB
+    await ddb.putItem(params).promise();
     return deck;
 }
 
@@ -101,14 +119,14 @@ exports.getScores = async (tenantId, deckId) => {
     var params = {
         TableName: 'data-' + tenantId,
         Key: {
-            'id': { S: "game-" + deckId }
+            'id': { S: "deck-" + deckId }
         }
     };
 
     // Retrieve Deck from DDB
     return ddb.getItem(params).promise()
             .then(data => {
-                if (data && data.Item) {
+                if (data && data.Item && data.Item.scores) {
                     let scores = [];
                     data.Item.scores.L.forEach(score => {
                         scores.push(Number.parseInt(score.N));
@@ -126,8 +144,7 @@ exports.getScores = async (tenantId, deckId) => {
 
 exports.saveScores = async (tenantId, deckId, scores) => {
     let item = {
-        'id': { S: "game-" + deckId },
-        deck: { S: deckId },
+        'id': { S: "deck-" + deckId },
         scores: { L: [ ] }
     };
 
@@ -137,9 +154,19 @@ exports.saveScores = async (tenantId, deckId, scores) => {
 
     var params = {
         TableName: 'data-' + tenantId,
-        Item: item
-    };
-    
+
+        ExpressionAttributeNames: {
+         "#SCORES": "scores"
+        }, 
+        ExpressionAttributeValues: {
+         ":SCORES": item.scores
+        }, 
+        Key: {
+         "id": item.id
+        }, 
+        UpdateExpression: "SET #SCORES = :SCORES"
+       };
+       
     // Save the item to DDB
-    return ddb.putItem(params).promise();
+    return ddb.updateItem(params).promise();
 }
