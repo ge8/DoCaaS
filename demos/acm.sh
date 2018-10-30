@@ -4,7 +4,7 @@
 
 CERTARN=`aws acm request-certificate --domain-name estaba.net --subject-alternative-names *.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
 echo $CERTARN
-sleep 5
+sleep 15
 
 DOMAINNAME1=`aws acm describe-certificate --certificate-arn $CERTARN | jq --raw-output '.Certificate.DomainValidationOptions[0].DomainName'`
 NAMECNAME1=`aws acm describe-certificate --certificate-arn $CERTARN | jq --raw-output '.Certificate.DomainValidationOptions[0].ResourceRecord.Name'`
