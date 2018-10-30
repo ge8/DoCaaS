@@ -32,6 +32,10 @@ class App extends Component {
     this.handleLogged = this.handleLogged.bind(this);
   }
 
+  componentDidMount(){
+    this.getCurrentAuthToken();
+  }
+  
   async getCurrentAuthToken() {
     // If Basic:
     return 'Basic ' + btoa(this.state.username + ":" + this.state.password);
