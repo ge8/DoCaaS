@@ -46,7 +46,7 @@ class App extends Component {
     //   this.setState( {
     //     'logingStatus': LOGGED
     //   });
-    //   return session.idToken;
+    //   return session.idToken.jwtToken;
     // } else return null;
   }
 
