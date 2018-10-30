@@ -10,11 +10,6 @@
 
 
 ## Demo1
-* Add amplify libraries into app
-```shell
-npm install --save aws-amplify 
-npm install --save aws-amplify-react #takes 1 min
-```
 * Initialize Amplify
 ```shell
 amplify init #prompts + takes 1 min

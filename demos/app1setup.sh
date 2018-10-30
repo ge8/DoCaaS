@@ -15,6 +15,8 @@ cd ../../../demos
 
 
 cd ../front-end/customer1
+npm install --save aws-amplify 
+npm install --save aws-amplify-react #takes 1 min
 npm install
 npm run-script build
 cd build/static/js #modify build

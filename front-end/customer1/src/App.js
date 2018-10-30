@@ -4,11 +4,6 @@ import MainBody from './components/MainBody/MainBody';
 
 import './App.css';
 
-// import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
-
-// import Amplify, { Auth } from 'aws-amplify';
-// import aws_exports from './aws-exports';
-// Amplify.configure(aws_exports);
 
 const NOT_LOGGED = 0
 const LOGGING = 1
@@ -80,5 +75,4 @@ class App extends Component {
   }
 }
 
-// export default withAuthenticator(App);
 export default (App);
