@@ -26,9 +26,3 @@ echo 'Finished C1 R53 add'
 echo 'Start C1 DynamoDB'
 ./dynamo1setup.sh
 echo 'Finished C1 DynamoDB'
-
-# Validate ACM is validated
-CERTARN=`aws acm request-certificate --domain-name estaba.net --subject-alternative-names *.estaba.net --validation-method DNS | jq --raw-output '.CertificateArn'`
-echo $CERTARN
-aws acm wait certificate-validated --certificate-arn $CERTARN
-echo 'Validation Done!'
