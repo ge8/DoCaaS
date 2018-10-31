@@ -1,0 +1,44 @@
+body,
+html,
+#root {
+  height: 100%;
+}
+
+html {
+  font-size: 18px;
+}
+
+h1 {
+  padding: .77rem 0;
+  background-color: #010c3f;
+  text-align: center;
+  font-family: 'Indie Flower', cursive;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+h1 .highlight {
+  color: #6c41ec;
+}
+
+.App-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center
+}
+
+.App-logo {
+  height: 6rem;
+  width: 6rem;
+  padding-right: 1rem;
+}
+
+.App-title {
+  color: rgb(255,255,255);
+  background-color: rgba(0,0,0,0);
+}
+
+.login {
+  height: 3rem;
+}

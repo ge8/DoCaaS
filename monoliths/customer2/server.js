@@ -18,7 +18,7 @@ app.get('/', require('./services/redirect-to-app').service);
 app.get('/healthcheck', require('./services/healthcheck').service);
 app.get('/create', auth, require('./services/create').service);
 app.get('/get', auth, require('./services/get').service);
-// app.get('/shuffle', auth, require('./services/shuffle').service);
+app.get('/shuffle', auth, require('./services/shuffle').service);
 app.get('/take', auth, require('./services/take').service);
 app.get('/game', auth, require('./services/game').service);
 

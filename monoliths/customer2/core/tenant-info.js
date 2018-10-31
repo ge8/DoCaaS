@@ -1,2 +1,2 @@
 exports.tenant = "customer2";
-exports.port = 3002;
+exports.port = process.env.PORT || 3001;

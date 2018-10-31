@@ -1,0 +1,29 @@
+.App-table {
+    margin: 2rem 0 0 7rem;
+}
+
+img {
+    height: 10rem;
+    width: 7rem;
+    margin-left: -5rem;
+}
+
+.table-title {
+    background-color: rgba(255,255,255,0);
+    color: rgb(255,255,255)
+}
+
+.position0 {
+    margin-left: 7rem;
+    text-align: left
+}
+
+.position1 {
+    margin-left: 35rem;
+    text-align: left
+}
+
+.scores {
+    margin-left: 20rem;
+    text-align: left
+}

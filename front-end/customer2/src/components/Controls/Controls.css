@@ -1,0 +1,8 @@
+.App-controls {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons {
+    margin: 1.5rem 0;
+}

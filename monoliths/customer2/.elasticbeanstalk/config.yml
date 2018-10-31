@@ -1,0 +1,19 @@
+branch-defaults:
+  default:
+    environment: prodA
+environment-defaults:
+  prodA:
+    branch: null
+    repository: null
+global:
+  application_name: customer2
+  default_ec2_keyname: null
+  default_platform: node.js
+  default_region: us-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: null
+  workspace_type: Application

@@ -1,0 +1,5 @@
+{
+    "id": {"S": "user"},
+    "username": {"S": "customer2"},
+    "password": {"S": "asd"}
+}
