@@ -5,25 +5,17 @@ const { AuthPolicy } = require('./common/auth-policy');
 const jwt = require('jsonwebtoken');
 const ALLOWED_RESOURCES = {
     "bronze": ["/create", "/get"],
-    "silver": ["/create", "/get", "/shuffle", "/game"], 
+    "silver": ["/create", "/get", "/shuffle", "/game"],
     "gold": ["/create", "/get", "/shuffle", "/cut", "/game"]
 }
 
 exports.authorise_request = async (event, context, callback) => {
-    if (DEBUG_LOGGING) {
-        console.log("Event:", event);
-        console.log('Client token:', event.authorizationToken);
-        console.log('Method ARN:', event.methodArn);
-    }
-
     // validate the incoming token
     let helper = new DAHelper(event);
     let loginCredentials;
     try {
         loginCredentials = await helper.aquireCredentials();
-    } catch(e) {
-        console.log("Invalid Login Credentials.", e);
-    }
+    } catch(e) { console.log("Invalid Login Credentials.", e); }
 
     if (!loginCredentials) return callback("Not Authorized");
 
