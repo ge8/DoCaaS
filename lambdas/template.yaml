@@ -76,7 +76,7 @@ Resources:
             Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
             Environment:
                 Variables:
-                    USER_POOL_ID: cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_NA2izZ6e4
+                    IDENTITY_POOL_ID: cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_NA2izZ6e4
     CorsFunction:
         Type: AWS::Serverless::Function
         Properties:
