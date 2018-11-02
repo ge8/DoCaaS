@@ -12,6 +12,7 @@ echo $CERTARN
 cd .ebextensions/
 find alb-secure-listener.config -type f -exec sed -i -e "s,CERTARNGOESHERE,$CERTARN,g" {} \;
 rm -f alb-secure-listener.config-e
+
 cd ..
-eb create docaas-customer2-eb-env 
+eb create docaas-customer2-eb-env --elb-type application
 cd ../../demos
