@@ -10,8 +10,8 @@ CERTARN=`aws acm list-certificates | jq --arg DOMAIN "$DOMAIN" '.CertificateSumm
 echo $CERTARN
 
 cd .ebextensions/
-find securelistener-clb.config -type f -exec sed -i -e "s,CERTARNGOESHERE,$CERTARN,g" {} \;
-rm -f securelistener-clb.config-e
+find alb-secure-listener.config -type f -exec sed -i -e "s,CERTARNGOESHERE,$CERTARN,g" {} \;
+rm -f alb-secure-listener.config-e
 cd ..
 eb create docaas-customer2-eb-env 
 cd ../../demos
