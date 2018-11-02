@@ -2,11 +2,6 @@
 
 . ./loadvariables.sh
 
-# ACM Setup
-echo 'Start ACM setup'
-./acm.sh
-echo 'Finished ACM setup'
-
 # App 1 Setup
 echo 'Start App1 setup'
 ./app1setup.sh
