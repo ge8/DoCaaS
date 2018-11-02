@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+aws cognito-idp list-user-pools --max-results 60
+
+
 # Create "plan" attribute
 aws cognito-idp add-custom-attributes
 
