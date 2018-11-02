@@ -19,18 +19,10 @@ Resources:
                     Effect: "Allow"
                     Principal: 
                         Service: "lambda.amazonaws.com"
-                        Action: "sts:AssumeRole"
-            ManagedPolicyArns: arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess #Change for CloudWatch Logs, Metrics.
-            Policy:     "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "logs:*"
-            ],
-            "Resource": "arn:aws:logs:*:*:*"
-        },
-            RoleName: RoleForLambdas
+                    Action: "sts:AssumeRole"
+            ManagedPolicyArns: 
+                - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+                - arn:aws:iam::aws:policy/service-role/AWSLambdaRole
 
     DeckDataAccessFunction:
         Type: AWS::Serverless::Function
@@ -371,6 +363,9 @@ Resources:
 Outputs:
     APIBaseURL:
         Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+    RoleForLambdas:
+      Description: "IAM execution Role for Lambda functions"
+      Value: !GetAtt RoleForLambdas.Arn
     DeckDataAccessFunction:
       Description: "Deck DataAccess Function ARN"
       Value: !GetAtt DeckDataAccessFunction.Arn
@@ -392,3 +387,4 @@ Outputs:
     AuthoriserFunction:
       Description: "Plan Authoriser Function ARN"
       Value: !GetAtt AuthoriserFunction.Arn
+

@@ -1,9 +1,10 @@
 #!/bin/bash
 
-REGION=ap-southeast-2
-BUCKET=adams-s3
+REGION=us-west-2
+BUCKET=docaas
 
-sam package --template-file template.yaml --s3-bucket $BUCKET --output-template-file packaged.yaml --region $REGION
-sam deploy --template-file packaged.yaml --stack-name docaas-cut-the-deck --capabilities CAPABILITY_IAM --region $REGION
+aws cloudformation delete-stack --stack-name docaas-test
+sam package --template-file test.yaml --s3-bucket $BUCKET --output-template-file packaged.yaml --region $REGION
+sam deploy --template-file packaged.yaml --stack-name docaas-test --capabilities CAPABILITY_NAMED_IAM --region $REGION
 
 rm -f packaged.yaml
