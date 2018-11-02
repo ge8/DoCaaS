@@ -28,8 +28,9 @@ eb init
 * Clone repo and run setup script
 ```shell
 git clone https://github.com/ge8/docaas && cd docaas/demos
-./setup-acm+c1.sh
-./setup-c2.sh
+./acm #create and validate an ACM certificate
+./setup-c1.sh #deploy customer 1 app + monolith
+./setup-c2.sh #deploy customer 2 app + monolith
 ```
 
 # Session details: GPSTEC405 - Optimize Your SaaS Offering with Serverless Microservices
