@@ -59,9 +59,9 @@ class Controls extends React.Component {
             <Button onClick={this.handleGame} className="buttons" color='warning' size="lg">
                 Game
             </Button>
-            <Button onClick={this.handleShuffle} className="buttons" color='danger' size="lg">
+            {/* <Button onClick={this.handleShuffle} className="buttons" color='danger' size="lg">
                 Shuffle
-            </Button>
+            </Button> */}
         </div>
     );
     }

@@ -10,6 +10,28 @@ Globals:
         Timeout: 20
 
 Resources:
+    RoleForLambdas:
+        Type: AWS::IAM::Role
+        Properties: 
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement: 
+                    Effect: "Allow"
+                    Principal: 
+                        Service: "lambda.amazonaws.com"
+                        Action: "sts:AssumeRole"
+            ManagedPolicyArns: arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess #Change for CloudWatch Logs, Metrics.
+            Policy:     "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+            RoleName: RoleForLambdas
+
     DeckDataAccessFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -17,7 +39,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: deck-da.deck_data_access
             FunctionName: DOCAAS_DeckDataAccess
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
     GameDataAccessFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -25,7 +47,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: game-da.game_data_access
             FunctionName: DOCAAS_GameDataAccess
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
     CreateDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -33,7 +55,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: create.create_deck_handler
             FunctionName: DOCAAS_CreateDeck
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
     GetDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -41,7 +63,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: get.get_deck_handler
             FunctionName: DOCAAS_GetDeck
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
     ShuffleDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -49,7 +71,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: shuffle.shuffle_deck_handler
             FunctionName: DOCAAS_ShuffleDeck
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
     CutDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -57,7 +79,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: cut.cut_deck_handler
             FunctionName: DOCAAS_CutDeck
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
     GameFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -65,7 +87,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: game.demo_game_handler
             FunctionName: DOCAAS_Game
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
     AuthoriserFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -73,7 +95,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: authoriser.authorise_request
             FunctionName: DOCAAS_Authoriser
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
             Environment:
                 Variables:
                     IDENTITY_POOL_ID: cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_NA2izZ6e4
@@ -84,7 +106,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: cors.handle_request
             FunctionName: DOCAAS_Cors
-            Role: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            Role: !Ref RoleForLambdas
 
     RestApi:
         Type: AWS::ApiGateway::RestApi
@@ -94,7 +116,7 @@ Resources:
     PlanAuthorizer: 
         Type: AWS::ApiGateway::Authorizer
         Properties: 
-            AuthorizerCredentials: arn:aws:iam::604674757980:role/DOCAAS_LAMBDA
+            AuthorizerCredentials: !Ref RoleForLambdas
             AuthorizerResultTtlInSeconds: 600
             AuthorizerUri: 
                 Fn::Join: 
