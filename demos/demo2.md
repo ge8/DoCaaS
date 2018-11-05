@@ -5,14 +5,14 @@
 * thisisnotgerardo’s gmail open
 * Login for customer 2.
 
-# Demo1: What we'll do: Add Secure Sign Up Sign In to customer1.
-1. Show app: customer1.estaba.net and customer2.estaba.net
-2. Amplify: Create Cognito User Pool
-3. Modify ReactJS to start using Cognito UI and standard flows
-4. Modify NodeJS to check authentication using Cognito instead of Basic Auth.
+# Demo2: What we'll do: Deploy a new API getting Isolation and Data Partitioning fixed once.
+1. Standardise Service Offering: create Cognito attribute + Initialise customer 1 and two with plans.
+2. SAM Template: to deploy API + Lambda Authorizer + CORS
+3. Lamda Authorizer: show output.
+4. Data Partitioning: IAM Role for default authentication in Cognito.
 
-# Demo1
-* Initialize Amplify
+# Demo2
+<!-- * Initialize Amplify
 ```shell
 amplify init #prompts + takes 1 min
 ```
@@ -43,4 +43,4 @@ export default withAuthenticator(App);
 ```shell
 cd ../../demos
 ./updateapp1withcognito.sh
-```
+``` -->
