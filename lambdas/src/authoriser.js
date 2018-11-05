@@ -1,12 +1,11 @@
 'use strict';
 const DEBUG_LOGGING = (process.env.DEBUG_LOGGING || "false") === "true";
-const { DAHelper } = require('./common/deck-da-helper');
-const { AuthPolicy } = require('./common/auth-policy');
+const { DAHelper } = require('./common/deck-da-helper'); // Helper with Cognito functions
+const { AuthPolicy } = require('./common/auth-policy'); // Provided by AWS
 const jwt = require('jsonwebtoken');
 const ALLOWED_RESOURCES = {
     "bronze": ["/create", "/get"],
     "silver": ["/create", "/get", "/shuffle", "/game"],
-    "gold": ["/create", "/get", "/shuffle", "/cut", "/game"]
 }
 
 exports.authorise_request = async (event, context, callback) => {
@@ -14,7 +13,7 @@ exports.authorise_request = async (event, context, callback) => {
     let helper = new DAHelper(event);
     let loginCredentials;
     try {
-        loginCredentials = await helper.aquireCredentials();
+        loginCredentials = await helper.aquireCredentials(); // by acquiring credentials for the user
     } catch(e) { console.log("Invalid Login Credentials.", e); }
 
     if (!loginCredentials) return callback("Not Authorized");
