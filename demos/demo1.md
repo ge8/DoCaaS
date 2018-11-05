@@ -10,7 +10,8 @@
 1. Show app: customer1.estaba.net and customer2.estaba.net
 2. Amplify: Create Cognito User Pool
 3. Modify ReactJS to start using Cognito UI and standard flows
-4. Modify NodeJS to check authentication using Cognito instead of Basic Auth.
+4. npm start - Show sign up/sign in
+5. Modify NodeJS to check authentication using Cognito instead of Basic Auth.
 
 # Demo1
 * Initialize Amplify
