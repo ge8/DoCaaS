@@ -1,10 +1,11 @@
-# Demo2: What we'll do: Deploy a new API getting Isolation and Data Partitioning fixed once.
-1. Standardise Service Offering: create Cognito attribute + Initialise customer 1 and two with plans.
-2. SAM Template: to deploy API + Lambda Authorizer + CORS
-3. Lamda Authorizer: show output.
-4. Data Partitioning: IAM Role for default authentication in Cognito.
+# Demo4: What we'll do: New Plan + Cut microservice.
+1. Update Lambda Authorizer with gold plan.
+2. Upgrade customer 1 plan by modifying CUP attribute.
+3. Author Cut Lambda
+4. Add Cut Lambda to SAM Template
+5. Deploy SAM Template.
 
-# Demo2
+# Demo4
 <!-- * Initialize Amplify
 ```shell
 amplify init #prompts + takes 1 min

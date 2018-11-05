@@ -1,10 +1,12 @@
-# Demo2: What we'll do: Deploy a new API getting Isolation and Data Partitioning fixed once.
-1. Standardise Service Offering: create Cognito attribute + Initialise customer 1 and two with plans.
-2. SAM Template: to deploy API + Lambda Authorizer + CORS
-3. Lamda Authorizer: show output.
-4. Data Partitioning: IAM Role for default authentication in Cognito.
+# Demo3: What we'll do: Break the monolith into Serverless Microservices
+1. Author GET function. *How to test, debug?*
+2. SAM Template: Microservices. (Deploy first, then explain)
+3. Test with Insomnia.
+4. Migration: show+run script for datastore migration per customer.
+5. Migration: DNS change. 
+6. Test with Insomina. (Test Data Partitioning, Isolation)
 
-# Demo2
+# Demo3
 <!-- * Initialize Amplify
 ```shell
 amplify init #prompts + takes 1 min
