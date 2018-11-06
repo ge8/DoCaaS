@@ -18,10 +18,9 @@ cd ../../../
 npm run-script build
 cp -vr build/ ../../monoliths/customer1/app/
 
-
 # Deploy & Update BEanstalk env
 cd ../../monoliths/customer1/
-
+eb init --platform node.js --region us-west-2
 CERTARN='no value'
 CERTARN=`aws acm list-certificates | jq --arg DOMAIN "$DOMAIN" '.CertificateSummaryList [] | select(.DomainName==$DOMAIN) .CertificateArn'`
 echo $CERTARN

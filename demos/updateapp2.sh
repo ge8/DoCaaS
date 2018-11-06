@@ -25,6 +25,8 @@ cd ../../monoliths/customer2/
 CERTARN='no value'
 CERTARN=`aws acm list-certificates | jq --arg DOMAIN "$DOMAIN" '.CertificateSummaryList [] | select(.DomainName==$DOMAIN) .CertificateArn'`
 echo $CERTARN
+eb init --platform node.js --region us-west-2
+
 cd .ebextensions/
 find alb-secure-listener.config -type f -exec sed -i -e "s,CERTARNGOESHERE,$CERTARN,g" {} \;
 rm -f alb-secure-listener.config-e
