@@ -7,7 +7,10 @@
 6. Update R53 record.
 
 # Demo2
-
+* Get Cognito's Identity Pool ID
+```shell
+aws cognito-identity list-identity-pools --max-results 50
+```
 
 
 
