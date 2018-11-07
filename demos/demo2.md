@@ -6,35 +6,9 @@
 (Pre-deployed?)
 
 # Demo2
-<!-- * Initialize Amplify
+* Create IAM policies for Authenticated Cognito Users
 ```shell
-amplify init #prompts + takes 1 min
+aws iam create-policy --policy-name DynamoPolicyForAuthenticatedUsers --policy-document file://cognito-auth-policy1.json
+aws iam create-policy --policy-name DefaultPolicyForAuthenticatedUsers --policy-document file://cognito-auth-policy2.json
 ```
-* Create Amazon Cognito User Pool
-```shell
-amplify add auth #prompts
-amplify push #takes 3 min: Go through Amplify Docs.
-```
-* Configure App with Amplify
-```js
-import Amplify, { Auth } from 'aws-amplify';
-import aws_exports from './aws-exports';
-Amplify.configure(aws_exports);
-```
-* Add Cognito's Authenticator Component (withAuthenticator HOC) Go to "Using Components in React".
-```js
-import { withAuthenticator } from 'aws-amplify-react';
-...
-export default withAuthenticator(App);
-```
-* Using Cognito's session info instead of Basic Auth. Hide App.js Line 37 and unhide Lines 40-46
-
-* Remove Previous Login Button. Header.js lines 27-29.
-
-* Modify Backend code. Hide Basic Auth Auth.js lines 11-16, unhide line 19. Explain cognito.js
-
-* Deploy App - takes 5 minutes.
-```shell
-cd ../../demos
-./updateapp1withcognito.sh
-``` -->
+* Create IAM Role in SAM template

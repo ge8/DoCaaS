@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  DoCaaSPolicyForAuthenticatedUsers:
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - dynamodb:*
+          Effect: Allow
+          Resource: '*'
+        Version: '2012-10-17'
+      PolicyName: DoCaaSPolicyForAuthenticatedUsers
+      Roles:
+      - labels-lambda-role2
+    Type: AWS::IAM::Policy

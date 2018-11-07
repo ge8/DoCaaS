@@ -22,9 +22,49 @@ Resources:
                 - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
                 - arn:aws:iam::aws:policy/service-role/AWSLambdaRole
 
+    PolicyForAuthenticatedUsers:
+        Type: AWS::IAM::Policy
+        Properties: 
+            PolicyName: DoCaaSPolicyForAuthenticatedUsers
+            PolicyDocument: 
+                Version: "2012-10-17"
+                Statement: 
+                    - 
+                        Effect: "Allow"
+                        Action: 
+                            - "dynamodb:*"
+                        Resource: "*"
+                        Condition: 
+                            ForAllValues:StringEquals: 
+                                dynamodb:LeadingKeys: 
+                                    - ”${cognito-identity.amazonaws.com:sub}"
+            Roles:
+                - "labels-lambda-role2"
+
+    RoleForAuthenticatedCognitoUsers:
+        Type: AWS::IAM::Role
+        Properties: 
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement: 
+                    - 
+                        Effect: "Allow"
+                        Principal: 
+                            Federated: 
+                                - "cognito-identity.amazonaws.com"
+                        Action: "sts:AssumeRoleWithWebIdentity"
+            ManagedPolicyArns: 
+                - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+
 Outputs:
-    AuthoriserFunction:
-      Description: "IAM execution Role for Lambda functions"
-      Value: !GetAtt RoleForLambdas.Arn
+    RoleForLambdas:
+        Description: "IAM execution Role for Lambda functions"
+        Value: !GetAtt RoleForLambdas.Arn
+    PolicyForAuthenticatedUsers:
+        Description: "IAM Role for Authenticated Cognito Users"
+        Value: !Ref PolicyForAuthenticatedUsers
+    RoleForAuthenticatedCognitoUsers:
+      Description: "IAM Role for Authenticated Cognito Users"
+      Value: !Ref RoleForAuthenticatedCognitoUsers
 
 
