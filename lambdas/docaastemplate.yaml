@@ -31,7 +31,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: deck-da.deck_data_access
             FunctionName: DOCAAS_DeckDataAccess
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
     GameDataAccessFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -39,7 +39,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: game-da.game_data_access
             FunctionName: DOCAAS_GameDataAccess
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
     CreateDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -47,7 +47,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: create.create_deck_handler
             FunctionName: DOCAAS_CreateDeck
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
     GetDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -55,7 +55,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: get.get_deck_handler
             FunctionName: DOCAAS_GetDeck
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
     ShuffleDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -63,7 +63,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: shuffle.shuffle_deck_handler
             FunctionName: DOCAAS_ShuffleDeck
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
     CutDeckFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -71,7 +71,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: cut.cut_deck_handler
             FunctionName: DOCAAS_CutDeck
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
     GameFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -79,7 +79,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: game.demo_game_handler
             FunctionName: DOCAAS_Game
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
     AuthoriserFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -87,10 +87,10 @@ Resources:
             Runtime: nodejs8.10
             Handler: authoriser.authorise_request
             FunctionName: DOCAAS_Authoriser
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
             Environment:
                 Variables:
-                    IDENTITY_POOL_ID: cognito-idp.us-west-2.amazonaws.com/IDENTITYPOOLIDGOESHERE
+                    IDENTITY_POOL_ID: cognito-idp.us-west-2.amazonaws.com/COGNITOIDENTITYPOOLGOESHERE
     CorsFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -98,7 +98,7 @@ Resources:
             Runtime: nodejs8.10
             Handler: cors.handle_request
             FunctionName: DOCAAS_Cors
-            Role: !GetAtt RoleForLambdas.arn
+            Role: !GetAtt RoleForLambdas.Arn
 
     RestApi:
         Type: AWS::ApiGateway::RestApi
@@ -108,7 +108,7 @@ Resources:
     PlanAuthorizer: 
         Type: AWS::ApiGateway::Authorizer
         Properties: 
-            AuthorizerCredentials: !GetAtt RoleForLambdas.arn
+            AuthorizerCredentials: !GetAtt RoleForLambdas.Arn
             AuthorizerResultTtlInSeconds: 600
             AuthorizerUri: 
                 Fn::Join: 

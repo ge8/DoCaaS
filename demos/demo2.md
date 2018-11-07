@@ -1,5 +1,5 @@
 # Demo2: What we'll do: Deploy a new API getting Isolation and Data Partitioning fixed once.
-1. SAM Template: to deploy API + Lambda Authorizer + CORS (Manually Add COGNITO). (How long it takes?)
+1. SAM Template: to deploy API + Lambda Authorizer + CORS (Manually Add COGNITO). (1 min)
 2. Standardise Service Offering: Lamda Authorizer: show output.
 3. Data Partitioning: Create new IAM Role for default authentication in Cognito.
 4. Standardise Service Offering: create Cognito attribute + Initialise customer 1 and two with plans + Add Authentication Policy/ Cognito_Poolname_ AUTH. Can I default a plan?
