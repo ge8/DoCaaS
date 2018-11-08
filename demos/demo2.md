@@ -26,7 +26,9 @@ aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy
 ./cognitosetup.sh
 ```
 
-5. Build and Deploy to bucket.
+5. Modify mainURL in MainBody.js with APIGW endpoing & and homepage in package.json with https://DOMAIN
+* Display Buttons based on plan attribute
+* Build and Deploy to bucket.
 ```shell
 npm install
 npm run-script build

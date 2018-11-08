@@ -18,7 +18,7 @@ aws configure #Set de default region to us-west-2 (Oregon)
 amplify configure
 eb init
 ```
-* Write your DOMAIN, BUCKET, BUCKETC1 and BUCKETC2 names into the loadvariables.sh found in /demos
+* Write your DOMAIN, BUCKET and REGION names into the loadvariables.sh found in /demos
 * Clone repo and run setup script
 ```shell
 git clone https://github.com/ge8/docaas && cd docaas/demos
