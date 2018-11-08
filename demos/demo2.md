@@ -30,7 +30,7 @@ aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy
 ```shell
 npm install
 npm run-script build
-aws s3 cp build/* s3://$BUCKET --recursive --acl public-read-write
+aws s3 sync build/ s3://$BUCKET --acl public-read-write
 ```
 
 6. Update R53 record
