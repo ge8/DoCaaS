@@ -1,15 +1,8 @@
-const jwt = require('jsonwebtoken');
-const debugLogging = process.env.DEBUG_LOGGING || "false" === "true";
-module.exports.isDebugLogging = function() {
-    return debugLogging;
-}
+const aws = require('aws-sdk');
 
 class Helper {
     constructor(event) {
         this._event = event;
-        this._jwt = this.event.headers.Authorization || this.event.headers.authorization;
-        this._claims = this.event.requestContext.authorizer.claims || jwt.decode(this._jwt);
-        this._aws = require('aws-sdk');
     }
 
     asPublicDeck(deck) {
@@ -30,20 +23,8 @@ class Helper {
       return this._event;
     }
 
-    get jwt() {
-        return this._jwt;
-    }
-
-    get claims() {
-        return this._claims;
-    }
-
     get plan() {
-        return this._claims["custom:plan"];
-    }
-
-    get role() {
-        return this._claims["cognito:preferred_role"];
+        return this.event.requestContext.authorizer.plan;
     }
 
     getParam(name) {
@@ -55,8 +36,6 @@ class Helper {
 
     async _callDeckDataAccess(method, params) {
         let data = {
-            jwt: this.jwt, 
-            claims: this.claims, 
             plan: this.plan,
             method: method,
             credentials: {
@@ -68,7 +47,7 @@ class Helper {
             params: params
         }
         
-        let lambda = new this._aws.Lambda();
+        let lambda = new aws.Lambda();
         let invokeParams = {
                 FunctionName: "DOCAAS_DeckDataAccess",
                 InvocationType: "RequestResponse",

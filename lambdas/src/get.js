@@ -4,7 +4,7 @@ exports.get_deck_handler = async (event, context, callback) => {
     try {
         let helper = new Helper(event);
         
-        // 1. Get deck from Request
+        // 1. Get deck name from Request
         let deckName = helper.getParam("deck");
         if (!deckName) return callback(null, { 'statusCode': 400, 'body': "Deck ID must be provided!" });
         

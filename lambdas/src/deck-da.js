@@ -5,9 +5,6 @@ exports.deck_data_access = async (event, context, callback) => {
         console.log("Event:", event);
         let helper = new DAHelper(event);
         
-        let loginOK = await helper.aquireCredentials();
-        if (!loginOK) return callback("Not Authorized");
-        
         let method = helper.method;
         let result;
         switch(method) {
