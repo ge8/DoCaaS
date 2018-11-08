@@ -3,20 +3,24 @@
 2. Standardise Service Offering: Lamda Authorizer: show output.
 3. Data Partitioning: Create new IAM Role for default authentication in Cognito.
 4. Standardise Service Offering: create Cognito attribute + Initialise customer 1 and two with plans + Add Authentication Policy/ Cognito_Poolname_ AUTH. Can I default a plan?
-5. Main DoCaaS react app -> Flag to show buttons based on plan - Embed APIGW mainulr. Deploy... Show Silver user?
-6. Update R53 record.
+5. Main DoCaaS react app -> Flag to show buttons based on plan - Embed APIGW mainulr. Deploy...
+6. Update R53 record for A record.
+7. Show Customer2 user (reset password)
 
 # Demo2
-* Get Cognito's Identity Pool ID
+* Get Cognito's Identity Pool ID into template and deploy it template
 ```shell
 aws cognito-identity list-identity-pools --max-results 50
+./deploy-scaffolding.sh
 ```
 
 
-
-* Create IAM policies for Authenticated Cognito Users
+* Create IAM policies
 ```shell
-aws iam create-policy --policy-name DynamoPolicyForAuthenticatedUsers --policy-document file://cognito-auth-policy1.json
-aws iam create-policy --policy-name DefaultPolicyForAuthenticatedUsers --policy-document file://cognito-auth-policy2.json
+aws iam create-policy --policy-name DoCaaSDynamoPolicyForAuthenticated --policy-document file://cognito-auth-policy1.json
+aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy-document file://cognito-auth-policy2.json
 ```
-* Create IAM Role in SAM template
+* Attach the policies to Cognito's Auth Role + Create plan attribute + Set Customer1 and Customer2 with Silver and Bronze plans
+```shell
+./cognitosetup.sh
+```

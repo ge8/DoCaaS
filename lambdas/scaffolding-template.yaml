@@ -1,0 +1,98 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    Deck of Cards As A Service
+
+    SAM Template for the Deck of Cards As A Service Application Suite
+    
+Globals:
+    Function:
+        Timeout: 20
+
+Resources:
+    RoleForLambdas:
+        Type: AWS::IAM::Role
+        Properties: 
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement: 
+                    Effect: "Allow"
+                    Principal: 
+                        Service: "lambda.amazonaws.com"
+                    Action: "sts:AssumeRole"
+            ManagedPolicyArns: 
+                - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+                - arn:aws:iam::aws:policy/service-role/AWSLambdaRole
+
+    AuthoriserFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Runtime: nodejs8.10
+            Handler: authoriser.authorise_request
+            FunctionName: DOCAAS_Authoriser
+            Role: !GetAtt RoleForLambdas.Arn
+            Environment:
+                Variables:
+                    IDENTITY_POOL_ID: cognito-idp.us-west-2.amazonaws.com/IDENTITYPOOLIDGOESHERE
+    CorsFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Runtime: nodejs8.10
+            Handler: cors.handle_request
+            FunctionName: DOCAAS_Cors
+            Role: !GetAtt RoleForLambdas.Arn
+
+    RestApi:
+        Type: AWS::ApiGateway::RestApi
+        Properties:
+            Name: docaas-api
+
+    PlanAuthorizer: 
+        Type: AWS::ApiGateway::Authorizer
+        Properties: 
+            AuthorizerCredentials: !GetAtt RoleForLambdas.Arn
+            AuthorizerResultTtlInSeconds: 600
+            AuthorizerUri: 
+                Fn::Join: 
+                    - ""
+                    - 
+                        - "arn:aws:apigateway:"
+                        - Ref: AWS::Region
+                        - ":lambda:path/2015-03-31/functions/"
+                        - Fn::GetAtt: 
+                            - "AuthoriserFunction"
+                            - "Arn"
+                        - "/invocations"
+            Type: TOKEN
+            IdentitySource: method.request.header.Authorization
+            Name: DocaasPlanAuthoriser
+            RestApiId: !Ref RestApi
+
+    AuthoriserInvokeLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "AuthoriserFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/*"
+
+    InvokeCorsLambdaPermission:
+        Type: "AWS::Lambda::Permission"
+        Properties:
+            Action: "lambda:InvokeFunction"
+            FunctionName: !GetAtt "CorsFunction.Arn"
+            Principal: "apigateway.amazonaws.com"
+            SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/*/*"
+            
+Outputs:
+    APIBaseURL:
+        Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+    RoleForLambdas:
+      Description: "IAM execution Role for Lambda functions"
+      Value: !GetAtt RoleForLambdas.Arn
+    AuthoriserFunction:
+      Description: "Plan Authoriser Function ARN"
+      Value: !GetAtt AuthoriserFunction.Arn
+

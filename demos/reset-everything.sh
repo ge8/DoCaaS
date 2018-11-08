@@ -2,6 +2,9 @@
 
 . ./loadvariables.sh
 
+# delete Amplify Stack
+
+
 # manually discard all changes in local repo
 
 

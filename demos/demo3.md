@@ -1,4 +1,5 @@
 # Demo3: What we'll do: Break the monolith into Serverless Microservices
+0. Deploy Two new Dynamo
 1. Author GET function. *How to test, debug?*
 2. SAM Template: Microservices. (Deploy first, then explain... How long does deploy take?)
 3. Data Migration: show+run script for datastore migration per customer.
@@ -6,3 +7,8 @@
 5. Migration: DNS change to redirect customer1.xxx to xxx.com
 
 # Demo3
+* Deploy New DynamoDBs
+```shell
+./deploy-dynamos.sh
+```
+
