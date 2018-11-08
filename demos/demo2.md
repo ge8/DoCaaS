@@ -28,7 +28,9 @@ aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy
 
 5. Build and Deploy to bucket.
 ```shell
-
+npm install
+npm run-script build
+aws s3 cp build/* s3://$BUCKET --recursive --acl public-read-write
 ```
 
 6. Update R53 record

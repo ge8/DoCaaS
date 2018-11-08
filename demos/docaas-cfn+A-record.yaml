@@ -50,6 +50,9 @@ Resources:
             Cookies:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
+          DefaultTTL: 0
+          MaxTTL: 0
+          MinTTL: 0
         PriceClass: PriceClass_All
         ViewerCertificate:
           AcmCertificateArn: !Ref AcmCertificateArn

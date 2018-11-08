@@ -9,12 +9,6 @@ This is a asdasdasd
 ##Setup
 * Install machine requirements including the AWS CLI (Pyhton 3), the AWS EB CLI, the AWS Amplify CLI and the SAM CLI
 ```shell
-npm install ajv
-npm install --save reactstrap react react-dom
-npm install jquery
-npm install --save boostrap
-npm i react-boostrap
-
 pip3 install awscli --upgrade --user #does it install EB CLI?
 npm install -g @aws-amplify/cli
 ```
@@ -28,9 +22,11 @@ eb init
 * Clone repo and run setup script
 ```shell
 git clone https://github.com/ge8/docaas && cd docaas/demos
-./acm #create and validate an ACM certificate
-./setup-c1.sh #deploy customer 1 app + monolith
-./setup-c2.sh #deploy customer 2 app + monolith
+./acm #create and validate an ACM certificate in preferred region (takes ~2-30min)
+./acm-us-east-1.sh #create and validate an ACM certificate in us-east-1 (takes ~2-30min)
+./deploy-docaas-cfn+A-record.sh #make bucket host public website + deploy cfn + R53 A record pointing domain to cfn (takes ~10 min)
+./setup-c1.sh #deploy customer 1 app + monolith (takes ~4 min)
+./setup-c2.sh #deploy customer 2 app + monolith (takes ~4 min)
 ```
 
 # Session details: GPSTEC405 - Optimize Your SaaS Offering with Serverless Microservices
