@@ -26,9 +26,9 @@ aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy
 ./cognitosetup.sh
 ```
 
-5. Enable bucket website with CFN (PRE-DEPLOYED), Build and Deploy to bucket, Update A record in R53.
+5. Build and Deploy to bucket.
 ```shell
-./s3+publish-app+r53.sh
+
 ```
 
 6. Update R53 record
