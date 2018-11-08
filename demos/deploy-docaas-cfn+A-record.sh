@@ -9,8 +9,10 @@ aws s3 website s3://$BUCKET --index-document index.html --error-document index.h
 ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN --query "HostedZones[0].Id" --output text`
 echo "Zone ID is $ZONEID"
 
+aws configure set default.region us-east-1
 CERTARN=`aws acm list-certificates --query "CertificateSummaryList[0].CertificateArn" --output text`
 echo "Cert ARN is $CERTARN"
+aws configure set default.region $REGION
 
 
 aws cloudformation delete-stack --stack-name docaas-cfn-a-record
