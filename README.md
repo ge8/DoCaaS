@@ -3,7 +3,7 @@ This is a asdasdasd
 
 ## Requirement -> An AWS account with:
 * Domain name imported into Route53
-* 3 x S3 Bucket in Oregon region (us-west-2)
+* A publicly readable S3 Bucket in Oregon region (us-west-2)
 * An IAM user with admin permissions.
 
 ##Setup
