@@ -6,8 +6,7 @@ const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
 // Set of Resources allowed, mapped by Plan
 const ALLOWED_RESOURCES = {
     "bronze": ["/create", "/get"],
-    "silver": ["/create", "/get", "/shuffle", "/game"],
-    "gold": ["/create", "/get", "/shuffle","cut", "/game"],
+    "silver": ["/create", "/get", "/shuffle", "/game"]
 }
 
 exports.authorise_request = async (event, context, callback) => {
