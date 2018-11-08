@@ -16,6 +16,6 @@ echo "Cert ARN is $CERTARN"
 aws cloudformation delete-stack --stack-name docaas-cfn-a-record
 aws cloudformation wait stack-delete-complete --stack-name docaas
 
-aws cloudformation deploy --template-file docaas-cfn+A-record.yaml --stack-name docaas-cfn-a-record --capabilities CAPABILITY_NAMED_IAM --region $REGION --parameter-overrides DomainName=$DOMAIN ZoneID=$ZONEID AcmCertificateArn=$CERTARN BucketName=$BUCKET
+aws cloudformation deploy --template-file docaas-cfn+A-record.yaml --stack-name docaas-cfn-a-record --capabilities CAPABILITY_NAMED_IAM --region $REGION --parameter-overrides DomainName=$DOMAIN ZoneID=$ZONEID AcmCertificateArn=$CERTARN BucketName=$BUCKET BucketWebsite="$BUCKET.s3-website-us-west-2.amazonaws.com"
 
 ##### NOT WORKING!!
