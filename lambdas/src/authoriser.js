@@ -1,7 +1,6 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const { AuthPolicy } = require('./common/auth-policy'); // Provided by AWS
-const DEBUG_LOGGING = (process.env.DEBUG_LOGGING || "false") === "true";
 const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
 
 // Set of Resources allowed, mapped by Plan
@@ -43,7 +42,6 @@ exports.authorise_request = async (event, context, callback) => {
         identityId: loginCredentials.id
     };
     
-    if (DEBUG_LOGGING) console.log("Auth Response:", JSON.stringify(authResponse));
     callback(null, authResponse);
 };
 

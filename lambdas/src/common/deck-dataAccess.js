@@ -1,4 +1,3 @@
-const debugLogging = (process.env.DEBUG_LOGGING || "false") === "true";
 
 function toDeck(data) {
     if (!data || !data.Item) return null;

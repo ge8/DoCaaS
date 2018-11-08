@@ -1,4 +1,3 @@
-const debugLogging = (process.env.DEBUG_LOGGING || "false") === "true";
 
 exports.getScores = async (ddb, tenantId, deckId) => {
     var params = {
