@@ -9,11 +9,11 @@
 # Demo3
 0. Deploy New DynamoDBs
 ```shell
+npm install aws-sdk
 ./deploy-dynamos.sh
 ```
 
 3. Run Data Migration script
 ```shell
-npm install aws-sdk
 USERPOOLID=us-west-2_qHHyA8fae node data-migration.js 
 ```

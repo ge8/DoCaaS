@@ -11,7 +11,6 @@ This is a asdasdasd
 ```shell
 pip3 install awscli --upgrade --user #does it install EB CLI?
 npm install -g @aws-amplify/cli
-npm install aws-sdk
 ```
 * Configure the AWS CLI, Amplify CLI, and the EB CLI - follow prompts
 ```shell
