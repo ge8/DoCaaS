@@ -18,7 +18,7 @@ exports.authorise_request = async (event, context, callback) => {
     if (!loginCredentials) return callback("Not Authorized");
     
     // Grab the plan attribute - this will define which methods are allowed for this user
-    let plan = claims["custom:plan"] || "silver"; // default plan when no plan has been specified for the customer
+    let plan = claims["custom:plan"] || "bronze"; // default plan when no plan has been specified for the customer
     
     // Create + Configure API Policy
     const policy = initialiseAuthPolicy(event.methodArn, claims.sub);
