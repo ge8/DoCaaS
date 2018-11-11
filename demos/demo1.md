@@ -5,6 +5,7 @@
 * demo1.md open in VSC
 * thisisnotgerardo’s gmail open
 * Close everything + WorkDocs + Google Drive
+* Clean Desktop Up
 
 # Demo1: What we'll do: Add Secure Sign Up Sign In to customer1.
 1. Show app: customer1.estaba.net and customer2.estaba.net
