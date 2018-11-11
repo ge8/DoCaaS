@@ -24,6 +24,8 @@ echo "The Cognito Client1 is: $CLIENT1"
 CLIENT2=`aws cognito-idp list-user-pool-clients --user-pool-id $USERPOOLID --max-results 50 --query 'UserPoolClients[1].ClientId' --output text`
 echo "The Cognito Client2 is: $CLIENT2"
 
+# Get RoleNameAuth
+$ROLENAMEAUTH=`aws cognito-identity get-identity-pool-roles --identity-pool-id $IDENTITYPOOLID --query "Roles.authenticated" --output text`
 
 # Attach 2 policies to Authenticated Role
 aws iam attach-role-policy --role-name $ROLENAMEAUTH --policy-arn arn:aws:iam::$AWSACCOUNT:policy/DoCaaSDynamoPolicyForAuthenticated
