@@ -40,6 +40,7 @@ class App extends Component {
     // else if cognito: 
     // let session = await Auth.currentSession();
     // if (session && session.idToken) {
+    //   console.log(session.idToken);
     //   let claims = jwtDecode(session.idToken.jwtToken);
     //   this.setState( {
     //     'claims': claims,

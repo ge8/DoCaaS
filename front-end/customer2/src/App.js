@@ -38,6 +38,7 @@ class App extends Component {
     // else if cognito: 
     // let session = await Auth.currentSession();
     // if (session && session.idToken) {
+    //   console.log(session.idToken);
     //   this.setState( {
     //     'logingStatus': LOGGED
     //   });
