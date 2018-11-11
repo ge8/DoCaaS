@@ -61,6 +61,6 @@ echo "The AWS Account is: $AWSACCOUNT"
 aws iam delete-policy --policy-arn arn:aws:iam::$AWSACCOUNT:policy/DoCaaSDynamoPolicyForAuthenticated
 aws iam delete-policy --policy-arn arn:aws:iam::$AWSACCOUNT:policy/DoCaaSDefaultPolicyForAuthenticated
 
-
+echo "Everything's been reset"
 
 
