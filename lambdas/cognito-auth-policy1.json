@@ -11,7 +11,10 @@
                 "dynamodb:Query",
                 "dynamodb:UpdateItem"
             ],
-            "Resource": "arn:aws:dynamodb:ap-southeast-2:*:table/decks-master",
+            "Resource": [
+                "arn:aws:dynamodb:ap-southeast-2:*:table/decks-master",
+                "arn:aws:dynamodb:ap-southeast-2:*:table/games-master"
+            ],
             "Condition": {
                 "ForAllValues:StringEquals": {
                     "dynamodb:LeadingKeys": "${cognito-identity.amazonaws.com:sub}"
