@@ -53,7 +53,7 @@ echo "C2 CNAME Record Updated from R53"
 # Confirm cfn deleted with Amplify STACK!!
 aws cloudformation wait stack-delete-complete --stack-name docaas-dynamos
 aws cloudformation wait stack-delete-complete --stack-name docaas
-aws cloudformation wait stack-delete-complete --stack-name customer1-20181106124851
+aws cloudformation wait stack-delete-complete --stack-name $STACKNAME
 
 # delete IAM policies DefaultPolicyForAuthenticatedUsers and DynamoPolicyForAuthenticatedUsers
 AWSACCOUNT=`aws sts get-caller-identity --output text --query 'Account'`
