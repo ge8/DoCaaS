@@ -5,7 +5,7 @@ const IDENTITY_POOL_ID = process.env.IDENTITY_POOL_ID;
 
 // Set of Resources allowed, mapped by Plan
 const ALLOWED_RESOURCES = {
-    "bronze": ["/create", "/get"],
+    "bronze": ["/create", "/get", "/game"],
     "silver": ["/create", "/get", "/shuffle", "/game"]
 }
 
