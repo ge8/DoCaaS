@@ -36,7 +36,8 @@ import { withAuthenticator } from 'aws-amplify-react';
 ...
 export default withAuthenticator(App);
 ```
-* Using Cognito's session info instead of Basic Auth. Hide App.js Line 37 and unhide Lines 40-46
+* Using Cognito's session info instead of Basic Auth. Hide App.js Line 37 and unhide Lines 40-46. & Display Buttons based on plan attribute -> default to gold
+
 
 * Remove Previous Login Button. Header.js lines 27-29.
 
