@@ -29,6 +29,9 @@ aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy
 * Display Buttons based on plan attribute
 * Build and Deploy to bucket.
 ```shell
+cp -a ../front-end/customer1 ../docaas-app # ~10 seconds
+aws cloudformation describe-stacks --stack-name docaas --query "Stacks[0].Outputs" 
+
 npm install
 npm run-script build
 aws s3 sync build/ s3://$BUCKET --acl public-read-write
