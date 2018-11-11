@@ -1,14 +1,15 @@
 #!/bin/bash
 
-
-
 # Get the IDENTITYPOOLID and USERPOOLID
-
-IDENTITYPOOLID=`aws cognito-identity list-identity-pools --max-results 50 --query 'IdentityPools[0].IdentityPoolId' --output text`
+cd ../front-end/customer1/amplify/backend/
+A=`grep "IdentityPoolId" amplify-meta.json`
+IDENTITYPOOLID=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
 echo "The Identity Pool Id is: $IDENTITYPOOLID"
 
-USERPOOLID=`aws cognito-idp list-user-pools --max-results 50 --query 'UserPools[0].Id' --output text`
+A=`grep "UserPoolId" amplify-meta.json`
+USERPOOLID=`echo "{ $A \"t\":1 }" | jq ".UserPoolId" --raw-output`
 echo "The User Pool Id is: $USERPOOLID"
+cd ../../../../lambdas
 
 # Get the IDENTITYPOOLID Auth Role
 ROLENAMEAUTH=`aws cognito-identity get-identity-pool-roles --identity-pool-id $IDENTITYPOOLID --query 'Roles.authenticated' --output text `
@@ -46,31 +47,3 @@ aws cognito-idp admin-update-user-attributes --user-pool-id $USERPOOLID --userna
 
 # Create customer2 with bronze plan and HolaHola1! temporary password.
 aws cognito-idp admin-create-user --user-pool-id $USERPOOLID --username customer2 --user-attributes Name=email,Value=thisisnotgerardosemail+1@gmail.com Name=email_verified,Value=true Name=custom:plan,Value=bronze --temporary-password HolaHola1!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# aws cognito-idp list-user-pools --max-results 60
-
-
-# # Create "plan" attribute
-# aws cognito-idp add-custom-attributes
-
-# # Make "plan" attribute readable to app client.
-# aws cognito-idp update-user-pool-client
-
-# # Add customer 1 to silver plan
-# aws cognito-idp admin-update-user-attributes
-
-# # Create user 2 with bronze plan
-
