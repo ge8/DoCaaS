@@ -2,10 +2,10 @@
 1. SAM Template: to deploy API + Lambda Authorizer + CORS (Manually Add COGNITO). (1 min)
 2. Lamdda Authorizer: show output.
 3. Data Partitioning: Create new IAM Role for default authentication in Cognito.
-4. Standardise Service Offering: create Cognito attribute + Initialise customer 1 and two with plans + Add Authentication Policy/ Cognito_Poolname_ AUTH. Can I default a plan?
-5. Main DoCaaS react app -> Flag to show buttons based on plan - Embed APIGW mainulr. Deploy... Console.log JTW token (ADAM)
+4. Standardise Service Offering: create Cognito attribute + Initialise customer 1 and two with plans + Add Authentication Policy/ Cognito_Poolname_ AUTH. 
+5. Main DoCaaS react app -> Flag to show buttons based on plan - Embed APIGW mainulr. Deploy.
 6. Show Customer2 user (reset password)
-7. Grab a token from browser and show them in jwt.io (ADAM)
+7. Grab a token from browser and show them in jwt.io
 
 # Demo2
 1. Get Cognito's Identity Pool ID into template and deploy it template
