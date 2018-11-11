@@ -1,83 +1,76 @@
 'use strict';
 // import SDK
-var AWS = require('aws-sdk');
+let AWS = require('aws-sdk');
 // initialize dynamodb and cognito
-var dynamodb = new AWS.DynamoDB({region:"us-west-2"});
-var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({region:"us-west-2"});
-var USER_POOL_ID = process.env.USERPOOLID
+let dynamodb = new AWS.DynamoDB({region:"us-west-2"});
+let cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({region:"us-west-2"});
+let USER_POOL_ID = process.env.USERPOOLID
+
 
 // Get <sub> for customer1. Parameters: customer1 & COGNITOPOOLID 
-var params1 = {
+let params = {
     UserPoolId: USER_POOL_ID, /* required */
     Username: 'customer1' /* required */
+};
+let GetUserSub = cognitoidentityserviceprovider.adminGetUser(params).promise();
+GetUserSub.then(function(data) {
+    let C1SUB = "";
+    data.UserAttributes.forEach(function (element) {
+        if (element.Name === "sub") {
+            C1SUB = element.Value;
+            console.log("C1SUB is: " + C1SUB);
+        }
+    })
+
+    // Put Customer 1 C1DECKS and C2DECKS into Decks and Games
+    let params = {
+        TableName: "data-customer1"
     };
-cognitoidentityserviceprovider.adminGetUser(params1, function(err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else {
-        data.UserAttributes.forEach(function (element) {
-            if (element.Name === "sub") {
-                var C1SUB = element.Value;
-                console.log(C1SUB);
-            }
-        })
-    }
-}).promise();
+    let ScanDynamo = dynamodb.scan(params).promise();
+    ScanDynamo.then(function(data) {
+    
+        console.log(data.Items);           // successful response
+    
+        data.Items.forEach( function (item) {
+            // Check for Decks
+            if (item.id.S.substring(0,4) === "deck") {
+                console.log("Found: " + item.id.S.slice(4));
+                let ID = { S: C1SUB + item.id.S.slice(4) };
+                let CARDS = { L: item.cards.L };
+                console.log( ID );
+                console.log( CARDS );
+                console.log({"id": ID, "cards": CARDS});
+                // Write to decks-master
+                let params = {
+                    TableName: "decks-master",
+                    Item: {"id": ID, "cards": CARDS},
+                    ReturnConsumedCapacity: "TOTAL",
+                };
+                let PutToMaster = dynamodb.putItem(params).promise();
+                PutToMaster.then(function(data) {
+                    console.log ("Successful item written to decks-master: " + data);
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            
 
-// Get <sub> for customer2. Parameters: customer2 & COGNITOPOOLID 
-var params2 = {
-    UserPoolId: USER_POOL_ID, /* required */
-    Username: 'customer2' /* required */
-};
-cognitoidentityserviceprovider.adminGetUser(params2, function(err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else {
-        data.UserAttributes.forEach(function (element) {
-            if (element.Name === "sub") {
-                var C2SUB = element.Value;
-                console.log(C2SUB);
-            }
-        })
-    }
-}).promise();
 
-// Scan customer1 DB
-var paramsscan = {
-    TableName: "data-customer1",
-};
+                // Check for Games for this Deck.
 
-dynamodb.scan(paramsscan, function(err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else {
-        console.log(data);           // successful response
-        data.Items.forEach( function (element) {
-            if (element.id.stringify().slice(0,3) === "deck") {
-                DECKID = element.id.stringify().replace("deck-","");
-                console.log("The Deck ID is" + DECKID);
-            }
+
+            } 
+            
+            
             
         });
-    }
+    
+    }).catch(function(err) {
+        console.log(err);
+    });
+    
+
+
+}).catch(function(err) {
+    console.log(err);
 });
-
-
-
-// Iterate over Items, modify them into two Items (Decks, Games).
-
-// var params = {
-//     Item: {
-//         "id": { S: C1SUB + DECKID}
-//       }
-//     }, 
-//     TableName: "decks-master"
-//    };
-//    dynamodb.putItem(params, function(err, data) {
-//      if (err) console.log(err, err.stack); // an error occurred
-//      else {
-//         console.log(data);           // successful response
-
-//      }
-//    });
-
-
-// Put into Decks and Games
 

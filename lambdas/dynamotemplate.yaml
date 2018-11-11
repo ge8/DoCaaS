@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
 Resources:
-  DynamoDBTable:
+  DynamoDecksTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: decks-master
@@ -15,7 +15,7 @@ Resources:
       SSESpecification:
         SSEEnabled: true
 
-  DynamoDBTable:
+  DynamoGamesTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: games-master
