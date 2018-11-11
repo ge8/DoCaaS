@@ -2,6 +2,8 @@
 
 . ./loadvariables.sh
 
+.reset-presentation.sh
+
 # Delete C1 and C2 R53 records
 
 # Delete ACM R53 records
