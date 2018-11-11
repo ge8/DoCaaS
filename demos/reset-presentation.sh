@@ -5,7 +5,7 @@
 # manually discard all changes in local repo (deletes all new local files and changes)
 cd ../
 git reset --hard HEAD
-git clean -f
+git clean -fdx
 cd demos/
 
 # delete Amplify Stack TODOOOOOOOO
