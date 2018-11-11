@@ -8,8 +8,12 @@ git reset --hard HEAD
 git clean -fdx
 cd demos/
 
-# delete Amplify Stack TODOOOOOOOO
-aws cloudformation delete-stack --stack-name customer1-20181106124851
+# delete Amplify Stack
+A=`aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE | grep '"StackName": "customer1'`
+echo $A
+STACKNAME=`echo "{ $A \"t\":1 }" | jq ".StackName" --raw-output`
+echo "Amplify's Stack Name to delete is: $STACKNAME"
+aws cloudformation delete-stack --stack-name $STACKNAME
 
 # Delete docaas SAM stack 
 aws cloudformation delete-stack --stack-name docaas
