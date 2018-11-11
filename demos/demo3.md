@@ -15,5 +15,5 @@ npm install aws-sdk
 
 3. Run Data Migration script
 ```shell
-USERPOOLID=us-west-2_qHHyA8fae node data-migration.js 
+USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with new Cognito User Pool Id
 ```

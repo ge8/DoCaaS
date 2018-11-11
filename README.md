@@ -28,6 +28,7 @@ git clone https://github.com/ge8/docaas && cd docaas/demos
 ./setup-c1.sh #deploy customer 1 app + monolith (takes ~4 min)
 ./setup-c2.sh #deploy customer 2 app + monolith (takes ~4 min)
 ```
+* Test the apps by browsing to customer1.<yourdomain> and customer2.<yourdomain>, creating 5 decks on each, shuffling some and playing a few games in some.
 
 # Session details: GPSTEC405 - Optimize Your SaaS Offering with Serverless Microservices
 
