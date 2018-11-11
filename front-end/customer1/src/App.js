@@ -34,7 +34,7 @@ class App extends Component {
   
   async getCurrentAuthToken() {
     // If Basic:
-    this.setState( { claims: { ["custom:plan"]:"bronze" }});
+    this.setState( { claims: { ["custom:plan"]:"silver" }});
     return 'Basic ' + btoa(this.state.username + ":" + this.state.password);
 
     // else if cognito: 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './components/Header/Header';
 import MainBody from './components/MainBody/MainBody';
+import jwtDecode from 'jwt-decode';
 
 import './App.css';
 
@@ -33,13 +34,16 @@ class App extends Component {
   
   async getCurrentAuthToken() {
     // If Basic:
+    this.setState( { claims: { ["custom:plan"]:"bronze" }});
     return 'Basic ' + btoa(this.state.username + ":" + this.state.password);
 
     // else if cognito: 
     // let session = await Auth.currentSession();
     // if (session && session.idToken) {
     //   console.log(session.idToken);
+    //   let claims = jwtDecode(session.idToken.jwtToken);
     //   this.setState( {
+    //     'claims': claims,
     //     'logingStatus': LOGGED
     //   });
     //   return session.idToken.jwtToken;
@@ -70,7 +74,7 @@ class App extends Component {
                 loginButtonColor={this.state.loginButtonColor} 
                 loginButtonCaption={this.state.loginButtonCaption} 
         />
-        <MainBody logingStatus={this.state.logingStatus} handleLogged={this.handleLogged} getAuthToken={this.getCurrentAuthToken.bind(this)} /> 
+        <MainBody logingStatus={this.state.logingStatus} claims={this.state.claims} handleLogged={this.handleLogged} getAuthToken={this.getCurrentAuthToken.bind(this)} /> 
       </div>
     );
   }

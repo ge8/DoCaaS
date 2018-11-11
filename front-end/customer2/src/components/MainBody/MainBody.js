@@ -278,6 +278,7 @@ class MainBody extends React.Component {
     }
     else if (logingStatus === LOGGED) {
       controls = <Controls 
+                    claims={this.props.claims} 
                     handleCreate={this.handleCreate} 
                     handleGet={this.handleGet} 
                     handleGame={this.handleGame} 

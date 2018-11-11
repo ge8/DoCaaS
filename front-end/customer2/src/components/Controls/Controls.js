@@ -38,6 +38,32 @@ class Controls extends React.Component {
         });
     }
 
+    shouldDisplay(name) {
+        let plan = this.props.claims ? this.props.claims["custom:plan"] : "bronze";
+        switch(name) {
+            case "create": 
+            case "get": 
+            case "game": 
+                return true; // Always Allowed
+            case "shuffle": 
+                return plan === "silver" || plan === "gold";
+            default: 
+                return false;
+        }
+    }
+
+    renderButton(name, label, colour, clickMethod) {
+        if (this.shouldDisplay(name)) {
+            return (
+                <Button onClick={clickMethod} className="buttons" color={colour} size="lg">
+                    {label}
+                </Button>
+            );
+        } else {
+            return null;
+        }
+    }
+
     render() {
     return (
         <div className="App-controls">
@@ -50,18 +76,10 @@ class Controls extends React.Component {
                 onChange={this.handleChange}
                 />
             </FormGroup>
-            <Button onClick={this.handleCreate} className="buttons" color='success' size="lg">
-                Create
-            </Button>
-            <Button onClick={this.handleGet} className="buttons" color='info' size="lg">
-                Get
-            </Button>
-            <Button onClick={this.handleGame} className="buttons" color='warning' size="lg">
-                Game
-            </Button>
-            {/* <Button onClick={this.handleShuffle} className="buttons" color='danger' size="lg">
-                Shuffle
-            </Button> */}
+            {this.renderButton("create", "Create", "success", this.handleCreate)}
+            {this.renderButton("get", "Get", "info", this.handleGet)}
+            {this.renderButton("game", "Game", "warning", this.handleGame)}
+            {this.renderButton("shuffle", "Shuffle", "danger", this.handleShuffle)}
         </div>
     );
     }
