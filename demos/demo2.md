@@ -31,7 +31,7 @@ aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy
 * Replace "customer1" with "Welcome to our new DoCaaS App" in index.js
 * Modify mainURL in MainBody.js with APIGW endpoing
 ```shell
-cp -a ../front-end/customer1 ../docaas-app # ~10 seconds
+rsync -ax --exclude 'node_modules' ../front-end/customer1 ../
 aws cloudformation describe-stacks --stack-name docaas --query "Stacks[0].Outputs" 
 ```
 * Build and Deploy to bucket.
@@ -39,5 +39,5 @@ aws cloudformation describe-stacks --stack-name docaas --query "Stacks[0].Output
 cd ../docaas-app
 npm install
 npm run-script build
-aws s3 sync build/ s3://$BUCKET --acl public-read-write
+aws s3 sync build/ s3://docaas --acl public-read-write #use your own S3 bucket
 ```
