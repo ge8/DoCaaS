@@ -2,7 +2,12 @@
 
 . ./loadvariables.sh
 
-A=`aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE | grep '"StackName": "dynamo-customer1'`
-echo $A
-STACKNAME=`echo "{ $A \"t\":1 }" | jq ".StackName" --raw-output`
-echo "Here it is: $STACKNAME"
+ROLENAMEAUTH=customer1-20181111211422-authRole
+
+AWSACCOUNT=`aws sts get-caller-identity --output text --query 'Account'`
+echo "The AWS Account is: $AWSACCOUNT"
+
+
+# Attach 2 policies to Authenticated Role
+aws iam detach-role-policy --role-name $ROLENAMEAUTH --policy-arn arn:aws:iam::$AWSACCOUNT:policy/DoCaaSDynamoPolicyForAuthenticated
+aws iam detach-role-policy --role-name $ROLENAMEAUTH --policy-arn arn:aws:iam::$AWSACCOUNT:policy/DoCaaSDefaultPolicyForAuthenticated
