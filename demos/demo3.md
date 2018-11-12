@@ -13,7 +13,20 @@ npm install aws-sdk
 ./deploy-dynamos.sh
 ```
 
+1. Deploy new template
+```shell
+./deploy-demo3-SAM.sh
+```
+
+
 3. Run Data Migration script
 ```shell
-USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with new Cognito User Pool Id
+aws cognito-idp list-user-pools --max-results 50
+USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with one from previous call
+```
+
+5. R53 update
+```shell
+./c1addr53record.sh
+./c2addr53record.sh
 ```

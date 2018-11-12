@@ -1,0 +1,11 @@
+{
+    "Comment": "CREATE/DELETE/UPSERT a record ",
+    "Changes": [{
+    "Action": "UPSERT",
+                "ResourceRecordSet": {
+                            "Name": "customer1.##DOMAINGOESHERE##",
+                            "Type": "CNAME",
+                            "TTL": 10,
+                         "ResourceRecords": [{ "Value": "estaba.net"}]
+}}]
+}
