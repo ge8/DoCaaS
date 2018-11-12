@@ -19,7 +19,7 @@ aws configure set default.region $REGION
 aws cloudformation delete-stack --stack-name docaas-cfn-a-record
 aws cloudformation wait stack-delete-complete --stack-name docaas-cfn-a-record
 
-aws cloudformation deploy --template-file docaas-cfn+A-record.yaml --stack-name docaas-cfn-a-record --capabilities CAPABILITY_NAMED_IAM --region $REGION --parameter-overrides DomainName=$DOMAIN AcmCertificateArn=$CERTARN BucketName=$BUCKET BucketWebsite="$BUCKET.s3-website-us-west-2.amazonaws.com"
+aws cloudformation deploy --template-file docaas-cfn+A-record.yaml --stack-name docaas-cfn-a-record --capabilities CAPABILITY_NAMED_IAM --region $REGION --parameter-overrides DomainName=$DOMAIN DomainCNAME="*.$DOMAIN" AcmCertificateArn=$CERTARN BucketName=$BUCKET BucketWebsite="$BUCKET.s3-website-us-west-2.amazonaws.com"
 
 # Query the DISTRIBUTION Endpoint
 DISTRIBUTION=`aws cloudformation describe-stacks --stack-name docaas-cfn-a-record --query "Stacks[0].Outputs[0].OutputValue" --output text`

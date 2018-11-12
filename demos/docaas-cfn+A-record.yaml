@@ -7,6 +7,11 @@ Parameters:
     Description: The DNS name of an existing Amazon Route 53 hosted zone e.g. jevsejev.io
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
     ConstraintDescription: must be a valid DNS zone name.
+  DomainCNAME:
+    Type: String
+    Description: The CNAME of an existing Amazon Route 53 hosted zone e.g. jevsejev.io
+    AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
+    ConstraintDescription: must be a valid CNAME zone name.
   AcmCertificateArn:
     Type: String
     Description: the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate.
@@ -35,6 +40,7 @@ Resources:
         DefaultRootObject: index.html
         Aliases:
         - !Ref 'DomainName'
+        - !Ref 'DomainCNAME'
         DefaultCacheBehavior:
           AllowedMethods:
           - GET
