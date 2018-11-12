@@ -25,12 +25,16 @@ aws iam create-policy --policy-name DoCaaSDefaultPolicyForAuthenticated --policy
 ./cognitosetup.sh
 ```
 
-5. Modify mainURL in MainBody.js with APIGW endpoing & and homepage in package.json with https://DOMAIN
-* Build and Deploy to bucket.
+5. New docaas-app
+* Modify homepage in package.json with https://DOMAIN
+* Replace "customer1" with "Welcome to our new DoCaaS App" in index.js
+* Modify mainURL in MainBody.js with APIGW endpoing
 ```shell
 cp -a ../front-end/customer1 ../docaas-app # ~10 seconds
 aws cloudformation describe-stacks --stack-name docaas --query "Stacks[0].Outputs" 
-
+```
+* Build and Deploy to bucket.
+```shell
 cd docaas-app
 npm install
 npm run-script build
