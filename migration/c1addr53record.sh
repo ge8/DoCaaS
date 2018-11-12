@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./loadvariables.sh
+. ./../demos/loadvariables.sh
 
 echo "Updating record in R53"
 ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-output '.HostedZones[0].Id'`
