@@ -11,6 +11,7 @@
 1. Get Cognito's Identity Pool ID into template and deploy it template
 ```shell
 aws cognito-identity list-identity-pools --max-results 50
+cd ../lambdas
 ./deploy-demo2-SAM.sh
 ```
 
@@ -35,7 +36,7 @@ aws cloudformation describe-stacks --stack-name docaas --query "Stacks[0].Output
 ```
 * Build and Deploy to bucket.
 ```shell
-cd docaas-app
+cd ../docaas-app
 npm install
 npm run-script build
 aws s3 sync build/ s3://$BUCKET --acl public-read-write

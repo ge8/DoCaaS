@@ -4,7 +4,7 @@ aws cognito-identity list-identity-pools --max-results 50
 
 
 
-
+cd ../lambdas
 ./deploy-demo2-SAM.sh
 
 
@@ -43,7 +43,7 @@ aws cloudformation describe-stacks --stack-name docaas --query "Stacks[0].Output
 
 
 
-cd docaas-app
+cd ../docaas-app
 npm install
 npm run-script build
 aws s3 sync build/ s3://estaba --acl public-read-write #use your bucket instead of estaba

@@ -9,7 +9,7 @@
 # Demo3
 0. Deploy New DynamoDBs
 ```shell
-npm install aws-sdk
+cd ../lambdas
 ./deploy-dynamos.sh
 ```
 
@@ -21,7 +21,9 @@ npm install aws-sdk
 
 3. Run Data Migration script
 ```shell
+cd ../migration
 aws cognito-idp list-user-pools --max-results 50
+npm install aws-sdk
 USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with one from previous call
 ```
 

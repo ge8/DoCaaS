@@ -4,8 +4,9 @@
 
 
 
-npm install aws-sdk
+cd ../lambdas
 ./deploy-dynamos.sh
+
 
 
 
@@ -19,10 +20,10 @@ npm install aws-sdk
 
 
 
-
+cd ../migration
 aws cognito-idp list-user-pools --max-results 50
-
-USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with new Cognito User Pool Id
+npm install aws-sdk
+USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with one from previous call
 
 
 
