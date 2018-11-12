@@ -8,6 +8,22 @@ git reset --hard HEAD
 git clean -fdx
 cd demos/
 
+# Get User Pool ID
+cd ../front-end/customer1/amplify/backend/
+A=`grep "IdentityPoolId" amplify-meta.json`
+IDENTITYPOOLID=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
+echo "The Identity Pool Id is: $IDENTITYPOOLID"
+
+# Get RoleNameAuth
+INPUT=`aws cognito-identity get-identity-pool-roles --identity-pool-id $IDENTITYPOOLID --query "Roles.authenticated" --output text`
+ROLENAMEAUTH=${INPUT#*/}   # remove prefix ending in "/"
+echo $ROLENAMEAUTH
+
+# Attach 2 policies to Authenticated Role
+aws iam detach-role-policy --role-name $ROLENAMEAUTH --policy-arn arn:aws:iam::$AWSACCOUNT:policy/DoCaaSDynamoPolicyForAuthenticated
+aws iam detach-role-policy --role-name $ROLENAMEAUTH --policy-arn arn:aws:iam::$AWSACCOUNT:policy/DoCaaSDefaultPolicyForAuthenticated
+
+
 # delete Amplify Stack
 A=`aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE | grep '"StackName": "customer1'`
 echo $A
