@@ -39,7 +39,7 @@ class Controls extends React.Component {
     }
 
     shouldDisplay(name) {
-        let plan = this.props.claims ? this.props.claims["custom:plan"] : "bronze";
+        let plan = this.props.claims && this.props.claims["custom:plan"] ? this.props.claims["custom:plan"] : "bronze";
         switch(name) {
             case "create": 
             case "get": 
