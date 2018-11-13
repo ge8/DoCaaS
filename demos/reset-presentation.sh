@@ -2,17 +2,17 @@
 
 . ./loadvariables.sh
 
-# manually discard all changes in local repo (deletes all new local files and changes)
-cd ../
-git reset --hard HEAD
-git clean -fdx
-cd demos/
-
 # Get User Pool ID
 cd ../front-end/customer1/amplify/backend/
 A=`grep "IdentityPoolId" amplify-meta.json`
 IDENTITYPOOLID=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
 echo "The Identity Pool Id is: $IDENTITYPOOLID"
+
+# manually discard all changes in local repo (deletes all new local files and changes)
+cd ../
+git reset --hard HEAD
+git clean -fdx
+cd demos/
 
 # Get RoleNameAuth
 INPUT=`aws cognito-identity get-identity-pool-roles --identity-pool-id $IDENTITYPOOLID --query "Roles.authenticated" --output text`
