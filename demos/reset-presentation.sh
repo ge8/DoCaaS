@@ -13,6 +13,7 @@ echo "The Identity Pool Id is: $IDENTITYPOOLID"
 cd $(git rev-parse --show-cdup)
 git reset --hard HEAD
 git clean -fdx
+cd ..
 git clone https://github.com/ge8/docaas && cd docaas/demos
 
 # Get RoleNameAuth
