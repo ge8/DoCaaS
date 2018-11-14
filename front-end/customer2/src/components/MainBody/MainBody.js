@@ -250,6 +250,7 @@ class MainBody extends React.Component {
     return this.props.getAuthToken().then((authToken) => {
       return fetch(url + "?deck=" + deckId, {
         method: 'GET',
+        mode: "cors",
         headers: { 
           Authorization: authToken
         }
