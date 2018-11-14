@@ -12,6 +12,7 @@ amplify push #takes 3 min.
 
 
 
+npm start
 
 cd ../../demos
 ./updateapp1withcognito.sh
