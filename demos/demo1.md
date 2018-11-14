@@ -17,12 +17,12 @@
 # Demo1
 * Initialize Amplify
 ```shell
-amplify init #prompts + takes 1 min
+amplify init # takes 1 min. Amplify Docs
 ```
 * Create Amazon Cognito User Pool
 ```shell
 amplify add auth #prompts
-amplify push #takes 3 min: Go through Amplify Docs.
+amplify push # "y" confirm then takes 3 min. Update Apps
 ```
 * Configure App with Amplify
 ```js
@@ -43,8 +43,9 @@ export default withAuthenticator(App);
 
 * Modify Backend code. Hide Basic Auth Auth.js lines 11-16, unhide line 19. Explain cognito.js
 
-* Deploy App - takes 5 minutes.
+* Test & Deploy App - takes 5 minutes.
 ```shell
+npm start
 cd ../../demos
 ./updateapp1withcognito.sh
 ```
