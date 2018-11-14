@@ -19,11 +19,11 @@ exports.shuffle_deck_handler = async (event, context, callback) => {
 
         // 1. Get deck name from Request
         let deckName = helper.getParam("deck");
-        if (!deckName) return callback(null, { 'statusCode': 400, 'body': "Deck ID must be provided!" });
+        if (!deckName) return callback(null, helper.withCors({ 'statusCode': 400, 'body': "Deck ID must be provided!" }));
         
         // 2. Get deck from Data Access
         let deck = await helper.getDeck(deckName);
-        if (!deck) return callback(null, { 'statusCode': 404, 'body': "Deck " + deckName + " not found" });
+        if (!deck) return callback(null, helper.withCors({ 'statusCode': 404, 'body': "Deck " + deckName + " not found" }));
         
         // 3. Shuffle deck + Save to Data Access
         let iterations = Number.parseInt(helper.getParam("iterations") || "100");
@@ -31,7 +31,7 @@ exports.shuffle_deck_handler = async (event, context, callback) => {
         await helper.saveDeck(deck);
         
         // 4. Return updated deck
-        callback(null, { 'statusCode': 200, 'body': JSON.stringify(helper.asPublicDeck(deck)) });
+        callback(null, helper.withCors({ 'statusCode': 200, 'body': JSON.stringify(helper.asPublicDeck(deck)) }));
     } catch (err) {
         console.log("Failed to Process Request with an \"" + err.code + "\" error:",err.message);
         callback(err.message, null);

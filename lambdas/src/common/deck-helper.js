@@ -9,6 +9,20 @@ class Helper {
         return { name:deck.name, cards:deck.cards };
     }
 
+    withCors(response) {
+        var origin = this.event.headers.origin || this.event.headers.Origin;
+        var requestHeaders = this.event.headers["access-control-request-headers"] || this.event.headers["Access-Control-Request-Headers"];
+        response.headers = {
+            'Access-Control-Max-Age': '900',
+            'Access-Control-Allow-Headers': requestHeaders,
+            'Access-Control-Allow-Origin': origin,
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Allow-Methods': 'GET,POST,PUT,OPTIONS', 
+            'Vary': 'Origin'
+        };
+        return response;
+    }
+
     async getDeck(name) {
         return this._callDeckDataAccess("get", { name:name });
     }
