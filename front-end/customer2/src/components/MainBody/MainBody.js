@@ -33,7 +33,7 @@ prefixes.forEach(prefix => {
 class MainBody extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     this.state = {
       'username': "",
       'password': "",
@@ -69,7 +69,7 @@ class MainBody extends React.Component {
   }
 
   handleCreate(deckId) {
-    console.log('API for Create');
+    // console.log('API for Create');
     let message = "";
     this.blankCards();
 
@@ -106,7 +106,7 @@ class MainBody extends React.Component {
   }
   
   handleGet(deckId) {
-    console.log('API for Get');
+    // console.log('API for Get');
     let message = "";
 
     this.callAPI(mainUrl + '/get', deckId).then(response => { 
@@ -152,7 +152,7 @@ class MainBody extends React.Component {
   }
 
   handleGame(deckId) {
-    console.log('API for Game');
+    // console.log('API for Game');
     let message = "";
     this.blankCards();
 
@@ -201,7 +201,7 @@ class MainBody extends React.Component {
   }
 
   handleShuffle(deckId) {
-    console.log('API for Shuffle');
+    // console.log('API for Shuffle');
     let message = "";
 
     this.callAPI(mainUrl + '/shuffle', deckId).then(response => {
@@ -256,7 +256,7 @@ class MainBody extends React.Component {
         }
       })
     }).then(response => {
-        console.log(response);
+        // console.log(response);
         if (response.status === 401) {
           // Not Authorized!
           return { name:"NOT_AUTHORIZED" };
