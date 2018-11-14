@@ -12,8 +12,8 @@
                 "dynamodb:UpdateItem"
             ],
             "Resource": [
-                "arn:aws:dynamodb:ap-southeast-2:*:table/decks-master",
-                "arn:aws:dynamodb:ap-southeast-2:*:table/games-master"
+                "arn:aws:dynamodb:*:*:table/decks-master",
+                "arn:aws:dynamodb:*:*:table/games-master"
             ],
             "Condition": {
                 "ForAllValues:StringEquals": {
