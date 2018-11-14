@@ -2,14 +2,16 @@
 
 . ./loadvariables.sh
 
+
 # Get User Pool ID
-cd ../front-end/customer1/amplify/backend/
+cd $(git rev-parse --show-cdup)
+cd /front-end/customer1/amplify/backend/
 A=`grep "IdentityPoolId" amplify-meta.json`
 IDENTITYPOOLID=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
 echo "The Identity Pool Id is: $IDENTITYPOOLID"
 
 # manually discard all changes in local repo (deletes all new local files and changes)
-cd ../
+cd $(git rev-parse --show-cdup)
 git reset --hard HEAD
 git clean -fdx
 cd demos/
@@ -41,12 +43,18 @@ aws cloudformation delete-stack --stack-name docaas
 aws cloudformation delete-stack --stack-name docaas-dynamos
 
 # redeploy App1
+cd $(git rev-parse --show-cdup)
+cd demos
 ./updateapp1.sh
 
 # redeploy App2
+cd $(git rev-parse --show-cdup)
+cd demos
 ./updateapp2.sh
 
 # Modify R53 CNAME for customer1.xxx back to ElasticBeanstalk
+cd $(git rev-parse --show-cdup)
+cd demos
 CNAMEC1=`aws elasticbeanstalk describe-environments --environment-names docaas-customer1-eb-env --no-include-deleted | jq --raw-output '.Environments[0].CNAME'`
 echo "Updating C1 CNAME record on R53"
 ZONEID=`aws route53 list-hosted-zones-by-name --dns-name $DOMAIN | jq --raw-output '.HostedZones[0].Id'`
