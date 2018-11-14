@@ -2,7 +2,6 @@
 
 . ./loadvariables.sh
 
-
 # Get User Pool ID
 cd $(git rev-parse --show-cdup)
 cd /front-end/customer1/amplify/backend/
@@ -14,7 +13,7 @@ echo "The Identity Pool Id is: $IDENTITYPOOLID"
 cd $(git rev-parse --show-cdup)
 git reset --hard HEAD
 git clean -fdx
-cd demos/
+git clone https://github.com/ge8/docaas && cd docaas/demos
 
 # Get RoleNameAuth
 INPUT=`aws cognito-identity get-identity-pool-roles --identity-pool-id $IDENTITYPOOLID --query "Roles.authenticated" --output text`
