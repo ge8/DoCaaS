@@ -38,7 +38,7 @@ Resources:
             Role: !GetAtt RoleForLambdas.Arn
             Environment:
                 Variables:
-                    IDENTITY_POOL_ID: cognito-idp.us-west-2.amazonaws.com/IDENTITYPOOLIDGOESHERE
+                    IDENTITY_POOL_ID: IDENTITYPOOLIDGOESHERE
     CorsFunction:
         Type: AWS::Serverless::Function
         Properties:
