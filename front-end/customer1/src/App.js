@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from './components/Header/Header';
 import MainBody from './components/MainBody/MainBody';
 import jwtDecode from 'jwt-decode';
-
 import './App.css';
 
 
@@ -38,17 +37,28 @@ class App extends Component {
     return 'Basic ' + btoa(this.state.username + ":" + this.state.password);
 
     // else if cognito: 
-    // let session = await Auth.currentSession();
-    // if (session && session.idToken) {
-    //   console.log(session.idToken);
-    //   let claims = jwtDecode(session.idToken.jwtToken);
-    //   this.setState( {
-    //     'claims': claims,
-    //     'logingStatus': LOGGED
-    //   });
-    //   return session.idToken.jwtToken;
-    // } else return null;
+    // if (this.state.jwt) {
+    //   return this.state.jwt;
+    // } else {
+    //   let session = await Auth.currentSession();
+    //   if (session && session.idToken) {
+    //     printIdentityId(session.idToken.jwtToken);
+    //     let claims = jwtDecode(session.idToken.jwtToken);
+    //     this.setState( {
+    //       'claims': claims,
+    //       'jwt': session.idToken.jwtToken,
+    //       'logingStatus': LOGGED
+    //     });
+  
+    //     return session.idToken.jwtToken;
+    //   } else return null;
+    // }
   }
+
+  // printIdentityId(idToken) {
+  //   const info = await Auth.currentUserInfo();
+  //   console.log("Identity ID:", info.id);
+  // }
 
   handleLogging() {
     this.setState ({
