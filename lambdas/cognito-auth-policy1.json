@@ -16,8 +16,8 @@
                 "arn:aws:dynamodb:*:*:table/games-master"
             ],
             "Condition": {
-                "ForAllValues:StringEquals": {
-                    "dynamodb:LeadingKeys": "${cognito-identity.amazonaws.com:sub}"
+                "ForAllValues:StringLike": {
+                    "dynamodb:LeadingKeys": "${cognito-identity.amazonaws.com:sub}-*"
                 }
             }
         }
