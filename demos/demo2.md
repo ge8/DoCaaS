@@ -11,7 +11,9 @@
 1. Get Cognito's Identity Pool ID into template and deploy it template
 ```shell
 aws cognito-identity list-identity-pools --max-results 50
-cd ../lambdas
+cd ../lambdas/src
+npm install
+cd ../
 ./deploy-demo2-SAM.sh
 ```
 
