@@ -23,7 +23,7 @@ cd ../lambdas
 
 
 
-# Current endpoint for app.
+# Show new app for customer 1 and 2. Grab Identity IDs 
 
 
 
@@ -33,8 +33,7 @@ cd ../lambdas
 
 cd ../migration
 npm install aws-sdk
-IDENTITYID=us-west-2_qHHyA8fae CUSTOMER=customer1 node data-migration.js # Replace with actual Identity ID for customer 1
-
+IDENTITYID1=xxxxxxxxxx IDENTITYID2=yyyyyyyyy node data-migration.js # Replace with actual Identity IDs
 
 
 
