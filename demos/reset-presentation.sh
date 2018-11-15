@@ -3,6 +3,7 @@
 . ./loadvariables.sh
 
 # Get User Pool ID
+cd ..
 A=`grep "IdentityPoolId" front-end/customer1/amplify/backend/amplify-meta.json`
 IDENTITYPOOLID=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
 echo "The Identity Pool Id is: $IDENTITYPOOLID"
