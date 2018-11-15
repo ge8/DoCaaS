@@ -16,7 +16,6 @@ cd ../lambdas
 
 1. Deploy new template
 ```shell
-aws cognito-identity list-identity-pools --max-results 50
 ./deploy-demo3-SAM.sh
 ```
 
