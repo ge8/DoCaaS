@@ -42,7 +42,7 @@ class App extends Component {
     // } else {
     //   let session = await Auth.currentSession();
     //   if (session && session.idToken) {
-    //     async printIdentityId(session.idToken.jwtToken);
+    //     printIdentityId(session.idToken.jwtToken);
     //     let claims = jwtDecode(session.idToken.jwtToken);
     //     this.setState( {
     //       'claims': claims,
@@ -55,7 +55,7 @@ class App extends Component {
     // }
   }
 
-  // printIdentityId(idToken) {
+  // async printIdentityId(idToken) {
   //   const info = await Auth.currentUserInfo();
   //   console.log("Identity ID:", info.id);
   // }
