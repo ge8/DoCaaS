@@ -4,7 +4,6 @@ import MainBody from './components/MainBody/MainBody';
 import jwtDecode from 'jwt-decode';
 import './App.css';
 
-
 const NOT_LOGGED = 0
 const LOGGING = 1
 const LOGGED = 2
@@ -42,7 +41,7 @@ class App extends Component {
     // } else {
     //   let session = await Auth.currentSession();
     //   if (session && session.idToken) {
-    //     printIdentityId(session.idToken.jwtToken);
+    //     this.printIdentityId();
     //     let claims = jwtDecode(session.idToken.jwtToken);
     //     this.setState( {
     //       'claims': claims,
@@ -55,7 +54,7 @@ class App extends Component {
     // }
   }
 
-  // async printIdentityId(idToken) {
+  // async printIdentityId() {
   //   const info = await Auth.currentUserInfo();
   //   console.log("Identity ID:", info.id);
   // }
