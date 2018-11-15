@@ -23,13 +23,17 @@ cd ../lambdas
 
 
 
+# Current endpoint for app.
+
+
+
+
+
 
 
 cd ../migration
-aws cognito-idp list-user-pools --max-results 50
-
 npm install aws-sdk
-USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with one from previous call
+IDENTITYID=us-west-2_qHHyA8fae CUSTOMER=customer1 node data-migration.js # Replace with actual Identity ID for customer 1
 
 
 

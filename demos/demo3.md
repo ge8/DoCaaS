@@ -2,9 +2,10 @@
 0. Deploy Two new Dynamo
 1. Author GET function. *How to test, debug?*
 2. SAM Template: Microservices. (Deploy first, then explain... How long does deploy take?)
-3. Data Migration: show+run script for datastore migration per customer. (TTD)
-4. Test success with Insomnia. Try to have C1 access C2. (Adam to explain)
-5. Migration: DNS change to redirect customer1.xxx to xxx.com 
+3. Show existing endpoing for app for customer1. Grab Identity ID from console.
+4. Data Migration: show+run script for datastore migration per customer. (TTD)
+5. Test success with Insomnia. Try to have C1 access C2. (Adam to explain)
+6. Migration: DNS change to redirect customer1.xxx to xxx.com 
 
 # Demo3
 0. Deploy New DynamoDBs
@@ -19,13 +20,12 @@ aws cognito-identity list-identity-pools --max-results 50
 ./deploy-demo3-SAM.sh
 ```
 
-
-3. Run Data Migration script
+3. Grab 
+4. Run Data Migration script
 ```shell
 cd ../migration
-aws cognito-idp list-user-pools --max-results 50
 npm install aws-sdk
-USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8fae with one from previous call
+IDENTITYID=us-west-2_qHHyA8fae CUSTOMER=customer1 node data-migration.js # Replace with actual Identity ID for customer 1
 ```
 
 5. R53 update
@@ -33,3 +33,5 @@ USERPOOLID=us-west-2_qHHyA8fae node data-migration.js # Replace us-west-2_qHHyA8
 ./c1addr53record.sh
 ./c2addr53record.sh
 ```
+
+6. Show 2 apps
