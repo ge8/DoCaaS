@@ -45,6 +45,7 @@ export default withAuthenticator(App);
 
 * Test & Deploy App - takes 5 minutes.
 ```shell
+npm install
 npm start
 cd ../../demos
 ./updateapp1withcognito.sh

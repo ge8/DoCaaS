@@ -11,7 +11,7 @@ amplify push #takes 3 min.
 
 
 
-
+npm install
 npm start
 
 cd ../../demos
