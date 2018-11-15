@@ -2,9 +2,18 @@
 
 
 
-amplify init #prompts + takes 1 min
-amplify add auth #prompts
-amplify push #takes 3 min.
+amplify init
+
+
+
+
+
+
+
+
+amplify add auth 
+amplify push 
+
 
 
 
