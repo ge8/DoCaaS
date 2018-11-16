@@ -42,6 +42,7 @@ class App extends Component {
     //   let session = await Auth.currentSession();
     //   if (session && session.idToken) {
     //     this.printIdentityId();
+    //     console.log("Identity JWT: " + session.idToken.jwtToken);
     //     let claims = jwtDecode(session.idToken.jwtToken);
     //     this.setState( {
     //       'claims': claims,
