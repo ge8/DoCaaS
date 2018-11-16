@@ -1,7 +1,9 @@
 
 function toDeck(data) {
     if (!data || !data.Item) return null;
-    let deck = { id:data.Item.id.S, name:data.Item.deck.S, cards:[] };
+    let id = data.Item.id.S;
+    let name = data.Item.deck ? data.Item.deck.S : data.Item.id.S.split("-")[1];
+    let deck = { id:id, name:name, cards:[] };
     data.Item.cards.L.forEach(card => {
         deck.cards.push(card.S);
     });
@@ -10,7 +12,8 @@ function toDeck(data) {
 
 function fromDeck(deck, tenantId) {
     if (!deck) return null;
-    let data = { id:{S:deck.id}, tenant:{S:tenantId}, deck: { S:deck.name }, cards:{ L: [] } };
+    let name = deck.name ? deck.name : deck.id.split("-")[1];
+    let data = { id:{S:deck.id}, tenant:{S:tenantId}, deck: { S:name }, cards:{ L: [] } };
     deck.cards.forEach(card => {
         data.cards.L.push({ S:card });
     });
