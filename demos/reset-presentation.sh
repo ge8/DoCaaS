@@ -7,6 +7,7 @@ cd ..
 A=`grep "IdentityPoolId" front-end/customer1/amplify/backend/amplify-meta.json`
 IDENTITYPOOLID=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
 echo "The Identity Pool Id is: $IDENTITYPOOLID"
+sleep 5
 
 # manually discard all changes in local repo (deletes all new local files and changes)
 git reset --hard HEAD
