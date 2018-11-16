@@ -11,7 +11,6 @@ const ALLOWED_RESOURCES = {
 
 exports.authorise_request = async (event, context, callback) => {
     // Decode the JWT and grab the claims - these claims cannot be trusted until after validating with cognito
-    console.log("Event:", event);
     let claims = jwt.decode(event.authorizationToken);
 
     let loginCredentials = await loadCredentials(claims, event.authorizationToken);
