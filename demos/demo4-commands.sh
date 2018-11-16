@@ -7,6 +7,7 @@
 aws cognito-idp list-user-pools --max-results 50
 
 aws cognito-idp admin-update-user-attributes --user-pool-id USERPOOLID --username customer1 --user-attributes Name=custom:plan,Value=gold
+aws cognito-idp admin-user-global-sign-out --user-pool-id USERPOOLID --username customer1
 
 
 

@@ -4,6 +4,8 @@
 aws cognito-idp list-user-pools --max-results 50
 
 aws cognito-idp admin-update-user-attributes --user-pool-id USERPOOLID --username customer1 --user-attributes Name=custom:plan,Value=gold #Change USERPOOLID with the one from previous call.
+aws cognito-idp admin-user-global-sign-out --user-pool-id USERPOOLID --username customer1
+
 ```
 
 2. Update Lambda Authorizer with gold plan.

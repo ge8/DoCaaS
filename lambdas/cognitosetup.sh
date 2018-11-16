@@ -44,6 +44,7 @@ aws cognito-idp update-user-pool-client --user-pool-id $USERPOOLID --client-id $
 
 # Add silver plan to customer1
 aws cognito-idp admin-update-user-attributes --user-pool-id $USERPOOLID --username customer1 --user-attributes Name=custom:plan,Value=silver
+aws cognito-idp admin-user-global-sign-out --user-pool-id $USERPOOLID --username customer1
 
 # Create customer2 with bronze plan and HolaHola1! temporary password.
 aws cognito-idp admin-create-user --user-pool-id $USERPOOLID --username customer2 --user-attributes Name=email,Value=thisisnotgerardosemail+1@gmail.com Name=email_verified,Value=true Name=custom:plan,Value=bronze --temporary-password HolaHola1!
