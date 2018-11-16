@@ -28,6 +28,8 @@ cd ../lambdas
 
 
 
+
+
 aws dynamodb scan --table-name data-customer1
 aws dynamodb scan --table-name data-customer2
 aws dynamodb scan --table-name decks-master
