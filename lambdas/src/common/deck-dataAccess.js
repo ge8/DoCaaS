@@ -1,8 +1,12 @@
 
+function deckNameFromId(id) {
+    let dash = id.lastIndexOf("-");
+    return id.substring(dash+1);
+}
 function toDeck(data) {
     if (!data || !data.Item) return null;
     let id = data.Item.id.S;
-    let name = data.Item.deck ? data.Item.deck.S : data.Item.id.S.split("-")[1];
+    let name = data.Item.deck ? data.Item.deck.S : deckNameFromId(data.Item.id.S);
     let deck = { id:id, name:name, cards:[] };
     data.Item.cards.L.forEach(card => {
         deck.cards.push(card.S);
@@ -12,7 +16,7 @@ function toDeck(data) {
 
 function fromDeck(deck, tenantId) {
     if (!deck) return null;
-    let name = deck.name ? deck.name : deck.id.split("-")[1];
+    let name = deck.name ? deck.name : deckNameFromId(deck.id);
     let data = { id:{S:deck.id}, tenant:{S:tenantId}, deck: { S:name }, cards:{ L: [] } };
     deck.cards.forEach(card => {
         data.cards.L.push({ S:card });

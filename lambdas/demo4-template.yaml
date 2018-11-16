@@ -113,7 +113,7 @@ Resources:
         Type: AWS::ApiGateway::Authorizer
         Properties: 
             AuthorizerCredentials: !GetAtt RoleForLambdas.Arn
-            AuthorizerResultTtlInSeconds: 600
+            AuthorizerResultTtlInSeconds: 60
             AuthorizerUri: 
                 Fn::Join: 
                     - ""
