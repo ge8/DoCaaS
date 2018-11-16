@@ -2,6 +2,7 @@
 * Incognito on customer1.estaba.net and customer2.estaba.net
 * Incognito on https://aws-amplify.github.io/
 * Firefox incognito ready
+* Iterm2 at lambdas
 * VSC on docaas
 * demo1.md open in VSC
 * thisisnotgerardo’s gmail open
@@ -49,7 +50,7 @@ export default withAuthenticator(App);
 * Test App & Create customer1 in Cognito
 ```shell
 npm install
-npm start
+npm start #Grab JWT token for demo2
 ```
 * Build and Deploy to bucket.
 ```shell

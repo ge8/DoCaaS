@@ -48,7 +48,7 @@ amplify push
 
 # Test App & Create customer1 in Cognito
 npm install
-npm start
+npm start # leave open
 
 
 

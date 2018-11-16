@@ -65,6 +65,7 @@ aws dynamodb scan --table-name games-master
 # Show New App @ estaba.net
 
 
+# Prove customer2 can't access shuffle. # Insomnia
 
 
 

@@ -5,14 +5,14 @@ cd ../lambdas
 ./deploy-dynamos.sh
 ```
 
-2. Author new GET function. *How to test, debug?*
+2. Author new GET function.
 
 3. Deploy SAM template
 ```shell
 ./deploy-demo3-SAM.sh
 ```
 
-4. Show new app for customer 1 and 2. Grab Identity IDs 
+4. Show new app for customer 1 and 2. Grab Identity IDs and tokens
 * Grab a token from browser and show them in jwt.io
 
 5. Run Data Migration script
@@ -30,4 +30,6 @@ aws dynamodb scan --table-name decks-master
 aws dynamodb scan --table-name games-master
 ```
 
-5. Show new apps
+5. Show new apps 
+
+6. Prove customer2 can't access shuffle. # Insomnia
