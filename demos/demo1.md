@@ -1,6 +1,7 @@
 # Prep: 
 * Incognito on customer1.estaba.net and customer2.estaba.net
 * Incognito on https://aws-amplify.github.io/
+* Firefox incognito ready
 * VSC on front-end/customer1
 * demo1.md open in VSC
 * thisisnotgerardo’s gmail open
