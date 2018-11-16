@@ -1,10 +1,4 @@
-# Demo3: What we'll do: Break the monolith into Serverless Microservices
-3. Show existing endpoing for app for customer1. Grab Identity ID from console.
-4. Data Migration: show+run script for datastore migration per customer. (TTD)
-5. Test success with Insomnia. Try to have C1 access C2. (Adam to explain)
-6. Migration: DNS change to redirect customer1.xxx to xxx.com 
-
-# Demo3
+# Demo3: Break the monolith into Serverless Microservices
 1. Deploy New DynamoDBs
 ```shell
 cd ../lambdas
@@ -36,10 +30,4 @@ aws dynamodb scan --table-name decks-master
 aws dynamodb scan --table-name games-master
 ```
 
-5. R53 update
-```shell
-./c1addr53record.sh
-./c2addr53record.sh
-```
-
-6. Show new apps
+5. Show new apps

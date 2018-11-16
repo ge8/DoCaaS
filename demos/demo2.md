@@ -1,6 +1,8 @@
 # Demo2: What we'll do: Deploy a new API getting Isolation and Data Partitioning fixed once.
 
-1. SAM Template: to deploy API + Lambda Authorizer + CORS
+1. Lambda Authorizer
+
+2. SAM Template: to deploy API + Lambda Authorizer + CORS
 * Get Cognito's Identity Pool ID into template and deploy it template
 ```shell
 aws cognito-identity list-identity-pools --max-results 50
@@ -10,7 +12,6 @@ npm install
 cd ../
 ./deploy-demo2-SAM.sh
 ```
-2. Lambda Authorizer
 
 3. Data Partitioning
 * Create IAM policies
