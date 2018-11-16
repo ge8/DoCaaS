@@ -28,7 +28,7 @@ aws iam detach-role-policy --role-name $ROLENAMEAUTH --policy-arn arn:aws:iam::$
 
 
 # delete Amplify Stack
-A=`aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE | grep '"StackName": "customer1'`
+A=`aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE | grep '"StackName": "multi-tenant-app'`
 echo $A
 STACKNAME=`echo "{ $A \"t\":1 }" | jq ".StackName" --raw-output`
 echo "Amplify's Stack Name to delete is: $STACKNAME"
