@@ -32,6 +32,10 @@ class Controls extends React.Component {
         this.props.handleShuffle(this.state.deckId);
     }
 
+    handleCut() {
+        this.props.handleCut(this.state.deckId);
+    }
+
     handleChange = event => {
         this.setState({
           [event.target.id]: event.target.value
@@ -47,6 +51,8 @@ class Controls extends React.Component {
                 return true; // Always Allowed
             case "shuffle": 
                 return plan === "silver" || plan === "gold";
+            case "cut": 
+                return plan === "gold"; // Always Allowed
             default: 
                 return false;
         }
@@ -80,6 +86,7 @@ class Controls extends React.Component {
             {this.renderButton("get", "Get", "info", this.handleGet)}
             {this.renderButton("game", "Game", "warning", this.handleGame)}
             {this.renderButton("shuffle", "Shuffle", "danger", this.handleShuffle)}
+            {this.renderButton("cut", "Cut", "primary", this.handleCut)}
         </div>
     );
     }

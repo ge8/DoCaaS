@@ -47,6 +47,7 @@ class MainBody extends React.Component {
     this.handleGet = this.handleGet.bind(this);
     this.handleGame = this.handleGame.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
+    this.handleCut = this.handleCut.bind(this);
     this.callAPI = this.callAPI.bind(this);
     this.blankCards = this.blankCards.bind(this);
   }  
@@ -244,6 +245,53 @@ class MainBody extends React.Component {
       });
     }
   }
+
+  handleCut(deckId) {
+    // console.log('API for Shuffle');
+    let message = "";
+
+    this.callAPI(mainUrl + '/cut', deckId).then(response => {
+      if (!USE_FIXED_VALUES) {
+        if (response.name === "NOT_AUTHORIZED")  {
+          message = "Not Authorized - check your username + password!";
+          this.blankCards();
+        } else if (response.name === "0")  {
+          message = "Invalid Deck";   
+          this.blankCards();
+        } else {
+          fixedDeck.id = response.name;
+          fixedDeck.cards = [];
+          response.cards.map((card,i) => {
+            fixedDeck.cards.push(card+".png");
+            return 0;
+          });
+        } 
+  
+        this.setState({
+          'message': message,
+          'deck': fixedDeck,
+          'winner': -1
+        });
+      }    
+    }); 
+
+    if (USE_FIXED_VALUES) {
+      fixedDeck.id = this.state.deck.id;
+      fixedDeck.cards = [];
+      prefixes.forEach(prefix => {
+        cards.forEach( card => {
+          fixedDeck.cards.push(card+prefix+'.png');
+        })
+      });
+
+      this.setState({
+        'message': message,
+        'deck': fixedDeck,
+        'winner': -1
+      });
+    }
+  }
+
 
   callAPI(url, deckId) {
     return this.props.getAuthToken().then((authToken) => {
