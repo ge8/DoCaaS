@@ -247,7 +247,7 @@ class MainBody extends React.Component {
   }
 
   handleCut(deckId) {
-    // console.log('API for Shuffle');
+    // console.log('API for Cut');
     let message = "";
 
     this.callAPI(mainUrl + '/cut', deckId).then(response => {
@@ -331,6 +331,7 @@ class MainBody extends React.Component {
                     handleGet={this.handleGet} 
                     handleGame={this.handleGame} 
                     handleShuffle={this.handleShuffle} 
+                    handleCut={this.handleCut} 
                   />;
       table = <Table 
                 deck={this.state.deck} 
