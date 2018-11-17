@@ -11,6 +11,7 @@ npm install
 # Modify mainURL in source
 cd src/components/MainBody #modify source
 find ./ -type f -exec sed -i -e "s/CUSTOMERGOESHERE/customer2/g" {} \;
+rm -f MainBody.js-e MainBody.css-e 
 find ./ -type f -exec sed -i -e "s/DOMAINGOESHERE.com/$DOMAIN/g" {} \;
 rm -f MainBody.js-e MainBody.css-e 
 cd ../../../
