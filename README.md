@@ -27,9 +27,7 @@ git clone https://github.com/ge8/docaas && cd docaas/demos
 ./deploy-docaas-cfn+A-record.sh #make bucket host public website + deploy cfn + R53 A record pointing domain to cfn (takes ~10 min)
 ./setup-c1.sh #deploy customer 1 app + monolith (takes ~4 min)
 ./setup-c2.sh #deploy customer 2 app + monolith (takes ~4 min)
-cd migration
-npm install aws-sdk
-cd ..
+./node-installs.sh #Instals AWS SDK at migration folder and runs npm install at lambdas
 ```
 * Test the apps by browsing to customer1.<yourdomain> and customer2.<yourdomain>, creating 5 decks on each, shuffling some and playing a few games in some.
 
