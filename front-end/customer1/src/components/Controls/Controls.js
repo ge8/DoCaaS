@@ -14,6 +14,7 @@ class Controls extends React.Component {
         this.handleGame = this.handleGame.bind(this);
         this.handleShuffle = this.handleShuffle.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        // this.handleCut = this.handleCut.bind(this);
     }
 
     handleCreate() {
