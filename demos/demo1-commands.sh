@@ -20,6 +20,7 @@ rsync -ax --exclude 'node_modules' front-end/customer1 ../docaas
 
 
 # Amplify: Create Cognito User Pool
+cd multi-tenant-app
 amplify init 
 
 
