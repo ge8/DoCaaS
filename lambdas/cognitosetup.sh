@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the IDENTITYPOOLID and USERPOOLID
-cd ../front-end/customer1/amplify/backend/
+cd ../multi-tenant-app/amplify/backend/
 A=`grep "IdentityPoolId" amplify-meta.json`
 IDENTITYPOOLID=`echo "{ $A \"t\":1 }" | jq ".IdentityPoolId" --raw-output`
 echo "The Identity Pool Id is: $IDENTITYPOOLID"
@@ -9,7 +9,7 @@ echo "The Identity Pool Id is: $IDENTITYPOOLID"
 A=`grep "UserPoolId" amplify-meta.json`
 USERPOOLID=`echo "{ $A \"t\":1 }" | jq ".UserPoolId" --raw-output`
 echo "The User Pool Id is: $USERPOOLID"
-cd ../../../../lambdas
+cd ../../../lambdas
 
 # Get the IDENTITYPOOLID Auth Role
 ROLENAMEAUTH=`aws cognito-identity get-identity-pool-roles --identity-pool-id $IDENTITYPOOLID --query 'Roles.authenticated' --output text `
