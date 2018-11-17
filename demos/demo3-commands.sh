@@ -44,7 +44,6 @@ cd ../lambdas
 # Data Migration
 
 cd ../migration
-npm install aws-sdk
 
 IDENTITYID1=xxxxxxxxxxxxx IDENTITYID2=yyyyyyyyyy node data-migration.js # Replace with actual Identity IDs
 
