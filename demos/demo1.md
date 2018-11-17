@@ -8,7 +8,8 @@
 * thisisnotgerardo’s gmail open
 * Close everything + WorkDocs + Google Drive
 * Clean Desktop Up
-* Docker open
+* Docker running
+* AWS console with Dynamo open
 
 # Demo1: What we'll do: Add Secure Sign Up Sign In to customer1.
 0. Show app: customer1.estaba.net and customer2.estaba.net

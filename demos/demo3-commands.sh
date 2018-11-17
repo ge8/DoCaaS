@@ -3,10 +3,18 @@
 
 
 
+# Show new app for customer 1 and 2. Grab Identity IDs & JWT token
+
+
+
+
+
+
+
 
 # Deploy New DynamoDBs
 cd ../lambdas
-./deploy-dynamos.sh
+./deploy-dynamos.h
 
 
 
@@ -33,28 +41,12 @@ cd ../lambdas
 
 
 
-
-# Show new app for customer 1 and 2. Grab Identity IDs & JWT token
-
-
-
-
-
-
-
 # Data Migration
 
 cd ../migration
 npm install aws-sdk
 
-aws dynamodb scan --table-name data-customer1
-aws dynamodb scan --table-name data-customer2
-aws dynamodb scan --table-name decks-master
-aws dynamodb scan --table-name games-master
-IDENTITYID1=xxxxxxxxxx IDENTITYID2=yyyyyyyyy node data-migration.js # Replace with actual Identity IDs
-
-aws dynamodb scan --table-name decks-master
-aws dynamodb scan --table-name games-master
+IDENTITYID1=xxxxxxxxxxxxx IDENTITYID2=yyyyyyyyyy node data-migration.js # Replace with actual Identity IDs
 
 
 
