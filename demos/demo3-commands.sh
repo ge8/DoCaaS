@@ -14,7 +14,7 @@
 
 # Deploy New DynamoDBs
 cd ../lambdas
-./deploy-dynamos.h
+./deploy-dynamos.sh
 
 
 
