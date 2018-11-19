@@ -12,6 +12,7 @@
 
 # New multi-tenant app
 rsync -ax --exclude 'node_modules' front-end/customer1 ../docaas
+cd multi-tenant-app && npm install
 
 
 
@@ -31,7 +32,6 @@ amplify init
 
 amplify add auth 
 amplify push
-npm install
 
 
 
