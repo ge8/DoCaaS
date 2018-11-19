@@ -316,5 +316,5 @@ Resources:
 
 Outputs:
     APIBaseURL:
-        Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+        Value: !Sub "${RestApi}"
 
