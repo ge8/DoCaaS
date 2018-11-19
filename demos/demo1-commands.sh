@@ -49,7 +49,7 @@ amplify push
 
 
 # Test App & Create customer1 in Cognito
-npm start # leave open
+npm start 
 
 
 
