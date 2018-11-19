@@ -10,7 +10,7 @@ echo "The Identity Pool Id is: $IDENTITYPOOLID"
 sleep 5
 
 # manually discard all changes in local repo (deletes all new local files and changes)
-git reset --hard HEAD
+git reset HEAD
 git clean -fdx
 git pull && cd demos
 
