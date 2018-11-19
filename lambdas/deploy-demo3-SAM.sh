@@ -9,5 +9,11 @@ RESTAPI=`aws cloudformation describe-stacks --stack-name docaas --query "Stacks[
 DEPID=`aws apigateway create-deployment --rest-api-id $RESTAPI --stage-name Prod --query "id" --output text`
 aws apigateway update-stage --rest-api-id $RESTAPI --stage-name Prod --patch-operations op='replace',path='/deploymentId',value=$DEPID
 
+# nohup aws lambda invoke Authorizer &
+# nohup aws lambda invoke CORS &
+# nohup aws lambda invoke Get &
+# nohup aws lambda invoke Create &
+# nohup aws lambda invoke Shuffle &
+# nohup aws lambda invoke Game &
 
 rm -f packaged.yaml
