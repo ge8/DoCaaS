@@ -6,9 +6,7 @@
 # SAM Template
 aws cognito-identity list-identity-pools --max-results 50
 
-cd ../lambdas/src
-npm install
-cd ../
+cd ../lambdas
 ./deploy-demo2-SAM.sh
 
 
