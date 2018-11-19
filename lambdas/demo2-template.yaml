@@ -93,10 +93,3 @@ Resources:
 Outputs:
     APIBaseURL:
         Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
-    RoleForLambdas:
-      Description: "IAM execution Role for Lambda functions"
-      Value: !GetAtt RoleForLambdas.Arn
-    AuthoriserFunction:
-      Description: "Plan Authoriser Function ARN"
-      Value: !GetAtt AuthoriserFunction.Arn
-

@@ -367,28 +367,3 @@ Resources:
 Outputs:
     APIBaseURL:
         Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
-    RoleForLambdas:
-      Description: "IAM execution Role for Lambda functions"
-      Value: !GetAtt RoleForLambdas.Arn
-    DeckDataAccessFunction:
-      Description: "Deck DataAccess Function ARN"
-      Value: !GetAtt DeckDataAccessFunction.Arn
-    GameDataAccessFunction:
-      Description: "Game DataAccess Function ARN"
-      Value: !GetAtt GameDataAccessFunction.Arn
-    CreateDeckFunction:
-      Description: "Create Deck Lambda Function ARN"
-      Value: !GetAtt CreateDeckFunction.Arn
-    GetDeckFunction:
-      Description: "Get Deck Lambda Function ARN"
-      Value: !GetAtt GetDeckFunction.Arn
-    ShuffleDeckFunction:
-      Description: "Shuffle Deck Lambda Function ARN"
-      Value: !GetAtt ShuffleDeckFunction.Arn
-    CutDeckFunction:
-      Description: "Cut Deck Lambda Function ARN"
-      Value: !GetAtt CutDeckFunction.Arn
-    AuthoriserFunction:
-      Description: "Plan Authoriser Function ARN"
-      Value: !GetAtt AuthoriserFunction.Arn
-
