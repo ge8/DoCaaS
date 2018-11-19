@@ -12,6 +12,7 @@ sleep 5
 # manually discard all changes in local repo (deletes all new local files and changes)
 git reset --hard HEAD
 git clean --force
+rm -fr multi-tenant-app
 git pull && cd demos
 
 # Get RoleNameAuth
