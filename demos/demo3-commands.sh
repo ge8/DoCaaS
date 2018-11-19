@@ -11,7 +11,6 @@
 
 
 
-
 # Deploy New DynamoDBs
 cd ../lambdas
 ./deploy-dynamos.sh
@@ -22,7 +21,7 @@ cd ../lambdas
 
 
 
-# Author new GET function
+# Show functions
 
 
 
@@ -45,7 +44,7 @@ cd ../lambdas
 
 cd ../migration
 
-IDENTITYID1=xxxxxxxxxxxxx IDENTITYID2=yyyyyyyyyy node data-migration.js # Replace with actual Identity IDs
+IDENTITYID1=xxxxxxxxxxx IDENTITYID2=yyyyyyyyyyyy node data-migration.js # Replace with actual Identity IDs
 
 
 
@@ -57,6 +56,6 @@ IDENTITYID1=xxxxxxxxxxxxx IDENTITYID2=yyyyyyyyyy node data-migration.js # Replac
 
 
 # Prove customer2 can't access shuffle. # Insomnia
-
+aws cloudformation describe-stacks --stack-name docaas --query "Stacks[0].Outputs"
 
 
