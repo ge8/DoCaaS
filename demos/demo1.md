@@ -1,15 +1,13 @@
 # Prep: 
-* Incognito on customer1.estaba.net and customer2.estaba.net
-* Incognito on https://aws-amplify.github.io/
+* Chrome Incognito on customer1.estaba.net and customer2.estaba.net
+* Chrome on thisisnotgerardo’s gmail && AWS console with Dynamo open
 * Firefox incognito ready
 * Iterm2 at lambdas
 * VSC on docaas
-* demo1.md open in VSC
-* thisisnotgerardo’s gmail open
+* demo1-commands.sh open in VSC
 * Close everything + WorkDocs + Google Drive
 * Clean Desktop Up
 * Docker running
-* AWS console with Dynamo open
 
 # Demo1: What we'll do: Add Secure Sign Up Sign In to customer1.
 0. Show app: customer1.estaba.net and customer2.estaba.net
