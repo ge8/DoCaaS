@@ -23,7 +23,6 @@ sam validate --template demo2-template.yaml
 
 # Add JWT token to auth-request.json from Demo1 local ITERM2 + Option+Shift+F
 sam local invoke AuthoriserFunction -e auth-request.json --template demo2-template.yaml --skip-pull-image 
-sam local invoke AuthoriserFunction -e auth-request.json --template demo2-template.yaml -d 5858 --skip-pull-image 
 
 
 
