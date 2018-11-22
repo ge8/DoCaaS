@@ -31,7 +31,7 @@ amplify init
 
 amplify add auth 
 amplify push
-npm install
+
 
 
 
