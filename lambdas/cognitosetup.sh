@@ -38,9 +38,9 @@ aws iam attach-role-policy --role-name $ROLENAMEAUTH --policy-arn arn:aws:iam::$
 # Create Cognito attribute "plan"
 aws cognito-idp add-custom-attributes --user-pool-id $USERPOOLID --custom-attributes Name=plan,AttributeDataType=String
 
-# Make "plan" attribute readable by clients
-aws cognito-idp update-user-pool-client --user-pool-id $USERPOOLID --client-id $CLIENT1 --read-attributes "custom:plan"
-aws cognito-idp update-user-pool-client --user-pool-id $USERPOOLID --client-id $CLIENT2 --read-attributes "custom:plan"
+# # Make "plan" attribute readable by clients
+# aws cognito-idp update-user-pool-client --user-pool-id $USERPOOLID --client-id $CLIENT1 --read-attributes "custom:plan"
+# aws cognito-idp update-user-pool-client --user-pool-id $USERPOOLID --client-id $CLIENT2 --read-attributes "custom:plan"
 
 # Add silver plan to customer1
 aws cognito-idp admin-update-user-attributes --user-pool-id $USERPOOLID --username customer1 --user-attributes Name=custom:plan,Value=silver
