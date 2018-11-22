@@ -10,9 +10,7 @@ const LOGGING = 1
 const LOGGED = 2
 
 const mainUrl = "https://CUSTOMERGOESHERE.DOMAINGOESHERE.com"
-// const mainUrl = "https://customer1.estaba.net" //HARDCODED
-// const mainUrl = "http://localhost:3001" //HARDCODED
-// const mainUrl = "https://{restapi_id}.execute-api.{region}.amazonaws.com/{stage_name}/"
+// const mainUrl = "https://{restapi_id}.execute-api.us-west-2.amazonaws.com/Prod/"
 
 let logingPage = null;
 let controls = null;
