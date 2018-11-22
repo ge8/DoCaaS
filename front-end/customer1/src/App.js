@@ -8,6 +8,12 @@ const NOT_LOGGED = 0
 const LOGGING = 1
 const LOGGED = 2
 
+// Amplify.configure({
+//   Auth: {
+//     mandatorySignIn: true,
+//   }
+// });
+
 if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
   window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.search;
 }
