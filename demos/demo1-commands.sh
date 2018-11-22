@@ -21,7 +21,6 @@ mv customer1 multi-tenant-app && cd multi-tenant-app && npm install
 
 
 # Amplify: Create Cognito User Pool
-cd multi-tenant-app
 amplify init 
 
 
