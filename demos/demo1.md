@@ -1,24 +1,14 @@
-# Prep: 
-* Chrome Incognito on customer1.estaba.net and customer2.estaba.net
-* Chrome on thisisnotgerardo’s gmail && AWS console with Dynamo open
-* Firefox incognito ready
-* Iterm2 at lambdas
-* VSC on docaas
-* demo1-commands.sh open in VSC
-* Demo 2 templates open on IDENTITYPOOLIDGOESHERE
-* Close everything + WorkDocs + Google Drive
-* Clean Desktop Up
-* Docker running
+# Demo1: Create new multi-tenant app and add Cognito to customer1.
+0. Check out existing single tenant apps: customer1.<yourdomain> and customer2.<yourdomain>. Create a handful of decks and games for both customers.
+* Explore front-end code and monolith code.
 
-# Demo1: What we'll do: Add Secure Sign Up Sign In to customer1.
-0. Show app: customer1.estaba.net and customer2.estaba.net
-
-1. New multi-tenant app
+1. Create the new multi-tenant app
 * Copy customer1's app.
 ```shell
 rsync -ax --exclude 'node_modules' front-end/customer1 ../docaas
+mv customer1 multi-tenant-app && cd multi-tenant-app && npm install
+
 ```
-* Name: multi-tenant-app
 * Modify homepage in package.json with https://estaba.net # Use your domain
 * Replace "customer1" with "Welcome to our new DoCaaS App" in index.js
 
@@ -30,7 +20,7 @@ amplify init # takes 1 min. Amplify Docs
 * Create Amazon Cognito User Pool
 ```shell
 amplify add auth #prompts
-amplify push # "y" confirm then takes 3 min. Update Apps
+amplify push # "y" confirm then takes 3 min.
 ```
 
 3. Amplify: Configure App with Cognito
@@ -46,11 +36,10 @@ import { withAuthenticator } from 'aws-amplify-react';
 ...
 export default withAuthenticator(App);
 ```
-* Using Cognito's session info instead of Basic Auth. Hide App.js Line 37 and unhide Lines 40-46. & Display Buttons based on plan attribute -> default to gold
+* Using Cognito's session info instead of Basic Auth. Hide App.js' two basic auth lines and unhide cognito's lines.
 * Remove Previous Login Button. Header.js lines 27-29.
 * Test App & Create customer1 in Cognito
 ```shell
-npm install
 npm start #Grab JWT token for demo2
 ```
 * Build and Deploy to bucket.
