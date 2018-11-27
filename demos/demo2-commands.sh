@@ -18,6 +18,15 @@ cd ../lambdas
 
 
 # Lambda Authorizer
+
+
+
+
+
+
+
+
+
 sam --version
 sam validate --template demo2-template.yaml
 
