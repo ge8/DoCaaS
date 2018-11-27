@@ -1,7 +1,7 @@
 'use strict';
 // import SDK
 let AWS = require('aws-sdk');
-// initialize dynamodb and cognito
+// initialize dynamodb
 let dynamodb = new AWS.DynamoDB({region:"us-west-2"});
 
 let IDENTITY_ID_1 = process.env.IDENTITYID1;
