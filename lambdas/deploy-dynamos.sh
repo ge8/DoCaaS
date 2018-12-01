@@ -1,7 +1,6 @@
 #!/bin/bash
 
-REGION=us-west-2
-BUCKET=docaas
+. ./../demos/loadvariables.sh
 
 aws cloudformation delete-stack --stack-name docaas-dynamos
 aws cloudformation wait stack-delete-complete --stack-name docaas-dynamos
